@@ -7,7 +7,7 @@
 
     <div>
       User status:
-      <b-badge>Guest {{ $errors.errors }}</b-badge>
+      <b-badge>Guest {{ $errors.any() }}</b-badge>
     </div>
   </div>
 </template>

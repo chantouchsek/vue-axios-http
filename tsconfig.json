@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
+    "target": "es2018",
+    "module": "commonjs",
+    "lib": ["es5", "es6", "es2015", "es2016", "es2017", "es2018", "esnext", "dom"],
     "moduleResolution": "node",
-    "lib": [
-      "dom"
-    ],
     "esModuleInterop": true,
     "strict": false,
     "declaration": true,

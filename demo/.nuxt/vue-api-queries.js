@@ -1,8 +1,9 @@
 import Vue from 'vue'
-import VueApiQueries, { Validator } from '../../src'
+import VueApiQueries, { Validator, BaseProxy } from 'vue-api-queries'
 
 export default function (ctx, inject) {
   Vue.use(VueApiQueries)
   ctx.$errors = new Validator()
+  BaseProxy.$http = ctx.$axios
   inject('queries', {})
 }
