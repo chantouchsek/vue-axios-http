@@ -13620,6 +13620,17 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
+"vue-api-queries@https://github.com/Chantouch/vue-api-queries":
+  version "0.0.0"
+  resolved "https://github.com/Chantouch/vue-api-queries#8b96337366f522b5fc009af06ad613bd7a06ba6f"
+  dependencies:
+    axios "^0.20.0"
+    bootstrap-vue "^2.17.3"
+    camelcase-keys "^6.2.2"
+    escape-string-regexp "^4.0.0"
+    lodash.merge "^4.6.2"
+    snakecase-keys "^3.2.0"
+
 vue-client-only@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/vue-client-only/-/vue-client-only-2.0.0.tgz#ddad8d675ee02c761a14229f0e440e219de1da1c"

@@ -1,5 +1,3 @@
-import vueApiQueryModule from '../nuxt'
-
 export default {
   server: {
     port: 5000,
@@ -16,7 +14,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     'bootstrap-vue/nuxt',
-    vueApiQueryModule,
+    'vue-api-queries/nuxt',
   ],
   axios: {
     proxy: true,
