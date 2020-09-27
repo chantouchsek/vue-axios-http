@@ -12,7 +12,7 @@ export default {
   buildModules: ['@nuxt/typescript-build'],
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/proxy',
+    '@nuxtjs/auth-next',
     'bootstrap-vue/nuxt',
     'vue-api-queries/nuxt',
   ],
@@ -33,53 +33,22 @@ export default {
     },
   },
   auth: {
-    redirect: false,
+    redirect: {
+      callback: '/callback',
+      logout: '/signed-out',
+    },
     strategies: {
-      local: false,
-      admin: {
+      local: {
         token: {
           property: 'access_token',
-          required: true,
-          type: 'Bearer',
         },
         user: {
-          property: 'user',
-          autoFetch: true,
+          property: 'data',
         },
         endpoints: {
-          login: { url: '/api/admins/login', method: 'post' },
-          logout: { url: '/api/admins/logout', method: 'post' },
-          user: { url: '/api/admins/user', method: 'get' },
-        },
-        isDefault: true,
-        redirect: {
-          callback: '/admin/callback',
-          logout: '/admin/signed-out',
-          home: '/admin/secure',
-          login: '/admin/login',
-        },
-      },
-      staff: {
-        token: {
-          property: 'access_token',
-          required: true,
-          type: 'Bearer',
-        },
-        user: {
-          property: 'user',
-          autoFetch: true,
-        },
-        endpoints: {
-          login: { url: '/api/users/login', method: 'post' },
-          logout: { url: '/api/users/logout', method: 'post' },
-          user: { url: '/api/users/user', method: 'get' },
-        },
-        isDefault: true,
-        redirect: {
-          callback: '/staff/callback',
-          logout: '/staff/signed-out',
-          home: '/staff/secure',
-          login: '/staff/login',
+          login: { url: '/auth/login', method: 'post' },
+          logout: { url: '/auth/logout', method: 'post' },
+          user: { url: '/auth/me', method: 'get' },
         },
       },
     },
