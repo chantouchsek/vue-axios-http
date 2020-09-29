@@ -12,7 +12,7 @@ export default class Validator {
   }
 
   add(attribute: string, message: string) {
-    if (!this.has(attribute)) {
+    if (this.missed(attribute)) {
       this.errors[attribute] = []
     }
     if (!this.errors[attribute].includes(message)) {

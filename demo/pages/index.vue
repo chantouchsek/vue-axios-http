@@ -1,13 +1,13 @@
 <template>
   <div>
     <b-jumbotron class="text-center">
-      <h3>Welcome to Nuxt auth example</h3>
+      <h3>Welcome to Nuxt example</h3>
       This demo is using vue-api-queries-module v{{ version }}
     </b-jumbotron>
 
     <div>
       User status:
-      <b-badge>Guest: {{ $errors.has('name') }}</b-badge>
+      <b-badge>Guest: {{ $auth.loggedIn }}</b-badge>
     </div>
   </div>
 </template>

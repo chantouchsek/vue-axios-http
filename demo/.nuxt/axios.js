@@ -1,6 +1,5 @@
 import Axios from 'axios'
 import defu from 'defu'
-import axiosRetry from 'axios-retry'
 
 // Axios.prototype cannot be modified
 const axiosExtra = {
@@ -65,7 +64,6 @@ const createAxiosInstance = axiosOptions => {
   setupDebugInterceptor(axios)
 
   setupProgress(axios)
-  axiosRetry(axios, {"retries":3})
 
   return axios
 }
@@ -175,8 +173,8 @@ export default (ctx, inject) => {
   const runtimeConfig = ctx.$config && ctx.$config.axios || {}
   // baseURL
   const baseURL = process.browser
-    ? (runtimeConfig.browserBaseURL || runtimeConfig.baseURL || '/')
-      : (runtimeConfig.baseURL || process.env._AXIOS_BASE_URL_ || 'http://drink-order-api.test/api:5000/')
+    ? (runtimeConfig.browserBaseURL || runtimeConfig.baseURL || '/api')
+      : (runtimeConfig.baseURL || process.env._AXIOS_BASE_URL_ || 'http://drink-order-api.test')
 
   // Create fresh objects for all default header scopes
   // Axios creates only one which is shared across SSR requests!

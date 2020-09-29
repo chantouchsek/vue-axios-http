@@ -1,10 +1,14 @@
 export default {
   server: {
-    port: 5000,
-    host: 'localhost',
+    port: process.env.PORT || 5000,
+    host: process.env.HOST || 'localhost',
   },
   publicRuntimeConfig: {},
-  privateRuntimeConfig: {},
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.API_URL + process.env.API_PREFIX,
+    },
+  },
   build: {
     extractCSS: true,
   },
@@ -18,14 +22,12 @@ export default {
   ],
   axios: {
     proxy: true,
-    retry: {
-      retries: 3,
-    },
     debug: process.env.NODE_ENV !== 'production',
+    credential: true,
   },
   proxy: {
     '/api': {
-      target: process.env.API_HOST,
+      target: process.env.API_URL + process.env.API_PREFIX,
       pathRewrite: {
         '^/api': '/',
       },
