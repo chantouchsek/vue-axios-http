@@ -74,7 +74,7 @@ export default class Validator {
     this.errors = {}
   }
 
-  clear(attribute: any | any[]) {
+  clear(attribute?: any | any[]) {
     if (!attribute) {
       return this.flush()
     }

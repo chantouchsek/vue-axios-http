@@ -1,22 +1,21 @@
 import type { AxiosInstance } from 'axios'
 import { isFile } from '../util/objects'
+import Validator from './Validator'
 
 class BaseProxy {
-  public $http!: AxiosInstance
   private parameters: any
   private readonly endpoint: string
+  public static $http: AxiosInstance
+  private errors: Validator
 
   constructor(endpoint: string, parameters?: any | any[]) {
     this.endpoint = endpoint
     this.parameters = parameters
+    this.errors = new Validator()
   }
 
-  get http(): AxiosInstance {
-    return <AxiosInstance>this.$http
-  }
-
-  set http(axios: AxiosInstance) {
-    this.$http = axios
+  get $http(): AxiosInstance {
+    return <AxiosInstance>BaseProxy.$http
   }
 
   all(): Promise<any> {
@@ -49,16 +48,24 @@ class BaseProxy {
 
   submit(requestType: string, url: string, form?: any): Promise<any> {
     this.__validateRequestType(requestType)
+    this.errors.flush()
+    this.errors.processing = true
+    this.errors.successful = false
 
     return new Promise((resolve, reject) => {
-      this.http[requestType](this.__getParameterString(url), form)
-        .then((response: any) => {
-          const { data } = response
+      this.$http[requestType](this.__getParameterString(url), form)
+        .then((response: ParametersType) => {
+          this.errors.processing = false
+          this.errors.successful = true
+          const { data = {} } = response
           resolve(data)
         })
-        .catch(({ response }: any) => {
+        .catch((error) => {
+          this.errors.processing = false
+          const { response } = error
           if (response) {
-            const { data } = response
+            const { data = {} } = response
+            this.onFail(data)
             reject(data)
           } else {
             reject()
@@ -67,7 +74,7 @@ class BaseProxy {
     })
   }
 
-  __getParameterString(url: string) {
+  __getParameterString(url: string): string {
     const keys = Object.keys(this.parameters)
     const parameters = keys
       .filter((key) => !!this.parameters[key])
@@ -123,7 +130,7 @@ class BaseProxy {
     return isFile(object)
   }
 
-  setParameters(parameters: any[]): this {
+  setParameters(parameters: ParametersType): this {
     Object.keys(parameters).forEach((key) => {
       this.parameters[key] = parameters[key]
     })
@@ -150,6 +157,17 @@ class BaseProxy {
     delete this.parameters[parameter]
     return this
   }
+
+  onFail(data: ParametersType): void {
+    this.errors.successful = false
+    if (data && data.errors) {
+      this.errors.fill(data.errors)
+    }
+  }
 }
 
 export default BaseProxy
+
+export interface ParametersType {
+  [key: string]: any
+}

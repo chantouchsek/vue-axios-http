@@ -1,7 +1,7 @@
 import Validator from '../core/Validator'
 
 describe('Validator', () => {
-  let validator
+  let validator: Validator
   beforeEach(() => {
     validator = new Validator()
   })

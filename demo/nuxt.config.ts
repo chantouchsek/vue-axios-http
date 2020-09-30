@@ -1,3 +1,5 @@
+const prefix = process.env.API_PREFIX
+
 export default {
   server: {
     port: process.env.PORT || 5000,
@@ -6,7 +8,7 @@ export default {
   publicRuntimeConfig: {},
   privateRuntimeConfig: {
     axios: {
-      baseURL: process.env.API_URL + process.env.API_PREFIX,
+      baseURL: `${process.env.API_URL}${prefix || '/'}`,
     },
   },
   build: {
@@ -27,7 +29,7 @@ export default {
   },
   proxy: {
     '/api': {
-      target: process.env.API_URL + process.env.API_PREFIX,
+      target: `${process.env.API_URL}${prefix || '/'}`,
       pathRewrite: {
         '^/api': '/',
       },

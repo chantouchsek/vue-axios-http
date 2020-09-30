@@ -3,18 +3,21 @@
     "name": "login",
     "path": "/login",
     "component": "/Users/chantouch/Documents/Touch/plugins/vue-api-queries/demo/pages/login.vue",
-    "chunkName": "pages/login"
+    "chunkName": "pages/login",
+    "_name": "_fcd93ff6"
   },
   {
     "name": "secure",
     "path": "/secure",
     "component": "/Users/chantouch/Documents/Touch/plugins/vue-api-queries/demo/pages/secure.vue",
-    "chunkName": "pages/secure"
+    "chunkName": "pages/secure",
+    "_name": "_792e308b"
   },
   {
     "name": "index",
     "path": "/",
     "component": "/Users/chantouch/Documents/Touch/plugins/vue-api-queries/demo/pages/index.vue",
-    "chunkName": "pages/index"
+    "chunkName": "pages/index",
+    "_name": "_90288624"
   }
 ]
