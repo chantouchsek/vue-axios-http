@@ -1,11 +1,11 @@
-import type { AxiosInstance } from 'axios'
+import type { AxiosError, AxiosInstance, AxiosResponse, Method } from 'axios'
 import { isFile } from '../util/objects'
 import type { Errors } from '../'
 import Validator from './Validator'
 import { objectToFormData } from '../util/formData'
 
 class BaseProxy {
-  private parameters: any
+  private parameters: any | any[]
   private readonly endpoint: string
   public static $http: AxiosInstance
   public errors: Errors
@@ -36,19 +36,19 @@ class BaseProxy {
     return this.post(payload)
   }
 
-  put(id: string | number, payload: any) {
+  put(id: string | number, payload: any): Promise<any> {
     return this.submit('put', `/${this.endpoint}/${id}`, payload)
   }
 
-  patch(id: string | number, payload: any) {
+  patch(id: string | number, payload: any): Promise<any> {
     return this.submit('patch', `/${this.endpoint}/${id}`, payload)
   }
 
-  delete(id: string | number) {
+  delete(id: string | number): Promise<any> {
     return this.submit('delete', `/${this.endpoint}/${id}`)
   }
 
-  submit(requestType: string, url: string, form?: any): Promise<any> {
+  submit(requestType: Method, url: string, form?: any): Promise<any> {
     this.__validateRequestType(requestType)
     const validator = Validator
     this.errors.flush()
@@ -58,7 +58,7 @@ class BaseProxy {
     return new Promise((resolve, reject) => {
       const data = this.__hasFiles(form) ? objectToFormData(form) : form
       this.$http[requestType](this.__getParameterString(url), data)
-        .then((response: ParametersType) => {
+        .then((response: AxiosResponse) => {
           this.errors.processing = false
           this.errors.successful = true
           validator.processing = false
@@ -66,13 +66,13 @@ class BaseProxy {
           const { data = {} } = response
           resolve(data)
         })
-        .catch((error) => {
+        .catch((error: AxiosError) => {
           this.errors.processing = false
           validator.processing = false
           const { response } = error
           if (response) {
             const { data = {}, status } = response
-            if (parseInt(status) === 422) {
+            if (status === 422) {
               this.onFail(data)
               validator.fill(data.errors)
             }
@@ -92,7 +92,7 @@ class BaseProxy {
     return parameters.length === 0 ? url : `${url}?${parameters.join('&')}`
   }
 
-  __validateRequestType(requestType: string): void {
+  __validateRequestType(requestType: Method): void {
     const requestTypes = ['get', 'delete', 'head', 'post', 'put', 'patch']
     if (!requestTypes.includes(requestType)) {
       throw new Error(
