@@ -5,7 +5,7 @@ export function isArray(object: any) {
 }
 
 export function isFile(object: any) {
-  return !!object
+  return object instanceof File || object instanceof FileList
 }
 
 export function merge(a: string | any, b: string | any) {

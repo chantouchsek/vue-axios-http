@@ -2,15 +2,16 @@ import Axios from 'axios'
 import BaseProxy from '../core/BaseProxy'
 import MockAdapter from 'axios-mock-adapter'
 import PostProxy from '../core/PostPorxy'
+import type { ValidatorType } from '../core/Validator'
 import Validator from '../core/Validator'
 
 let proxy: PostProxy
 let mockAdapter
-let validator: Validator
+let validator: ValidatorType
 
 describe('BaseProxy', () => {
   beforeEach(() => {
-    validator = new Validator()
+    validator = Validator
     const axios = Axios.create()
     BaseProxy.$http = axios
     proxy = new PostProxy()
@@ -20,7 +21,7 @@ describe('BaseProxy', () => {
     const items = [{ first_name: 'Chantouch', last_name: 'Sek' }]
     mockAdapter.onGet('/posts').reply(200, { data: items })
     try {
-      const { data } = await proxy.all()
+      const { data } = await proxy.removeParameters().all()
       expect(data).toEqual(items)
     } catch (e) {
       console.log('all:', e)
@@ -33,15 +34,11 @@ describe('BaseProxy', () => {
       { first_name: 'Chantouch', last_name: 'Sek', id: 2 },
     ]
     mockAdapter.onGet('/posts?id=1&first_name=Dara').reply(200, { data: items })
-    try {
-      const { data } = await proxy
-        .setParameter('id', 1)
-        .setParameters({ first_name: 'Dara' })
-        .all()
-      expect(data).toEqual(items)
-    } catch (e) {
-      console.log('all params:', e)
-    }
+    const { data } = await proxy
+      .setParameter('id', 1)
+      .setParameters({ first_name: 'Dara' })
+      .all()
+    expect(data).toEqual(items)
   })
   it('it should be able to remove parameter(s)', async () => {
     const items = [
@@ -49,18 +46,13 @@ describe('BaseProxy', () => {
       { first_name: 'Chantouch', last_name: 'Sek', id: 2 },
     ]
     mockAdapter.onGet('/posts?id=1').reply(200, { data: items })
-    try {
-      const { data } = await proxy
-        .setParameter('id', 1)
-        .setParameters({ first_name: 'Dara' })
-        .setParameters({ last_name: 'Sek' })
-        .removeParameter('first_name')
-        .removeParameters(['first_name', 'last_name'])
-        .all()
-      expect(data).toEqual(items)
-    } catch (e) {
-      console.log('all params:', e)
-    }
+    const { data } = await proxy
+      .setParameter('id', 1)
+      .setParameters({ first_name: 'Dara', last_name: 'Sek' })
+      .removeParameter('first_name')
+      .removeParameters(['last_name'])
+      .all()
+    expect(data).toEqual(items)
   })
 
   it('it should find an item by id', async () => {
@@ -85,6 +77,24 @@ describe('BaseProxy', () => {
     }
   })
 
+  it('it should post with form data', async () => {
+    const file = new File(['hello world!'], 'myfile')
+    const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1, file }
+    mockAdapter.onPost('/posts').reply((request) => {
+      expect(request.data).toBeInstanceOf(FormData)
+      expect(request.data.get('file')).toEqual(file)
+      expect(getFormDataKeys(request.data)).toEqual(['file'])
+      return [200, {}]
+    })
+    try {
+      const { data } = await proxy.post(item)
+      console.log(data)
+      // expect(data.first_name).toEqual(item.first_name)
+    } catch (e) {
+      console.log('post:', e)
+    }
+  })
+
   it('it should throw errors message when data is not valid', async () => {
     const item = { first_name: null, last_name: 'Sek', id: 1 }
     mockAdapter.onPost('/posts').reply(422, {
@@ -93,9 +103,8 @@ describe('BaseProxy', () => {
     try {
       await proxy.post(item)
     } catch (e) {
-      console.log('post:', e)
+      // console.log('post:', e)
     }
-    console.log('Error: ', validator.any())
     expect(validator.has('first_name')).toBeTruthy()
   })
 
@@ -143,3 +152,10 @@ describe('BaseProxy', () => {
     }
   })
 })
+
+function getFormDataKeys(formData) {
+  // This is because the FormData.keys() is missing from the jsdom implementations.
+  return formData[Object.getOwnPropertySymbols(formData)[0]]._entries.map(
+    (e) => e.name,
+  )
+}

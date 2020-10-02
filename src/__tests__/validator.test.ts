@@ -1,15 +1,13 @@
+import type { ValidatorType } from '../core/Validator'
 import Validator from '../core/Validator'
 
 describe('Validator', () => {
-  let validator: Validator
+  let validator: ValidatorType
   beforeEach(() => {
-    validator = new Validator()
+    validator = Validator
   })
-  afterAll(() => {
+  afterEach(() => {
     validator.flush()
-  })
-  test('Validator instance of', () => {
-    expect(validator).toBeInstanceOf(Validator)
   })
   test('Add error', () => {
     validator.add('name', 'The name field is required.')

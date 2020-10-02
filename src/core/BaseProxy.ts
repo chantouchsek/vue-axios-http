@@ -1,17 +1,19 @@
 import type { AxiosInstance } from 'axios'
 import { isFile } from '../util/objects'
+import type { Errors } from '../'
 import Validator from './Validator'
+import { objectToFormData } from '../util/formData'
 
 class BaseProxy {
   private parameters: any
   private readonly endpoint: string
   public static $http: AxiosInstance
-  private errors: Validator
+  public errors: Errors
 
   constructor(endpoint: string, parameters?: any | any[]) {
     this.endpoint = endpoint
     this.parameters = parameters
-    this.errors = new Validator()
+    this.errors = Validator
   }
 
   get $http(): AxiosInstance {
@@ -48,25 +50,33 @@ class BaseProxy {
 
   submit(requestType: string, url: string, form?: any): Promise<any> {
     this.__validateRequestType(requestType)
+    const validator = Validator
     this.errors.flush()
     this.errors.processing = true
     this.errors.successful = false
 
     return new Promise((resolve, reject) => {
-      this.$http[requestType](this.__getParameterString(url), form)
+      const data = this.__hasFiles(form) ? objectToFormData(form) : form
+      this.$http[requestType](this.__getParameterString(url), data)
         .then((response: ParametersType) => {
           this.errors.processing = false
           this.errors.successful = true
+          validator.processing = false
+          validator.successful = true
           const { data = {} } = response
           resolve(data)
         })
         .catch((error) => {
           this.errors.processing = false
+          validator.processing = false
           const { response } = error
           if (response) {
-            const { data = {} } = response
-            this.onFail(data)
-            reject(data)
+            const { data = {}, status } = response
+            if (parseInt(status) === 422) {
+              this.onFail(data)
+              validator.fill(data.errors)
+            }
+            reject(error)
           } else {
             reject()
           }
@@ -92,7 +102,7 @@ class BaseProxy {
     }
   }
 
-  __hasFiles(form: any) {
+  __hasFiles(form: any): boolean {
     for (const property in form) {
       if (!form.hasOwnProperty(property)) {
         return false
@@ -142,7 +152,7 @@ class BaseProxy {
     return this
   }
 
-  removeParameters(parameters: any[]): this {
+  removeParameters(parameters = [] as any[]): this {
     if (!parameters.length) {
       this.parameters = []
     } else {
@@ -159,7 +169,6 @@ class BaseProxy {
   }
 
   onFail(data: ParametersType): void {
-    this.errors.successful = false
     if (data && data.errors) {
       this.errors.fill(data.errors)
     }

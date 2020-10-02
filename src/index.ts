@@ -1,13 +1,14 @@
-import _Validator from './core/Validator'
+import type { ValidatorType } from './core/Validator'
+import Validator from './core/Validator'
 
-export type Errors = _Validator
+export type Errors = ValidatorType
 
 class VueApiQuery {
   install(Vue: any) {
     Vue.mixin({
       beforeCreate() {
         this.$options.$errors = {}
-        Vue.util.defineReactive(this.$options, '$errors', new _Validator())
+        Vue.util.defineReactive(this.$options, '$errors', Validator)
         if (!this.$options.computed) {
           this.$options.computed = {}
         }

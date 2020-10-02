@@ -1,6 +1,6 @@
 import { is, isArray } from '../util/objects'
 
-export default class Validator {
+class Validator {
   public errors: any
   public successful: boolean
   public processing: boolean
@@ -11,7 +11,7 @@ export default class Validator {
     this.errors = {}
   }
 
-  add(attribute: string, message: string) {
+  add(attribute: string, message: string): void {
     if (this.missed(attribute)) {
       this.errors[attribute] = []
     }
@@ -20,7 +20,7 @@ export default class Validator {
     }
   }
 
-  has(field: any | any[]) {
+  has(field: any | any[]): boolean {
     if (isArray(field)) {
       return is(Object.keys(this.errors), field)
     }
@@ -50,7 +50,7 @@ export default class Validator {
     return !this.has(field)
   }
 
-  nullState(field = null) {
+  nullState(field = null): boolean | null {
     return this.has(field) ? !this.has(field) : null
   }
 
@@ -66,15 +66,15 @@ export default class Validator {
     return this.errors
   }
 
-  fill(errors = {}) {
+  fill(errors: ErrorOptions): void {
     this.errors = errors
   }
 
-  flush() {
+  flush(): void {
     this.errors = {}
   }
 
-  clear(attribute?: any | any[]) {
+  clear(attribute?: any | any[]): void {
     if (!attribute) {
       return this.flush()
     }
@@ -103,14 +103,22 @@ export default class Validator {
     this.fill(errors)
   }
 
-  isValid() {
+  isValid(): boolean {
     return !this.any()
   }
 
-  onKeydown(event: any, prefix?: string) {
+  onKeydown(event: any, prefix?: string): void {
     const { name } = event.target
     if (!name) return
     const name2 = prefix ? `${prefix}.${name}` : null
     this.clear([name, name2])
   }
 }
+
+export interface ErrorOptions {
+  [key: string]: any
+}
+
+export { Validator as ValidatorType }
+
+export default new Validator()
