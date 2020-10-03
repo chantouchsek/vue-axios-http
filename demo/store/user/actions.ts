@@ -1,6 +1,6 @@
 import * as types from './mutation-types'
 import UserProxy from '~/proxies/UserProxy'
-// import { OrganizationTransformer, PaginationTransformer } from '~/transformers'
+import { BaseTransformer, PaginationTransformer } from 'vue-api-queries'
 
 const proxy = new UserProxy()
 
@@ -11,10 +11,9 @@ const all = async ({ commit }, payload?: PayloadOptions): Promise<any> => {
   }
   try {
     const { data, meta } = await proxy.all()
-    console.log(data)
     const item = {
-      items: data,
-      pagination: meta,
+      items: BaseTransformer.fetchCollection(data),
+      pagination: PaginationTransformer.fetch(meta),
     }
     commit(types.ALL, item)
   } catch (e) {

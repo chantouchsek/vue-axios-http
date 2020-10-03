@@ -21,6 +21,8 @@ class VueApiQuery {
 }
 export { default as Validator } from './core/Validator'
 export { default as BaseProxy } from './core/BaseProxy'
+export { default as BaseTransformer } from './core/BaseTransformer'
+export { default as PaginationTransformer } from './core/PaginationTransformer'
 export default new VueApiQuery()
 
 declare module '@nuxt/types' {

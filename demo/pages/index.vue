@@ -18,6 +18,7 @@
 import { version } from '../../package.json'
 
 export default {
+  name: 'Index',
   computed: {
     version: () => version
   }
