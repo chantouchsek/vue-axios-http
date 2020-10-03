@@ -16,7 +16,9 @@ describe('Validator', () => {
   test('Check if error has "name" key.', () => {
     validator.add('name', 'The name field is required.')
     expect(validator.has('name')).toBeTruthy()
-    expect(validator.first('name')).toBe('The name field is required.')
+    expect(validator.first(['name', 'form.name'])).toBe(
+      'The name field is required.',
+    )
   })
   test('Check if has error by multi key', () => {
     validator.add('name', 'The name field is required.')
@@ -124,5 +126,30 @@ describe('Validator', () => {
     validator.fill(errors)
     validator.onKeydown(event, 'form')
     expect(validator.has(['form.name'])).toBeFalsy()
+  })
+
+  it('can pass array of keys to any method and get back error of specified key', () => {
+    const errors = {
+      first_name: ['This field is required'],
+      last_name: ['This field is required'],
+      age: ['This field is required'],
+    }
+    validator.fill(errors)
+
+    expect(validator.any(['first_name', 'last_name'], true)).toEqual({
+      first_name: ['This field is required'],
+      last_name: ['This field is required'],
+    })
+  })
+
+  it('can pass array of keys to any method and get back boolean', () => {
+    const errors = {
+      first_name: ['This field is required'],
+      last_name: ['This field is required'],
+      age: ['This field is required'],
+    }
+    validator.fill(errors)
+
+    expect(validator.any(['first_name', 'last_name'], false)).toBeTruthy()
   })
 })

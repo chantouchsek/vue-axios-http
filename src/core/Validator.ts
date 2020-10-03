@@ -54,8 +54,21 @@ class Validator {
     return this.has(field) ? !this.has(field) : null
   }
 
-  any(): boolean {
-    return Object.keys(this.errors).length > 0
+  any(fields = [], returnObject?: boolean): boolean | string[] | any {
+    if (returnObject) {
+      const errors = {}
+      if (!fields.length) {
+        return {}
+      }
+      fields.forEach((key) => (errors[key] = this.get(key)))
+      return errors
+    }
+    if (!fields.length) {
+      return Object.keys(this.errors).length > 0
+    }
+    const errors = {}
+    fields.forEach((key) => (errors[key] = this.get(key)))
+    return Object.keys(errors).length > 0
   }
 
   get(field: string): string | string[] {

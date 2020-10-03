@@ -23,7 +23,7 @@ export function cloneDeep(object: any) {
     return object
   }
 
-  if (Array.isArray(object)) {
+  if (isArray(object)) {
     const clone: string[] = []
 
     for (const key in object) {
@@ -54,7 +54,7 @@ export function is(errors: any, error: any): boolean {
   if (typeof error === 'string' && error.match(/[\*\!]/)) {
     return errors.filter((w: any) => isMatch(w, error)).length > 0
   }
-  return Array.isArray(error)
+  return isArray(error)
     ? error.some((w) => is(errors, w))
     : errors.includes(error)
 }
