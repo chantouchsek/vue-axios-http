@@ -1,9 +1,9 @@
 # Vue Api Queries.
 
-[![Latest Version on NPM](https://img.shields.io/npm/v/laravel-vue-form-validator.svg?style=flat-square)](https://npmjs.com/package/laravel-vue-form-validator)
+[![Latest Version on NPM](https://img.shields.io/npm/v/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![npm](https://img.shields.io/npm/dt/laravel-vue-form-validator.svg?style=flat-square)](https://npmjs.com/package/laravel-vue-form-validator)
-[![npm](https://img.shields.io/npm/dm/laravel-vue-form-validator.svg?style=flat-square)](https://npmjs.com/package/laravel-vue-form-validator)
+[![npm](https://img.shields.io/npm/dt/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
+[![npm](https://img.shields.io/npm/dm/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
 
 🔥  If you use Laravel, this package matches perfectly with [andersao/l5-repository](https://github.com/andersao/l5-repository).
 
@@ -21,19 +21,19 @@ Take a look at the [usage section](#usage) to view a detailed example on how to 
 You can install the package via yarn (or npm):
 
 ```npm
-npm install laravel-vue-form-validator
+npm install vue-api-queries
 ```
 ```yarn
-yarn add laravel-vue-form-validator
+yarn add vue-api-queries
 ```
 
 ## Usage
 
 ```js
 import Vue from 'vue'
-import FormValidator from 'laravel-vue-form-validator'
+import VueApiQueries from 'vue-api-queries'
 
-Vue.use(FormValidator)
+Vue.use(VueApiQueries)
 ```
 
 ## Nuxt Support
@@ -43,7 +43,7 @@ Put it on top of axios module
 ```js
 export default {
     modules: [
-       'laravel-vue-form-validator/nuxt',
+       'vue-api-queries/nuxt',
        '@nuxtjs/axios',
     ]
 }
@@ -73,9 +73,9 @@ export default {
 
 ```js
 import Vue from 'vue'
-import FormValidator from 'laravel-vue-form-validator'
+import VueApiQueries from 'vue-api-queries'
 
-Vue.use(FormValidator)
+Vue.use(VueApiQueries)
 ```
 
 ### Note
@@ -115,7 +115,7 @@ Validator                   | Description
 ``~/proxies/NewsProxy.js``
 
 ```js
-import { BaseProxy } from 'laravel-vue-form-validator'
+import { BaseProxy } from 'vue-api-queries'
 
 class NewsProxy extends BaseProxy {
   constructor(parameters = {}) {
@@ -140,7 +140,7 @@ actions.js
 ```js
 import { ALL } from './mutation-types'
 import { NewsProxy } from '~/proxies'
-import { NewsTransformer, PaginationTransformer } from '~/transformers'
+import { BaseTransformer, PaginationTransformer } from 'vue-api-queries'
 import { pagination, notify } from '~/utils'
 
 const proxy = new NewsProxy()
@@ -153,7 +153,7 @@ const all = async ({ commit, dispatch }, payload = {}) => {
   try {
     const { data, meta } = await proxy.all()
     const all = {
-      items: NewsTransformer.fetchCollection(data),
+      items: BaseTransformer.fetchCollection(data),
       pagination: PaginationTransformer.fetch(meta)
     }
     await commit(ALL, all)
