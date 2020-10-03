@@ -54,6 +54,9 @@ class BaseProxy {
     this.errors.flush()
     this.errors.processing = true
     this.errors.successful = false
+    validator.flush()
+    validator.processing = true
+    validator.successful = false
 
     return new Promise((resolve, reject) => {
       const data = this.__hasFiles(form) ? objectToFormData(form) : form

@@ -12,7 +12,7 @@ let validator: ValidatorType
 describe('BaseProxy', () => {
   beforeEach(() => {
     validator = Validator
-    const axios = Axios.create()
+    const axios = Axios.create({ baseURL: 'http://drink-order-api.test' })
     BaseProxy.$http = axios
     proxy = new PostProxy()
     mockAdapter = new MockAdapter(axios)
@@ -77,20 +77,62 @@ describe('BaseProxy', () => {
     }
   })
 
-  /*
-  it('it should post with form data', async () => {
+  it('transforms the data to a FormData object if there is a File', async () => {
     const file = new File(['hello world!'], 'myfile')
-    const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1, file }
+    const form = { field1: {}, field2: {} }
+    form.field1 = {
+      foo: 'testFoo',
+      bar: ['testBar1', 'testBar2'],
+      baz: new Date(Date.UTC(2012, 3, 13, 2, 12)),
+    }
+    form.field2 = file
+
     mockAdapter.onPost('/posts').reply((request) => {
       expect(request.data).toBeInstanceOf(FormData)
-      expect(request.data.get('file')).toEqual(file)
-      expect(getFormDataKeys(request.data)).toEqual(['file'])
+      expect(request.data.get('field1[foo]')).toBe('testFoo')
+      expect(request.data.get('field1[bar][0]')).toBe('testBar1')
+      expect(request.data.get('field1[bar][1]')).toBe('testBar2')
+      expect(request.data.get('field1[baz]')).toBe('2012-04-13T02:12:00.000Z')
+      expect(request.data.get('field2')).toEqual(file)
+
+      expect(getFormDataKeys(request.data)).toEqual([
+        'field1[foo]',
+        'field1[bar][0]',
+        'field1[bar][1]',
+        'field1[baz]',
+        'field2',
+      ])
       return [200, {}]
     })
-    const { data } = await proxy.post(item)
-    expect(data.first_name).toEqual(item.first_name)
+
+    await proxy.post(form)
   })
-  */
+
+  it('transforms the boolean values in FormData object to "1" or "0"', async () => {
+    const file = new File(['hello world!'], 'myfile')
+    const form = { field1: {}, field2: null }
+    form.field1 = {
+      foo: true,
+      bar: false,
+    }
+    form.field2 = file
+
+    mockAdapter.onPost('/posts').reply((request) => {
+      expect(request.data).toBeInstanceOf(FormData)
+      expect(request.data.get('field1[foo]')).toBe('1')
+      expect(request.data.get('field1[bar]')).toBe('0')
+      expect(request.data.get('field2')).toEqual(file)
+
+      expect(getFormDataKeys(request.data)).toEqual([
+        'field1[foo]',
+        'field1[bar]',
+        'field2',
+      ])
+      return [200, {}]
+    })
+
+    await proxy.post(form)
+  })
 
   it('it should throw errors message when data is not valid', async () => {
     const item = { first_name: null, last_name: 'Sek', id: 1 }
@@ -147,6 +189,14 @@ describe('BaseProxy', () => {
     } catch (e) {
       console.log('delete:', e)
     }
+  })
+
+  it('can accept a custom http instance in options', () => {
+    BaseProxy.$http = Axios.create({ baseURL: 'http://another-example.com' })
+    expect(proxy.$http.defaults.baseURL).toBe('http://another-example.com')
+
+    BaseProxy.$http = Axios.create()
+    expect(proxy.$http.defaults.baseURL).toBe(undefined)
   })
 })
 
