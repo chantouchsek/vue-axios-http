@@ -4,6 +4,8 @@ import type { Errors } from '../'
 import Validator from './Validator'
 import { objectToFormData } from '../util/formData'
 
+const validator = Validator
+
 class BaseProxy {
   private parameters: any | any[]
   private readonly endpoint: string
@@ -50,22 +52,12 @@ class BaseProxy {
 
   submit(requestType: Method, url: string, form?: any): Promise<any> {
     this.__validateRequestType(requestType)
-    const validator = Validator
-    this.errors.flush()
-    this.errors.processing = true
-    this.errors.successful = false
-    validator.flush()
-    validator.processing = true
-    validator.successful = false
-
+    this.beforeSubmit()
     return new Promise((resolve, reject) => {
       const data = this.__hasFiles(form) ? objectToFormData(form) : form
       this.$http[requestType](this.__getParameterString(url), data)
         .then((response: AxiosResponse) => {
-          this.errors.processing = false
-          this.errors.successful = true
-          validator.processing = false
-          validator.successful = true
+          this.onSuccess()
           const { data = {} } = response
           resolve(data)
         })
@@ -76,8 +68,9 @@ class BaseProxy {
           if (response) {
             const { data = {}, status } = response
             if (status === 422) {
-              this.onFail(data)
-              validator.fill(data.errors)
+              const { errors } = data
+              this.onFail(errors)
+              validator.fill(errors)
             }
             reject(error)
           } else {
@@ -166,15 +159,29 @@ class BaseProxy {
     return this
   }
 
-  removeParameter(parameter: any) {
+  removeParameter(parameter: any): this {
     delete this.parameters[parameter]
     return this
   }
 
-  onFail(data: ParametersType): void {
-    if (data && data.errors) {
-      this.errors.fill(data.errors)
-    }
+  onFail(errors: ParametersType): void {
+    this.errors.fill(errors)
+  }
+
+  beforeSubmit(): void {
+    this.errors.flush()
+    this.errors.processing = true
+    this.errors.successful = false
+    validator.flush()
+    validator.processing = true
+    validator.successful = false
+  }
+
+  onSuccess(): void {
+    this.errors.processing = false
+    this.errors.successful = true
+    validator.processing = false
+    validator.successful = true
   }
 }
 

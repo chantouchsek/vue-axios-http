@@ -3,7 +3,7 @@ import VueApiQueries, { Validator, BaseProxy } from 'vue-api-queries'
 
 export default function (ctx, inject) {
   Vue.use(VueApiQueries)
-  ctx.$errors = new Validator()
+  ctx.$errors = Validator
   BaseProxy.$http = ctx.$axios
-  inject('queries', {})
+  inject('queries', BaseProxy)
 }
