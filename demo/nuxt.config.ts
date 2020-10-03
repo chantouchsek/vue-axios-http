@@ -17,10 +17,10 @@ export default {
   plugins: ['~/plugins/axios'],
   buildModules: ['@nuxt/typescript-build'],
   modules: [
+    'vue-api-queries/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     'bootstrap-vue/nuxt',
-    'vue-api-queries/nuxt',
   ],
   axios: {
     proxy: true,

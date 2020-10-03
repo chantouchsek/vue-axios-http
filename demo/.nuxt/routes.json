@@ -14,6 +14,13 @@
     "_name": "_792e308b"
   },
   {
+    "name": "users",
+    "path": "/users",
+    "component": "/Users/chantouch/Documents/Touch/plugins/vue-api-queries/demo/pages/users/index.vue",
+    "chunkName": "pages/users/index",
+    "_name": "_3ab532a7"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "/Users/chantouch/Documents/Touch/plugins/vue-api-queries/demo/pages/index.vue",

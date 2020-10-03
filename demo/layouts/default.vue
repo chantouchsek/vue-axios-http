@@ -12,7 +12,12 @@
             Home
           </b-nav-item>
         </b-navbar-nav>
-        <b-navbar-nav class="ml-auto">
+        <b-navbar-nav class="ml-auto" v-if="$auth.loggedIn">
+          <b-dropdown-item>
+            {{  $auth.user.name }}
+          </b-dropdown-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto" v-else>
           <b-dropdown-item to="/login">
             Login
           </b-dropdown-item>

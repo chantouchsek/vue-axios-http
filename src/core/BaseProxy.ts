@@ -169,6 +169,9 @@ class BaseProxy {
   }
 
   beforeSubmit(): void {
+    if (!this.$http) {
+      throw new Error('Vue Api Queries, No http library provided.')
+    }
     this.errors.flush()
     this.errors.processing = true
     this.errors.successful = false

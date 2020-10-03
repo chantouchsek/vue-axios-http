@@ -1,7 +1,7 @@
 import { resolve, join } from 'path'
 import merge from 'lodash.merge'
 
-module.exports = function nuxtVueFormValidatorModule(moduleOptions = {}) {
+module.exports = function nuxtVueApiQueriesModule(moduleOptions = {}) {
   const { apiQueries = {} } = this.options
   const options = merge({}, moduleOptions, apiQueries)
   this.addPlugin({
