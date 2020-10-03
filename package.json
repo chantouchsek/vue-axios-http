@@ -13,7 +13,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "start": "npm link && nodemon",
-    "release": "semantic-release"
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
