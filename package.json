@@ -7,9 +7,9 @@
   "scripts": {
     "dev": "nuxt-ts demo",
     "lint": "eslint './src/**/*.{js,ts,tsx}'",
-    "test": "jest",
+    "test": "jest --env=jsdom",
     "test:watch": "jest --watchAll",
-    "test:watch:jsdom": "jest --watchAll --env=jsdom",
+    "test:watch:jsdom": "jest --watchAll",
     "build": "tsc",
     "watch": "tsc -w",
     "start": "npm link && nodemon",
