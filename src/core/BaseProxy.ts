@@ -7,8 +7,8 @@ import { objectToFormData } from '../util/formData'
 const validator = Validator
 
 class BaseProxy {
-  private parameters: any | any[]
-  private readonly endpoint: string
+  public parameters: any | any[]
+  public readonly endpoint: string
   public static $http: AxiosInstance
   public errors: Errors
 
