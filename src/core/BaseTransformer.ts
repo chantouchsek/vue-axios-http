@@ -17,7 +17,7 @@ class BaseTransformer {
     return item
   }
 
-  static send(item: any, snakeCaseKey?: boolean): any {
+  static send(item: any, snakeCaseKey = true): any {
     if (snakeCaseKey) {
       return snakeCaseKeys(item)
     }
