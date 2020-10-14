@@ -1,6 +1,6 @@
 {
   "name": "vue-api-queries",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Elegant and simple way to build requests for REST API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,11 +10,12 @@
     "test": "jest --env=jsdom",
     "test:watch": "jest --watchAll",
     "test:watch:jsdom": "jest --watchAll --env=jsdom",
-    "build": "tsc",
+    "build": "npm run clean && tsc",
     "watch": "tsc -w",
     "start": "npm link && nodemon",
     "semantic-release": "semantic-release",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "clean": "rimraf dist"
   },
   "repository": {
     "type": "git",
@@ -70,6 +71,7 @@
     "nodemon": "^2.0.5",
     "nuxt-edge": "latest",
     "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
     "semantic-release": "^17.2.1",
     "ts-jest": "^26.4.1",
     "typescript": "^4.0.3",
