@@ -1,6 +1,6 @@
 {
   "name": "vue-api-queries",
-  "version": "0.0.2-alpha.4",
+  "version": "0.0.3",
   "description": "Elegant and simple way to build requests for REST API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,7 +14,7 @@
     "watch": "tsc -w",
     "start": "npm link && nodemon",
     "semantic-release": "semantic-release",
-    "prepublish": "npm build"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -57,7 +57,7 @@
     "@types/escape-string-regexp": "^2.0.1",
     "@types/jest": "^26.0.14",
     "@types/lodash.merge": "^4.6.6",
-    "@types/node": "^14.11.1",
+    "@types/node": "^14.11.8",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
     "axios-mock-adapter": "^1.18.2",
@@ -67,16 +67,16 @@
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.3.0",
     "jest": "^26.4.2",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.5",
     "nuxt-edge": "latest",
     "prettier": "^2.1.2",
-    "semantic-release": "^17.1.2",
-    "ts-jest": "^26.3.0",
+    "semantic-release": "^17.2.1",
+    "ts-jest": "^26.4.1",
     "typescript": "^4.0.3",
     "vue-api-queries": "file:."
   },
   "files": [
-    "dist/**/*",
+    "dist",
     "nuxt"
   ],
   "dependencies": {
