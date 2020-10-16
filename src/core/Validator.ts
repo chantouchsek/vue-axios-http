@@ -132,6 +132,6 @@ export interface ErrorOptions {
   [key: string]: any
 }
 
-export { Validator as ValidatorType }
+export type { Validator as ValidatorType }
 
 export default new Validator()
