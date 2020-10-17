@@ -5,6 +5,7 @@ import Validator from './core/Validator'
 import './vue'
 
 export type Errors = ValidatorType
+export type { ValidatorType }
 
 class VueApiQueries {
   install(Vue: any) {

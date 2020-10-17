@@ -108,6 +108,38 @@ describe('BaseProxy', () => {
     await proxy.post(form)
   })
 
+  it('transforms the data to a FormData object if there is a File with post', async () => {
+    const file = new File(['hello world!'], 'my-file')
+    const form = { id: 1, user: {}, file }
+    form.user = {
+      id: 1,
+      name: 'testFoo',
+      villages: ['testBar1', 'testBar2'],
+      date: new Date(Date.UTC(2012, 3, 13, 2, 12)),
+    }
+    mockAdapter.onPost('/posts/' + 1).reply((request) => {
+      expect(request.data).toBeInstanceOf(FormData)
+      expect(request.data.get('user[name]')).toBe('testFoo')
+      expect(request.data.get('user[villages][0]')).toBe('testBar1')
+      expect(request.data.get('user[villages][1]')).toBe('testBar2')
+      expect(request.data.get('user[date]')).toBe('2012-04-13T02:12:00.000Z')
+      expect(request.data.get('file')).toEqual(file)
+      expect(getFormDataKeys(request.data)).toEqual([
+        'id',
+        'user[id]',
+        'user[name]',
+        'user[villages][0]',
+        'user[villages][1]',
+        'user[date]',
+        'file',
+        '_method',
+      ])
+      return [200, {}]
+    })
+
+    await proxy.putWithFile(form.id, form)
+  })
+
   it('transforms the boolean values in FormData object to "1" or "0"', async () => {
     const file = new File(['hello world!'], 'myfile')
     const form = { field1: {}, field2: null }

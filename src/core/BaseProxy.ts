@@ -42,6 +42,11 @@ class BaseProxy {
     return this.submit('put', `/${this.endpoint}/${id}`, payload)
   }
 
+  putWithFile(id: string | number, payload: any): Promise<any> {
+    payload['_method'] = 'put'
+    return this.submit('post', `/${this.endpoint}/${id}`, payload)
+  }
+
   patch(id: string | number, payload: any): Promise<any> {
     return this.submit('patch', `/${this.endpoint}/${id}`, payload)
   }
