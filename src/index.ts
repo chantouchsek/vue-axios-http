@@ -1,6 +1,5 @@
 import type { ValidatorType } from './core/Validator'
 import Validator from './core/Validator'
-import _Vue from 'vue'
 
 // augment typings of Vue.js
 import './vue'
@@ -9,11 +8,11 @@ export type Errors = ValidatorType
 export type { ValidatorType }
 
 class VueApiQueries {
-  install(Vue: typeof _Vue) {
-    Vue.extend({
-      beforeCreate(this: any) {
+  install(Vue: any) {
+    Vue.mixin({
+      beforeCreate() {
         this.$options.$errors = {}
-        Vue.set(this.$options, '$errors', Validator)
+        Vue.util.defineReactive(this.$options, '$errors', Validator)
         if (!this.$options.computed) {
           this.$options.computed = {}
         }
