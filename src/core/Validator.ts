@@ -27,7 +27,7 @@ class Validator {
     let hasError = this.errors.hasOwnProperty(field)
     if (!hasError) {
       const errors = Object.keys(this.errors).filter(
-        (e) => e.startsWith(`${field}.`) || e.startsWith(`${field}[`),
+        (e: string) => e.startsWith(`${field}.`) || e.startsWith(`${field}[`),
       )
       hasError = errors.length > 0
     }
@@ -60,14 +60,14 @@ class Validator {
       if (!fields.length) {
         return {}
       }
-      fields.forEach((key) => (errors[key] = this.get(key)))
+      fields.forEach((key: string) => (errors[key] = this.get(key)))
       return errors
     }
     if (!fields.length) {
       return Object.keys(this.errors).length > 0
     }
     const errors = {}
-    fields.forEach((key) => (errors[key] = this.get(key)))
+    fields.forEach((key: string) => (errors[key] = this.get(key)))
     return Object.keys(errors).length > 0
   }
 
@@ -96,22 +96,22 @@ class Validator {
       attribute.map((field: string) => {
         Object.keys(errors)
           .filter(
-            (e) =>
+            (e: string) =>
               e === field ||
               e.startsWith(`${field}.`) ||
               e.startsWith(`${field}[`),
           )
-          .forEach((e) => delete errors[e])
+          .forEach((e: string) => delete errors[e])
       })
     } else {
       Object.keys(errors)
         .filter(
-          (e) =>
+          (e: string) =>
             e === attribute ||
             e.startsWith(`${attribute}.`) ||
             e.startsWith(`${attribute}[`),
         )
-        .forEach((e) => delete errors[e])
+        .forEach((e: string) => delete errors[e])
     }
     this.fill(errors)
   }
@@ -129,7 +129,7 @@ class Validator {
 }
 
 export interface ErrorOptions {
-  [key: string]: any
+  [key: string]: any | any[]
 }
 
 export type { Validator as ValidatorType }

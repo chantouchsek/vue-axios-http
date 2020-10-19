@@ -88,13 +88,20 @@ class BaseProxy {
   __getParameterString(url: string): string {
     const keys = Object.keys(this.parameters)
     const parameters = keys
-      .filter((key) => !!this.parameters[key])
-      .map((key) => `${key}=${this.parameters[key]}`)
+      .filter((key: string) => !!this.parameters[key])
+      .map((key: string) => `${key}=${this.parameters[key]}`)
     return parameters.length === 0 ? url : `${url}?${parameters.join('&')}`
   }
 
   __validateRequestType(requestType: Method): void {
-    const requestTypes = ['get', 'delete', 'head', 'post', 'put', 'patch']
+    const requestTypes: Array<string> = [
+      'get',
+      'delete',
+      'head',
+      'post',
+      'put',
+      'patch',
+    ]
     if (!requestTypes.includes(requestType)) {
       throw new Error(
         `\`${requestType}\` is not a valid request type, ` +
