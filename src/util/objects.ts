@@ -5,6 +5,9 @@ export function isArray(object: any): boolean {
 }
 
 export function isFile(object: any): boolean {
+  if (typeof window === 'undefined') {
+    return false
+  }
   if (typeof File !== 'function' || typeof FileList !== 'function') {
     return false
   }

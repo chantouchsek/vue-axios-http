@@ -115,6 +115,9 @@ class BaseProxy {
       if (!form.hasOwnProperty(property)) {
         return false
       }
+      if (typeof window === 'undefined') {
+        return false
+      }
       if (this.__hasFilesDeep(form[property])) {
         return true
       }
