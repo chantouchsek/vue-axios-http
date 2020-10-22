@@ -2,7 +2,7 @@ export function objectToFormData(
   object,
   formData = new FormData(),
   parent = null,
-) {
+): FormData | void {
   if (object === null || object === 'undefined' || object.length === 0) {
     return formData.append(parent, object)
   }

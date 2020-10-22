@@ -1,20 +1,26 @@
 import { isMatch } from './matcher'
 
-export function isArray(object: any) {
+export function isArray(object: any): boolean {
   return Object.prototype.toString.call(object) === '[object Array]'
 }
 
-export function isFile(object: any) {
+export function isFile(object: any): boolean {
+  if (typeof File !== 'function' || typeof FileList !== 'function') {
+    return false
+  }
   return object instanceof File || object instanceof FileList
 }
 
-export function merge(a: string | any, b: string | any) {
+export function merge(a: string | any, b: string | any): void {
   for (const key in b) {
+    if (!b.hasOwnProperty(key)) {
+      continue
+    }
     a[key] = cloneDeep(b[key])
   }
 }
 
-export function cloneDeep(object: any) {
+export function cloneDeep(object: any): any {
   if (object === null) {
     return null
   }
