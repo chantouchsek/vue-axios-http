@@ -87,10 +87,10 @@ class BaseProxy {
 
   __getParameterString(url: string): string {
     const keys = Object.keys(this.parameters)
-    const parameters = keys
+    const params = keys
       .filter((key: string) => !!this.parameters[key])
       .map((key: string) => `${key}=${this.parameters[key]}`)
-    return parameters.length === 0 ? url : `${url}?${parameters.join('&')}`
+    return params.length === 0 ? url : `${url}?${params.join('&')}`
   }
 
   __validateRequestType(requestType: Method): void {
