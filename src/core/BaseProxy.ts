@@ -89,7 +89,12 @@ class BaseProxy {
     const keys = Object.keys(this.parameters)
     const params = keys
       .filter((key: string) => !!this.parameters[key])
-      .map((key: string) => `${key}=${this.parameters[key]}`)
+      .map(
+        (key: string) =>
+          `${encodeURIComponent(key)}=${encodeURIComponent(
+            this.parameters[key],
+          )}`,
+      )
     return params.length === 0 ? url : `${url}?${params.join('&')}`
   }
 
