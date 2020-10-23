@@ -20,12 +20,8 @@ describe('BaseProxy', () => {
   it('will fetch all records', async () => {
     const items = [{ first_name: 'Chantouch', last_name: 'Sek' }]
     mockAdapter.onGet('/posts').reply(200, { data: items })
-    try {
-      const { data } = await proxy.removeParameters().all()
-      expect(data).toEqual(items)
-    } catch (e) {
-      console.log('all:', e)
-    }
+    const { data } = await proxy.removeParameters().all()
+    expect(data).toEqual(items)
   })
 
   it('will fetch all records with query params', async () => {
@@ -58,23 +54,15 @@ describe('BaseProxy', () => {
   it('it should find an item by id', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onGet('/posts/' + 1).reply(200, { data: item })
-    try {
-      const { data } = await proxy.find(1)
-      expect(data).toEqual(item)
-    } catch (e) {
-      console.log('find:', e)
-    }
+    const { data } = await proxy.find(1)
+    expect(data).toEqual(item)
   })
 
   it('it should find an item by id', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPost('/posts').reply(201, { data: item })
-    try {
-      const { data } = await proxy.post(item)
-      expect(data).toEqual(item)
-    } catch (e) {
-      console.log('post:', e)
-    }
+    const { data } = await proxy.post(item)
+    expect(data).toEqual(item)
   })
 
   it('transforms the data to a FormData object if there is a File', async () => {
@@ -173,54 +161,36 @@ describe('BaseProxy', () => {
     })
     try {
       await proxy.post(item)
-    } catch (e) {
-      // console.log('post:', e)
-    }
+    } catch (e) {} // eslint-disable-line no-empty
     expect(validator.has('first_name')).toBeTruthy()
   })
 
   it('it should store the item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPost('/posts').reply(201, { data: item })
-    try {
-      const { data } = await proxy.store(item)
-      expect(data).toEqual(item)
-    } catch (e) {
-      console.log('store:', e)
-    }
+    const { data } = await proxy.store(item)
+    expect(data).toEqual(item)
   })
 
   it('it should be able to put item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPut('/posts/' + 1).reply(200, { data: item })
-    try {
-      const { data } = await proxy.put(item.id, item)
-      expect(data).toEqual(item)
-    } catch (e) {
-      console.log('put:', e)
-    }
+    const { data } = await proxy.put(item.id, item)
+    expect(data).toEqual(item)
   })
 
   it('it should be able to patch item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPatch('/posts/' + 1).reply(200, { data: item })
-    try {
-      const { data } = await proxy.patch(item.id, item)
-      expect(data).toEqual(item)
-    } catch (e) {
-      console.log('patch:', e)
-    }
+    const { data } = await proxy.patch(item.id, item)
+    expect(data).toEqual(item)
   })
 
   it('it should be able to patch item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onDelete('/posts/' + 1).reply(200, { data: item })
-    try {
-      const { data } = await proxy.delete(item.id)
-      expect(data).toEqual(item)
-    } catch (e) {
-      console.log('delete:', e)
-    }
+    const { data } = await proxy.delete(item.id)
+    expect(data).toEqual(item)
   })
 
   it('can accept a custom http instance in options', () => {
