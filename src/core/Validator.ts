@@ -1,5 +1,9 @@
 import { is, isArray } from '../util/objects'
 
+export interface ErrorOptions {
+  [key: string]: string | string[]
+}
+
 class Validator {
   public errors: any
   public successful: boolean
@@ -126,10 +130,6 @@ class Validator {
     const name2 = prefix ? `${prefix}.${name}` : null
     this.clear([name, name2])
   }
-}
-
-export interface ErrorOptions {
-  [key: string]: any | any[]
 }
 
 export type { Validator as ValidatorType }

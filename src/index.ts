@@ -1,5 +1,8 @@
 import type { ValidatorType } from './core/Validator'
+import BaseProxy from './core/BaseProxy'
 import Validator from './core/Validator'
+import BaseTransformer from './core/BaseTransformer'
+import PaginationTransformer from './core/PaginationTransformer'
 
 // augment typings of Vue.js
 import './vue'
@@ -23,8 +26,5 @@ class VueApiQueries {
     })
   }
 }
-export { default as Validator } from './core/Validator'
-export { default as BaseProxy } from './core/BaseProxy'
-export { default as BaseTransformer } from './core/BaseTransformer'
-export { default as PaginationTransformer } from './core/PaginationTransformer'
+export { BaseProxy, BaseTransformer, PaginationTransformer, Validator }
 export default new VueApiQueries()

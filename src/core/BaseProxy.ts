@@ -7,10 +7,11 @@ import { objectToFormData } from '../util/formData'
 const validator = Validator
 
 class BaseProxy {
+  public errors: Errors
   public parameters: any | any[]
   public readonly endpoint: string
   public static $http: AxiosInstance
-  public errors: Errors
+  public static $errorsKeyName = 'errors'
 
   constructor(endpoint: string, parameters?: any | any[]) {
     this.endpoint = endpoint
@@ -20,6 +21,10 @@ class BaseProxy {
 
   get $http(): AxiosInstance {
     return <AxiosInstance>BaseProxy.$http
+  }
+
+  get $errorsKeyName(): string {
+    return BaseProxy.$errorsKeyName
   }
 
   all(): Promise<any> {
@@ -73,7 +78,8 @@ class BaseProxy {
           if (response) {
             const { data = {}, status } = response
             if (status === 422) {
-              const { errors } = data
+              const errors = {}
+              Object.assign(errors, data[this.$errorsKeyName])
               this.onFail(errors)
               validator.fill(errors)
             }
