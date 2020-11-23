@@ -1,8 +1,4 @@
-import { is, isArray } from '../util/objects'
-
-export interface ErrorOptions {
-  [key: string]: string | string[]
-}
+import { is } from '../util/objects'
 
 class Validator {
   public errors: any
@@ -25,7 +21,7 @@ class Validator {
   }
 
   has(field: any | any[]): boolean {
-    if (isArray(field)) {
+    if (field instanceof Array) {
       return is(Object.keys(this.errors), field)
     }
     let hasError = this.errors.hasOwnProperty(field)
@@ -39,7 +35,7 @@ class Validator {
   }
 
   first(field: any | any[]): string {
-    if (isArray(field)) {
+    if (field instanceof Array) {
       for (let i = 0; i < field.length; i++) {
         if (!this.errors.hasOwnProperty(field[i])) {
           continue
@@ -83,7 +79,15 @@ class Validator {
     return this.errors
   }
 
-  fill(errors: ErrorOptions): void {
+  fill(errors: any): void {
+    for (const error in errors) {
+      if (!errors.hasOwnProperty(error)) {
+        continue
+      }
+      if (!(errors[error] instanceof Array)) {
+        errors[error] = [errors[error]]
+      }
+    }
     this.errors = errors
   }
 
@@ -91,12 +95,12 @@ class Validator {
     this.errors = {}
   }
 
-  clear(attribute?: any | any[]): void {
+  clear(attribute?: string | string[]): void {
     if (!attribute) {
       return this.flush()
     }
     const errors = Object.assign({}, this.errors)
-    if (isArray(attribute)) {
+    if (attribute instanceof Array) {
       attribute.map((field: string) => {
         Object.keys(errors)
           .filter(

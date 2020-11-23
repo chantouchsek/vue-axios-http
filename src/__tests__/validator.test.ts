@@ -9,9 +9,17 @@ describe('Validator', () => {
   afterEach(() => {
     validator.flush()
   })
-  test('Add error', () => {
+  test('Add an error', () => {
     validator.add('name', 'The name field is required.')
     expect(validator.any()).toBeTruthy()
+  })
+  test('Add an error message as string', () => {
+    const errors = {
+      name: 'The name field is required.',
+    }
+    validator.fill(errors)
+    expect(validator.any()).toBeTruthy()
+    expect(validator.first('name')).toEqual('The name field is required.')
   })
   test('Check if error has "name" key.', () => {
     validator.add('name', 'The name field is required.')

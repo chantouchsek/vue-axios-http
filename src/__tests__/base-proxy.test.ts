@@ -4,6 +4,8 @@ import MockAdapter from 'axios-mock-adapter'
 import PostProxy from '../core/PostPorxy'
 import type { ValidatorType } from '../core/Validator'
 import Validator from '../core/Validator'
+import BaseTransformer from '../core/BaseTransformer'
+import PaginationTransformer from '../core/PaginationTransformer'
 
 let proxy: PostProxy
 let mockAdapter
@@ -17,15 +19,47 @@ describe('BaseProxy', () => {
     proxy = new PostProxy()
     mockAdapter = new MockAdapter(axios)
   })
+
+  it('it should fetch items with pagination', async () => {
+    const items = {
+      data: [{ first_name: 'Chantouch', last_name: 'Sek' }],
+      pagination: { count: 1, page: 1, perPage: 20 },
+    }
+    mockAdapter.onGet('/posts').reply(200, items)
+    const { data, pagination = {} } = await proxy.removeParameters().all()
+    const all = {
+      items: BaseTransformer.fetchCollection(data),
+      pagination: PaginationTransformer.fetch(pagination),
+    }
+    expect(all).toHaveProperty('pagination')
+    expect(data).toEqual(all.items)
+    expect(all.pagination.page).toEqual(1)
+  })
+
+  it('it should fetch items with meta that has pagination', async () => {
+    const items = {
+      data: [{ first_name: 'Chantouch', last_name: 'Sek' }],
+      meta: {
+        pagination: { count: 1, current_page: 1, perPage: 20 },
+        include: [],
+      },
+    }
+    mockAdapter.onGet('/posts').reply(200, items)
+    const { data, meta = {} } = await proxy.removeParameters().all()
+    const all = {
+      items: BaseTransformer.fetchCollection(data),
+      pagination: PaginationTransformer.fetch(meta),
+    }
+    expect(meta).toHaveProperty('pagination')
+    expect(data.length).toEqual(1)
+    expect(all.pagination.page).toEqual(1)
+  })
+
   it('will fetch all records', async () => {
     const items = [{ first_name: 'Chantouch', last_name: 'Sek' }]
     mockAdapter.onGet('/posts').reply(200, { data: items })
-    try {
-      const { data } = await proxy.removeParameters().all()
-      expect(data).toEqual(items)
-    } catch (e) {
-      console.log('all:', e)
-    }
+    const { data } = await proxy.removeParameters().all()
+    expect(data).toEqual(items)
   })
 
   it('will fetch all records with query params', async () => {
