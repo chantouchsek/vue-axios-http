@@ -5,12 +5,17 @@ describe('Validator', () => {
   let validator: ValidatorType
   beforeEach(() => {
     validator = Validator
+    validator.flush()
   })
   afterEach(() => {
     validator.flush()
   })
   test('Add an error', () => {
     validator.add('name', 'The name field is required.')
+    expect(validator.any()).toBeTruthy()
+  })
+  test('add error with missed attribute', () => {
+    validator.add('name-3diidi', 'The name field is required.')
     expect(validator.any()).toBeTruthy()
   })
   test('Add an error message as string', () => {
@@ -148,6 +153,16 @@ describe('Validator', () => {
       first_name: ['This field is required'],
       last_name: ['This field is required'],
     })
+  })
+
+  it('should return empty object, with returnObject property is true', () => {
+    const errors = {
+      first_name: ['This field is required'],
+      last_name: ['This field is required'],
+      age: ['This field is required'],
+    }
+    validator.fill(errors)
+    expect(validator.any([], true)).toEqual({})
   })
 
   it('can pass array of keys to any method and get back boolean', () => {

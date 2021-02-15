@@ -1,6 +1,10 @@
 import snakeCaseKeys from 'snakecase-keys'
 import camelcaseKeys from 'camelcase-keys'
 
+export type Attribute = {
+  [key in string | number]: any
+}
+
 class BaseTransformer {
   static fetchCollection(
     items: Array<Attribute>,
@@ -32,7 +36,3 @@ class BaseTransformer {
 }
 
 export default BaseTransformer
-
-export type Attribute = {
-  [key in string | number]: any
-}

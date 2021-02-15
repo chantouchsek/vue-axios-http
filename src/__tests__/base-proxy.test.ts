@@ -6,6 +6,7 @@ import type { ValidatorType } from '../core/Validator'
 import Validator from '../core/Validator'
 import BaseTransformer from '../core/BaseTransformer'
 import PaginationTransformer from '../core/PaginationTransformer'
+import { merge } from '../util/objects'
 
 let proxy: PostProxy
 let mockAdapter
@@ -14,10 +15,19 @@ let validator: ValidatorType
 describe('BaseProxy', () => {
   beforeEach(() => {
     validator = Validator
-    const axios = Axios.create({ baseURL: 'http://drink-order-api.test' })
+    const axios = Axios.create({ baseURL: 'http://mock-api.test' })
     BaseProxy.$http = axios
     proxy = new PostProxy()
     mockAdapter = new MockAdapter(axios)
+  })
+
+  it('check if http was installed', async () => {
+    BaseProxy.$http = null
+    try {
+      await proxy.all()
+    } catch (e) {
+      expect(e.message).toBe('Vue Api Queries, No http library provided.')
+    }
   })
 
   it('it should fetch items with pagination', async () => {
@@ -70,6 +80,28 @@ describe('BaseProxy', () => {
     mockAdapter.onGet('/posts?id=1&first_name=Dara').reply(200, { data: items })
     const { data } = await proxy
       .setParameter('id', 1)
+      .setParameters({ first_name: 'Dara' })
+      .all()
+    expect(data).toEqual(items)
+  })
+
+  it('should set parameter with empty value', async () => {
+    const user1 = {
+      first_name: 'Dara',
+      last_name: 'Hok',
+      id: 1,
+      songs: [1, 2, 3],
+    }
+    const user2 = merge(user1, {
+      last_name: 'Hok 01',
+      songs: [4, 5, 6],
+      song: { name: 'Love song...' },
+      pc: null,
+    })
+    const items = [user2, { first_name: 'Chantouch', last_name: 'Sek', id: 2 }]
+    mockAdapter.onGet('/posts?id=1&first_name=Dara').reply(200, { data: items })
+    const { data } = await proxy
+      .setParameter('id=1')
       .setParameters({ first_name: 'Dara' })
       .all()
     expect(data).toEqual(items)

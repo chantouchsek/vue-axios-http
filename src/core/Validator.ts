@@ -1,4 +1,4 @@
-import { is } from '../util/objects'
+import { is, isArray } from '../util/objects'
 
 class Validator {
   public errors: any
@@ -21,7 +21,7 @@ class Validator {
   }
 
   has(field: any | any[]): boolean {
-    if (field instanceof Array) {
+    if (isArray(field)) {
       return is(Object.keys(this.errors), field)
     }
     let hasError = this.errors.hasOwnProperty(field)
@@ -46,12 +46,12 @@ class Validator {
     return this.get(field)[0]
   }
 
-  missed(field = null): boolean {
+  missed(field?: string | string[]): boolean {
     return !this.has(field)
   }
 
-  nullState(field = null): boolean | null {
-    return this.has(field) ? !this.has(field) : null
+  nullState(field?: string | string[]): boolean | null {
+    return this.has(field) ? this.missed(field) : null
   }
 
   any(fields = [], returnObject?: boolean): boolean | string[] | any {

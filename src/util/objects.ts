@@ -14,13 +14,14 @@ export function isFile(object: any): boolean {
   return object instanceof File || object instanceof FileList
 }
 
-export function merge(a: string | any, b: string | any): void {
+export function merge(a: any, b: any): string[] {
   for (const key in b) {
     if (!b.hasOwnProperty(key)) {
       continue
     }
     a[key] = cloneDeep(b[key])
   }
+  return a
 }
 
 export function cloneDeep(object: any): any {

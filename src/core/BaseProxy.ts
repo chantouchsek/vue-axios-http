@@ -1,10 +1,14 @@
 import type { AxiosError, AxiosInstance, AxiosResponse, Method } from 'axios'
-import { isFile } from '../util/objects'
+import { isFile, isArray } from '../util/objects'
 import type { Errors } from '../'
 import Validator from './Validator'
 import { objectToFormData } from '../util/formData'
 
 const validator = Validator
+const UNPROCESSABLE_ENTITY = 422
+export interface ParametersType {
+  [key: string]: any
+}
 
 class BaseProxy {
   public errors: Errors
@@ -68,7 +72,7 @@ class BaseProxy {
       this.$http[requestType](this.__getParameterString(url), data)
         .then((response: AxiosResponse) => {
           this.onSuccess()
-          const { data = {} } = response
+          const { data } = response
           resolve(data)
         })
         .catch((error: AxiosError) => {
@@ -76,8 +80,8 @@ class BaseProxy {
           validator.processing = false
           const { response } = error
           if (response) {
-            const { data = {}, status } = response
-            if (status === 422) {
+            const { data, status } = response
+            if (status === UNPROCESSABLE_ENTITY) {
               const errors = {}
               Object.assign(errors, data[this.$errorsKeyName])
               this.onFail(errors)
@@ -97,6 +101,16 @@ class BaseProxy {
       .filter((key: string) => !!this.parameters[key])
       .map((key: string) => `${key}=${this.parameters[key]}`)
     return parameters.length === 0 ? url : `${url}?${parameters.join('&')}`
+  }
+
+  __getQueryString(parameter: string): string[] {
+    const queries: string[] = parameter.split('&')
+    const obj: any = {}
+    queries.forEach(function (property: string) {
+      const [key = null, value = null]: string[] = property.split('=')
+      obj[key] = value
+    })
+    return obj
   }
 
   __validateRequestType(requestType: Method): void {
@@ -146,7 +160,7 @@ class BaseProxy {
       }
     }
 
-    if (Array.isArray(object)) {
+    if (isArray(object)) {
       for (const key in object) {
         if (object.hasOwnProperty(key)) {
           return this.__hasFilesDeep(object[key])
@@ -164,7 +178,11 @@ class BaseProxy {
     return this
   }
 
-  setParameter(parameter: any, value: any): this {
+  setParameter(parameter: string, value?: any): this {
+    if (!value) {
+      this.parameters = this.__getQueryString(parameter)
+      return this
+    }
     this.parameters[parameter] = value
     return this
   }
@@ -210,7 +228,3 @@ class BaseProxy {
 }
 
 export default BaseProxy
-
-export interface ParametersType {
-  [key: string]: any
-}

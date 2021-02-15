@@ -1,5 +1,6 @@
 # Vue Api Queries.
 
+[![Build Status](https://travis-ci.com/Chantouch/vue-api-queries.svg?branch=master)](https://travis-ci.com/Chantouch/vue-api-queries)
 [![Latest Version on NPM](https://img.shields.io/npm/v/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![npm](https://img.shields.io/npm/dt/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
@@ -305,9 +306,76 @@ Method                           | Description
 **has(attributes)**                        | To check multiple attributes given have any errors
 **first(attribute)**                        | To get errors message by an attribute
 
-## Todo
-### Add tests
+
+## How to use in vue component
+
+```vue
+<template>
+  <v-form v-model="valid" lazy-validation @keydown.native="$errors.onKeydown" @submit.prevent='submit'>
+    <v-container>
+      <v-row>
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="firstname"
+            :error-messages="$errors.first(['firstname'])"
+            :counter="10"
+            label="First name"
+            required
+            name="firstname"
+            @focus="validate"
+          />
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="lastname"
+            :counter="10"
+            label="Last name"
+            required
+            :error-messages="$errors.first(['lastname'])"
+          />
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="email"
+            :counter="10"
+            label="Email"
+            required
+            :error-messages="$errors.first('email')"
+          />
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field v-model="email" label="E-mail" required />
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-form>
+</template>
+<script>
+export default {
+  data: () => ({
+    valid: false,
+    firstname: '',
+    lastname: '',
+    email: '',
+  }),
+  methods: {
+    submit() {
+      this.$axios.$post('/account/create', {
+        firstname: this.firstname,
+        lastname: this.lastname,
+        email: this.email
+      })
+    }
+  },
+  beforeDestroy() {
+    this.$errors.flush()
+  }
+}
+</script>
+```
 
 # Contact
+
+Email: chantouchsek.cs83@gmail.com
 
 Twitter [@DevidCs83](https://twitter.com/DevidCs83)
