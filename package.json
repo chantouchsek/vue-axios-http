@@ -1,6 +1,6 @@
 {
   "name": "vue-api-queries",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Elegant and simple way to build requests for REST API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
