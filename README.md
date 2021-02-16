@@ -12,7 +12,7 @@ This package helps you quickly to build requests for REST API. Move your logic a
 
 Wouldn't it be great if you could just use your back end to validate forms on the front end? This package provides a
  `BaseProxy` class that does exactly that. It can post itself to a configured endpoint and manage errors. The class
-  is meant to be used with a Laravel back end and it doesn't limit that you need only to work with laravel, Ruby on
+  is meant to be used with a Laravel back end, and it doesn't limit that you need only to work with laravel, Ruby on
    Rail, NodeJs, ExpressJs, or any other languages.
 
 Take a look at the [usage section](#usage) to view a detailed example on how to use it.
@@ -51,7 +51,8 @@ export default {
 ```
 
 ### Note:
-`baseURL` is required. <br />
+`baseURL` is required.
+
 You can define `baseURL` at .env just one of them
 ```bash
 API_URL=http://localhost::3000/api
@@ -107,7 +108,7 @@ Validator                   | Description
 **fill(errors = {})**       | fill the errors object.
 **flush()**                 | clear all errors.
 **clear(field)**            | clear specific error by field name.
-**onKeydown(event)**        | event to clear error by event.target.name. (input the has name).
+**onKeydown(event, 'baseFormName')**        | event to clear error by event.target.name. (input the has name).
 
 ## Using with Vuex
 
@@ -322,7 +323,6 @@ Method                           | Description
             label="First name"
             required
             name="firstname"
-            @focus="validate"
           />
         </v-col>
         <v-col cols="12" md="4">
