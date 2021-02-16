@@ -103,7 +103,7 @@ class BaseProxy {
     return parameters.length === 0 ? url : `${url}?${parameters.join('&')}`
   }
 
-  __getQueryString(parameter: string): string[] {
+  __getQueryString(parameter: string): any | any[] {
     const queries: string[] = parameter.split('&')
     const obj: any = {}
     queries.forEach(function (property: string) {
@@ -180,7 +180,10 @@ class BaseProxy {
 
   setParameter(parameter: string, value?: any): this {
     if (!value) {
-      this.parameters = this.__getQueryString(parameter)
+      const params = this.__getQueryString(parameter)
+      Object.entries(params).forEach(
+        ([key, value]) => (this.parameters[key] = value),
+      )
       return this
     }
     this.parameters[parameter] = value
