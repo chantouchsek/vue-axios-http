@@ -291,7 +291,9 @@ this.data = data
 ```
 **Note**: Query object above will transform into query string like:
 
-``https://my-web-url.com?search[first_name]=Sek&search[last_name]=Chantouch&page[limit]=10&page[offset]=1&order[first_name]=asc&order[last_name]=desc&category_id=6``
+```js
+https://my-web-url.com?search[first_name]=Sek&search[last_name]=Chantouch&page[limit]=10&page[offset]=1&order[first_name]=asc&order[last_name]=desc&category_id=6
+```
 
 if setParameter that value is empty or null it will remove that param for query string
 
