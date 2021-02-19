@@ -94,7 +94,7 @@ class BaseProxy {
             }
             reject(error)
           } else {
-            reject()
+            reject(error)
           }
         })
     })

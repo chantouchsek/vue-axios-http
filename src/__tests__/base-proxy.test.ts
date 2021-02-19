@@ -19,6 +19,7 @@ describe('BaseProxy', () => {
     BaseProxy.$http = axios
     proxy = new PostProxy()
     mockAdapter = new MockAdapter(axios)
+    mockAdapter.reset()
   })
 
   it('check if http was installed', async () => {
@@ -70,6 +71,15 @@ describe('BaseProxy', () => {
     mockAdapter.onGet('/posts').reply(200, { data: items })
     const { data } = await proxy.removeParameters().all()
     expect(data).toEqual(items)
+  })
+
+  it('Check network server return 500', async () => {
+    mockAdapter.onGet('/posts').networkError()
+    try {
+      await proxy.all()
+    } catch (e) {
+      expect(e.message).toBe('Network Error')
+    }
   })
 
   it('will fetch all records with query params', async () => {
@@ -165,13 +175,14 @@ describe('BaseProxy', () => {
 
   it('transforms the data to a FormData object if there is a File', async () => {
     const file = new File(['hello world!'], 'myfile')
-    const form = { field1: {}, field2: {} }
+    const form = { field1: {}, field2: {}, files: [] }
     form.field1 = {
       foo: 'testFoo',
       bar: ['testBar1', 'testBar2'],
       baz: new Date(Date.UTC(2012, 3, 13, 2, 12)),
     }
     form.field2 = file
+    form.files = [{ file }]
 
     mockAdapter.onPost('/posts').reply((request) => {
       expect(request.data).toBeInstanceOf(FormData)
@@ -180,6 +191,7 @@ describe('BaseProxy', () => {
       expect(request.data.get('field1[bar][1]')).toBe('testBar2')
       expect(request.data.get('field1[baz]')).toBe('2012-04-13T02:12:00.000Z')
       expect(request.data.get('field2')).toEqual(file)
+      expect(request.data.get('files[0][file]')).toEqual(file)
 
       expect(getFormDataKeys(request.data)).toEqual([
         'field1[foo]',
@@ -187,6 +199,7 @@ describe('BaseProxy', () => {
         'field1[bar][1]',
         'field1[baz]',
         'field2',
+        'files[0][file]',
       ])
       return [200, {}]
     })

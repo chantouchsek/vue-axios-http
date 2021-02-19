@@ -44,6 +44,13 @@ describe('Validator', () => {
     expect(validator.missed('name')).toBeTruthy()
     expect(validator.nullState('name')).toBeNull()
   })
+  test('Check nullState function', () => {
+    validator.add('email', 'The email field is required.')
+    expect(validator.nullState('email')).toBeFalsy()
+  })
+  test('Get an none exist error messages by param name', () => {
+    expect(validator.get('email')).toHaveLength(0)
+  })
   test('Get all errors by key', () => {
     validator.add('email', 'The email field is required.')
     expect(validator.get('email').length).toBeGreaterThan(0)
@@ -67,6 +74,13 @@ describe('Validator', () => {
     expect(validator.first('name')).toBe('The name field is required.')
     expect(validator.first('email')).toBe('The email field is required.')
     expect(Object.keys(validator.all()).length).toEqual(2)
+  })
+  it('should not allow protopath overwrite', () => {
+    const errors = {
+      __proto__: ['Set __proto__ to overwrite.'],
+    }
+    validator.fill(errors)
+    expect(Object.keys(validator.all()).length).toEqual(0)
   })
   test('Clear all errors by flush', () => {
     const errors = {
