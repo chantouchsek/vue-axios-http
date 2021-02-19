@@ -1,6 +1,6 @@
 {
   "name": "vue-api-queries",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Elegant and simple way to build requests for REST API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -58,12 +58,13 @@
     "@types/jest": "^26.0.14",
     "@types/lodash.merge": "^4.6.6",
     "@types/node": "^14.11.10",
-    "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.4.1",
     "axios-mock-adapter": "^1.18.2",
     "bootstrap-vue": "^2.17.3",
-    "eslint": "^7.11.0",
+    "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.13.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.3.0",
     "jest": "^26.5.3",
@@ -85,6 +86,7 @@
     "camelcase-keys": "^6.2.2",
     "escape-string-regexp": "^4.0.0",
     "lodash.merge": "^4.6.2",
+    "qs": "^6.9.6",
     "snakecase-keys": "^3.2.0"
   }
 }

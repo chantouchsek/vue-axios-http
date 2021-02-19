@@ -11,7 +11,8 @@
     "types": [
       "@types/node",
       "@nuxt/types",
-      "@types/jest"
+      "@types/jest",
+      "axios"
     ]
   },
   "include": ["src"],
