@@ -261,6 +261,38 @@ Method                                              | Description
 **removeParameters([key1, key2])**                  | Remove params by keys
 **removeParameters()**                              | Remove all params
 
+#### setParameters()
+
+Set parameters with key/value.
+
+**Note**: If you to pass query string as object that can be response like object format at api side.
+
+#### Example
+
+```js
+const proxy = new ExampleProxy()
+const parameters = {
+  search: {
+    first_name: 'Sek',
+    last_name: 'Chantouch'
+  },
+  page: {
+    limit: 20,
+    offset: 1
+  },
+  order: {
+    first_name: 'ASC',
+    last_name: 'DESC'
+  },
+  category_id: 6
+}
+const { data } = proxy.setParameters(parameters).all()
+this.data = data
+```
+**Note**: Query object above will transform into query string like:
+
+``https://my-web-url.com?search[first_name]=Sek&search[last_name]=Chantouch&page[limit]=10&page[offset]=1&order[first_name]=asc&order[last_name]=desc&category_id=6``
+
 if setParameter that value is empty or null it will remove that param for query string
 
 Be sure to use only once in `mounted()` or `asyncData()` and `asyncData()` is only available in `NuxtJs`
