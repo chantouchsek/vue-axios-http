@@ -1,8 +1,9 @@
 import type { AxiosError, AxiosInstance, AxiosResponse, Method } from 'axios'
-import { isFile, isArray } from '../util/objects'
-import type { Errors } from '../'
+import { isArray, isFile } from '../util/objects'
+import type { Errors } from '..'
 import Validator from './Validator'
 import { objectToFormData } from '../util/formData'
+import qs from 'qs'
 
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
@@ -12,9 +13,13 @@ export interface ParametersType {
 
 class BaseProxy {
   public errors: Errors
+
   public parameters: any | any[]
+
   public readonly endpoint: string
+
   public static $http: AxiosInstance
+
   public static $errorsKeyName = 'errors'
 
   constructor(endpoint: string, parameters?: any | any[]) {
@@ -52,7 +57,7 @@ class BaseProxy {
   }
 
   putWithFile(id: string | number, payload: any): Promise<any> {
-    payload['_method'] = 'put'
+    payload._method = 'put'
     return this.submit('post', `/${this.endpoint}/${id}`, payload)
   }
 
@@ -96,11 +101,8 @@ class BaseProxy {
   }
 
   __getParameterString(url: string): string {
-    const keys = Object.keys(this.parameters)
-    const parameters = keys
-      .filter((key: string) => !!this.parameters[key])
-      .map((key: string) => `${key}=${this.parameters[key]}`)
-    return parameters.length === 0 ? url : `${url}?${parameters.join('&')}`
+    const query = qs.stringify(this.parameters, { encode: false })
+    return query ? `${url}?${query}` : url
   }
 
   __getQueryString(parameter: string): any | any[] {

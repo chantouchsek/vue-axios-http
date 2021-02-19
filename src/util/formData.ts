@@ -7,9 +7,10 @@ export function objectToFormData(
     return formData.append(parent, object)
   }
   for (const property in object) {
-    if (object.hasOwnProperty(property)) {
-      appendToFormData(formData, getKey(parent, property), object[property])
+    if (!object.hasOwnProperty(property)) {
+      continue
     }
+    appendToFormData(formData, getKey(parent, property), object[property])
   }
   return formData
 }

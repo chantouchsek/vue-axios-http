@@ -120,6 +120,26 @@ describe('BaseProxy', () => {
       .all()
     expect(data).toEqual(items)
   })
+  it('it should accept query params as object', async () => {
+    const items = [
+      { first_name: 'Dara', last_name: 'Hok', id: 1 },
+      { first_name: 'Chantouch', last_name: 'Sek', id: 2 },
+    ]
+    mockAdapter
+      .onGet('/posts?search[id]=1&first_name=Dara')
+      .reply(200, { data: items })
+    const params = {
+      search: { id: 1 },
+      first_name: 'Dara',
+      last_name: 'Hok',
+    }
+    const { data } = await proxy
+      .setParameters(params)
+      .removeParameters(['last_name'])
+      .all()
+    expect(data).toEqual(items)
+    expect(proxy.parameters).toEqual({ search: { id: 1 }, first_name: 'Dara' })
+  })
 
   it('it should find an item by id', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
