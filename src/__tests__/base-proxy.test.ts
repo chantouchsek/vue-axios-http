@@ -109,11 +109,21 @@ describe('BaseProxy', () => {
       pc: null,
     })
     const items = [user2, { first_name: 'Chantouch', last_name: 'Sek', id: 2 }]
-    mockAdapter.onGet('/posts?id=1&first_name=Dara').reply(200, { data: items })
+    mockAdapter
+      .onGet('/posts?id=1&last_name=Hok&search[name]=hello&first_name=Dara')
+      .reply(200, { data: items })
     const { data } = await proxy
-      .setParameter('id=1')
+      .setParameter('id=1&last_name=Hok&search[name]=hello')
       .setParameters({ first_name: 'Dara' })
       .all()
+    expect(proxy.parameters).toEqual({
+      id: '1',
+      first_name: 'Dara',
+      last_name: 'Hok',
+      search: {
+        name: 'hello',
+      },
+    })
     expect(data).toEqual(items)
   })
   it('it should be able to remove parameter(s)', async () => {

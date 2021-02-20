@@ -291,11 +291,42 @@ this.data = data
 ```
 **Note**: Query object above will transform into query string like:
 
-```js
+```text
 https://my-web-url.com?search[first_name]=Sek&search[last_name]=Chantouch&page[limit]=10&page[offset]=1&order[first_name]=asc&order[last_name]=desc&category_id=6
 ```
 
 if setParameter that value is empty or null it will remove that param for query string
+
+#### setParameter()
+
+#### Example 1
+```js
+const proxy = new ExampleProxy()
+const { data } = await proxy.setParameter('page', 1).all()
+this.data = data
+```
+Expected will be:
+```json
+{ "page": 1 }
+```
+
+#### Example 2
+```js
+const proxy = new ExampleProxy()
+const queryString = 'limit=10&page=1&search[name]=hello'
+const { data } = await proxy.setParameter(queryString).all()
+this.data = data
+```
+Expected will be:
+```json
+{
+  "limit": 10,
+  "page": 1,
+  "search": {
+    "name": "hello"
+  }
+}
+```
 
 Be sure to use only once in `mounted()` or `asyncData()` and `asyncData()` is only available in `NuxtJs`
 

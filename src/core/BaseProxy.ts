@@ -3,7 +3,7 @@ import { isArray, isFile } from '../util/objects'
 import type { Errors } from '..'
 import Validator from './Validator'
 import { objectToFormData } from '../util/formData'
-import qs from 'qs'
+import qs, { ParsedQs } from 'qs'
 
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
@@ -105,16 +105,6 @@ class BaseProxy {
     return query ? `${url}?${query}` : url
   }
 
-  __getQueryString(parameter: string): any | any[] {
-    const queries: string[] = parameter.split('&')
-    const obj: any = {}
-    queries.forEach(function (property: string) {
-      const [key = null, value = null]: string[] = property.split('=')
-      obj[key] = value
-    })
-    return obj
-  }
-
   __validateRequestType(requestType: Method): void {
     const requestTypes: Array<string> = [
       'get',
@@ -182,11 +172,13 @@ class BaseProxy {
 
   setParameter(parameter: string, value?: any): this {
     if (!value) {
-      const params = this.__getQueryString(parameter)
-      Object.entries(params).forEach(
-        ([key, value]) => (this.parameters[key] = value),
-      )
-      return this
+      const options = {
+        comma: true,
+        allowDots: true,
+        ignoreQueryPrefix: true,
+      }
+      const params: ParsedQs = qs.parse(parameter, options)
+      return this.setParameters(params)
     }
     this.parameters[parameter] = value
     return this
