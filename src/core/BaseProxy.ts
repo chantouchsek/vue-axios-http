@@ -70,7 +70,7 @@ class BaseProxy {
   }
 
   submit(requestType: Method, url: string, form?: any): Promise<any> {
-    this.__validateRequestType(requestType)
+    BaseProxy.__validateRequestType(requestType)
     this.beforeSubmit()
     return new Promise((resolve, reject) => {
       const data = this.__hasFiles(form) ? objectToFormData(form) : form
@@ -100,12 +100,16 @@ class BaseProxy {
     })
   }
 
-  __getParameterString(url: string): string {
-    const query = qs.stringify(this.parameters, { encode: false })
-    return query ? `${url}?${query}` : url
+  private __getParameterString(url: string): string {
+    const query = qs.stringify(this.parameters, {
+      encode: false,
+      skipNulls: true,
+      addQueryPrefix: true,
+    })
+    return `${url}${query}`
   }
 
-  __validateRequestType(requestType: Method): void {
+  private static __validateRequestType(requestType: Method): void {
     const requestTypes: Array<string> = [
       'get',
       'delete',
@@ -122,7 +126,7 @@ class BaseProxy {
     }
   }
 
-  __hasFiles(form: any): boolean {
+  private __hasFiles(form: any): boolean {
     for (const property in form) {
       if (!form.hasOwnProperty(property)) {
         return false
@@ -137,7 +141,7 @@ class BaseProxy {
     return false
   }
 
-  __hasFilesDeep(object: any): boolean {
+  private __hasFilesDeep(object: any): boolean {
     if (object === null) {
       return false
     }

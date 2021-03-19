@@ -2,18 +2,20 @@ import BaseTransformer from './BaseTransformer'
 import snakecaseKeys from 'snakecase-keys'
 
 export interface PaginationOptions {
-  per_page?: string | number
-  total_pages?: string | number
-  current_page?: string | number
-  total?: string | number
+  perPage: number
+  totalPages: number
+  totalCount: number
+  limit: number
+  currentPage: number
+  total: number
   links?: string | number
-  count?: string | number
-  page?: string | number
-  items_per_page?: string | number
-  page_count?: string | number
-  items_length?: string | number
-  page_start?: string | number
-  page_stop?: string | number
+  count: number
+  page: number
+  itemsPerPage?: number
+  pageCount: number
+  itemsLength: number
+  pageStart?: number
+  pageStop?: number
   include?: string | string[]
 }
 
@@ -24,7 +26,7 @@ export interface MetaOptions {
 
 class PaginationTransformer extends BaseTransformer {
   static fetch(meta: MetaOptions | any) {
-    if (!meta.hasOwnProperty('pagination')) {
+    if (!Object.prototype.hasOwnProperty.call(meta, 'pagination')) {
       return snakecaseKeys(meta, { deep: true })
     }
     const { pagination = {}, include } = meta

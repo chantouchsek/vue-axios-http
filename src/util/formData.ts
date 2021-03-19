@@ -2,15 +2,15 @@ export function objectToFormData(
   object,
   formData = new FormData(),
   parent = null,
-): FormData | void {
+): FormData {
   if (object === null || object === 'undefined' || object.length === 0) {
-    return formData.append(parent, object)
-  }
-  for (const property in object) {
-    if (!object.hasOwnProperty(property)) {
-      continue
+    formData.append(parent, object)
+  } else {
+    for (const property in object) {
+      if (Object.hasOwnProperty.call(object, property)) {
+        appendToFormData(formData, getKey(parent, property), object[property])
+      }
     }
-    appendToFormData(formData, getKey(parent, property), object[property])
   }
   return formData
 }

@@ -15,7 +15,7 @@ let validator: ValidatorType
 describe('BaseProxy', () => {
   beforeEach(() => {
     validator = Validator
-    const axios = Axios.create({ baseURL: 'http://mock-api.test' })
+    const axios = Axios.create({ baseURL: 'https://mock-api.test' })
     BaseProxy.$http = axios
     proxy = new PostProxy()
     mockAdapter = new MockAdapter(axios)
@@ -333,8 +333,8 @@ describe('BaseProxy', () => {
   })
 
   it('can accept a custom http instance in options', () => {
-    BaseProxy.$http = Axios.create({ baseURL: 'http://another-example.com' })
-    expect(proxy.$http.defaults.baseURL).toBe('http://another-example.com')
+    BaseProxy.$http = Axios.create({ baseURL: 'https://another-example.com' })
+    expect(proxy.$http.defaults.baseURL).toBe('https://another-example.com')
 
     BaseProxy.$http = Axios.create()
     expect(proxy.$http.defaults.baseURL).toBe(undefined)
