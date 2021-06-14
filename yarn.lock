@@ -1614,31 +1614,31 @@
     webpackbar "^4.0.0"
 
 "@nuxtjs/auth-next@^5.0.0-1602966760.822bc05":
-  version "5.0.0-1602966760.822bc05"
-  resolved "https://registry.npmjs.org/@nuxtjs/auth-next/-/auth-next-5.0.0-1602966760.822bc05.tgz"
-  integrity sha512-kjQSm7XiwtOYmIuukxqw5OcEC0Bph6ju91sH7KLlBrLm45IoFnFeQtl4O3RlJZUWd4AnqFjLsLbU44IUKCME7g==
+  version "5.0.0-1607967355.df8f01e"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/auth-next/-/auth-next-5.0.0-1607967355.df8f01e.tgz#1cca94116e7d5f3d0343d33f44bfe6de597ee1e9"
+  integrity sha512-60UxG/HXpFNardxcoYjz/4N0BRPK5AGIlpmokiLjBEm56j5+H6wFNJBnHjwP2Mqlm1O/Nx4VTQ9mdWF2xgKjHw==
   dependencies:
-    "@nuxtjs/axios" "^5.12.0"
+    "@nuxtjs/axios" "^5.12.4"
     body-parser "^1.19.0"
-    consola "^2.14.0"
+    consola "^2.15.0"
     cookie "^0.4.1"
-    defu "^2.0.4"
+    defu "^3.2.2"
     js-cookie "^2.2.1"
-    jwt-decode "^2.2.0"
-    lodash "^4.17.19"
-    nanoid "^3.1.10"
+    jwt-decode "^3.1.2"
+    lodash "^4.17.20"
+    nanoid "^3.1.20"
     requrl "^2.0.1"
 
-"@nuxtjs/axios@^5.12.0", "@nuxtjs/axios@^5.12.2":
-  version "5.13.1"
-  resolved "https://registry.npmjs.org/@nuxtjs/axios/-/axios-5.13.1.tgz"
-  integrity sha512-vZpXV2AAkQ5Duejubt1k3ZgUnYowYnPvmcUt0hskd+OebmQ+jF6Wk6rOG0/9EeknOxm7mtTGgKSwdlE1jDo+xA==
+"@nuxtjs/axios@^5.12.2", "@nuxtjs/axios@^5.12.4":
+  version "5.13.6"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/axios/-/axios-5.13.6.tgz#6f4bbd98a3a7799a5d2c0726c6ad2a98aa111881"
+  integrity sha512-XS+pOE0xsDODs1zAIbo95A0LKlilvJi8YW0NoXYuq3/jjxGgWDxizZ6Yx0AIIjZOoGsXJOPc0/BcnSEUQ2mFBA==
   dependencies:
     "@nuxtjs/proxy" "^2.1.0"
     axios "^0.21.1"
     axios-retry "^3.1.9"
     consola "^2.15.3"
-    defu "^3.2.2"
+    defu "^5.0.0"
 
 "@nuxtjs/eslint-config-typescript@latest":
   version "3.0.0"
@@ -4981,6 +4981,11 @@ defu@^3.2.2:
   resolved "https://registry.npmjs.org/defu/-/defu-3.2.2.tgz"
   integrity sha512-8UWj5lNv7HD+kB0e9w77Z7TdQlbUYDVWqITLHNqFIn6khrNHv5WQo38Dcm1f6HeNyZf0U7UbPf6WeZDSdCzGDQ==
 
+defu@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/defu/-/defu-5.0.0.tgz#5768f0d402a555bfc4c267246b20f82ce8b5a10b"
+  integrity sha512-VHg73EDeRXlu7oYWRmmrNp/nl7QkdXUxkQQKig0Zk8daNmm84AbGoC8Be6/VVLJEKxn12hR0UBmz8O+xQiAPKQ==
+
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz"
@@ -6448,7 +6453,7 @@ get-stdin@^6.0.0:
 
 get-stream@^3.0.0:
   version "3.0.0"
-  resolved "http://registry.npmjs.org/get-stream/-/get-stream-3.0.0.tgz"
+  resolved "https://registry.npmjs.org/get-stream/-/get-stream-3.0.0.tgz"
   integrity sha1-jpQ9E1jcN1VQVOy+LtsFqhdO3hQ=
 
 get-stream@^4.0.0, get-stream@^4.1.0:
@@ -8302,10 +8307,10 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-jwt-decode@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/jwt-decode/-/jwt-decode-2.2.0.tgz"
-  integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
+jwt-decode@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-3.1.2.tgz#3fb319f3675a2df0c2895c8f5e9fa4b67b04ed59"
+  integrity sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
 
 keyv@^3.0.0:
   version "3.1.0"
@@ -9270,10 +9275,10 @@ nan@^2.12.1:
   resolved "https://registry.npmjs.org/nan/-/nan-2.14.2.tgz"
   integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
 
-nanoid@^3.1.10:
-  version "3.1.12"
-  resolved "https://registry.npmjs.org/nanoid/-/nanoid-3.1.12.tgz"
-  integrity sha512-1qstj9z5+x491jfiC4Nelk+f8XBad7LN20PmyWINJEMRSf3wcAjAWysw1qaA8z6NSKe2sjq1hRSDpBH5paCb6A==
+nanoid@^3.1.10, nanoid@^3.1.20:
+  version "3.1.23"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.23.tgz#f744086ce7c2bc47ee0a8472574d5c78e4183a81"
+  integrity sha512-FiB0kzdP0FFVGDKlRLEQ1BgDzU87dy5NnzjeW9YZNt+/c3+q82EQDUwniSAUxp/F0gFNI1ZhKU1FqYsMuqZVnw==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -13758,7 +13763,7 @@ vm-browserify@^1.0.1:
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
 "vue-api-queries@file:.":
-  version "0.0.16"
+  version "0.1.0"
   dependencies:
     axios "^0.21.1"
     camelcase-keys "^6.2.2"
