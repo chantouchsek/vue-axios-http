@@ -1,5 +1,4 @@
 import BaseTransformer from './BaseTransformer'
-import snakecaseKeys from 'snakecase-keys'
 
 export interface PaginationOptions {
   perPage: number
