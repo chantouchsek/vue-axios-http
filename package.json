@@ -87,6 +87,6 @@
     "camelcase-keys": "^6.2.2",
     "lodash.merge": "^4.6.2",
     "qs": "^6.9.6",
-    "snakecase-keys": "^3.2.0"
+    "snakecase-keys": "^4.0.2"
   }
 }
