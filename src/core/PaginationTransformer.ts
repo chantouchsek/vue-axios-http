@@ -26,17 +26,21 @@ export interface MetaOptions {
 
 class PaginationTransformer extends BaseTransformer {
   static fetch(meta: MetaOptions | any) {
+    if (!meta) {
+      meta = { pagination: {}, include: [] }
+    }
     if (!Object.prototype.hasOwnProperty.call(meta, 'pagination')) {
-      return snakecaseKeys(meta, { deep: true })
+      return super.fetch(meta, true)
     }
     const { pagination = {}, include } = meta
-    return {
+    const payload = {
+      ...pagination,
       perPage: pagination.per_page,
       totalPages: pagination.total_pages,
-      currentPage: pagination.current_page,
+      currentPage: pagination.current_page || 1,
       total: pagination.total,
       links: pagination.links,
-      count: pagination.count,
+      count: pagination.count || 0,
       page: pagination.current_page,
       itemsPerPage: pagination.per_page,
       pageCount: pagination.total_pages,
@@ -45,6 +49,8 @@ class PaginationTransformer extends BaseTransformer {
       pageStop: pagination.count,
       include,
     }
+
+    return super.fetch(payload, true)
   }
 }
 

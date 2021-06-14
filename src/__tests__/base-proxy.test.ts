@@ -66,6 +66,22 @@ describe('BaseProxy', () => {
     expect(all.pagination.page).toEqual(1)
   })
 
+  it('should assign default object meta if it is null or undefined', async () => {
+    const items = {
+      data: [{ first_name: 'Chantouch', last_name: 'Sek' }],
+      meta: undefined,
+    }
+    mockAdapter.onGet('/posts').reply(200, items)
+    const { data, meta } = await proxy.removeParameters([]).all()
+    const all = {
+      items: BaseTransformer.fetchCollection(data),
+      pagination: PaginationTransformer.fetch(meta),
+    }
+    expect(meta).toBeUndefined()
+    expect(data.length).toEqual(1)
+    expect(all.pagination.currentPage).toEqual(1)
+  })
+
   it('will fetch all records', async () => {
     const items = [{ first_name: 'Chantouch', last_name: 'Sek' }]
     mockAdapter.onGet('/posts').reply(200, { data: items })

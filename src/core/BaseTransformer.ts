@@ -1,37 +1,21 @@
 import snakeCaseKeys from 'snakecase-keys'
 import camelcaseKeys from 'camelcase-keys'
 
-export type Attribute = {
-  [key in string | number]: any
-}
-
 class BaseTransformer {
-  static fetchCollection(
-    items: Array<Attribute>,
-    camelCaseKey?: boolean,
-  ): Array<Attribute> {
-    return items.map((item: Attribute) => this.fetch(item, camelCaseKey))
+  static fetchCollection(items: Array<any>, camelKey?: boolean): Array<any> {
+    return items.map((item: any) => this.fetch(item, camelKey))
   }
 
-  static sendCollection(
-    items: Array<Attribute>,
-    snakeCaseKey?: boolean,
-  ): Array<Attribute> {
-    return items.map((item: Attribute) => this.send(item, snakeCaseKey))
+  static sendCollection(items: Array<any>, snakeKey?: boolean): Array<any> {
+    return items.map((item: any) => this.send(item, snakeKey))
   }
 
-  static fetch(item: Attribute, camelCaseKey?: boolean): Attribute {
-    if (camelCaseKey) {
-      return camelcaseKeys(item, { deep: true })
-    }
-    return item
+  static fetch(item: any, camelKey?: boolean) {
+    return camelKey ? camelcaseKeys(item, { deep: true }) : item
   }
 
-  static send(item: Attribute, snakeCaseKey?: boolean): Attribute {
-    if (snakeCaseKey) {
-      return snakeCaseKeys(item)
-    }
-    return item
+  static send(item: any, snakeKey?: boolean) {
+    return snakeKey ? snakeCaseKeys(item) : item
   }
 }
 
