@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Chantouch/vue-api-queries.git"
+    "url": "https://github.com/chantouchsek/vue-api-queries.git"
   },
   "keywords": [
     "vue",
@@ -36,9 +36,9 @@
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Chantouch/vue-api-queries/issues"
+    "url": "https://github.com/chantouchsek/vue-api-queries/issues"
   },
-  "homepage": "https://github.com/Chantouch/vue-api-queries#readme",
+  "homepage": "https://github.com/chantouchsek/vue-api-queries#readme",
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint && npm test",
