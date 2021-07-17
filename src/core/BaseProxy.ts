@@ -1,4 +1,10 @@
-import type { AxiosError, AxiosInstance, AxiosResponse, Method } from 'axios'
+import {
+  AxiosError,
+  AxiosInstance,
+  AxiosResponse,
+  Method,
+  AxiosRequestConfig,
+} from 'axios'
 import { isArray, isFile } from '../util/objects'
 import type { Errors } from '..'
 import Validator from './Validator'
@@ -44,21 +50,25 @@ class BaseProxy {
     return this.submit('get', `/${this.endpoint}/${id}`)
   }
 
-  post(payload: any): Promise<any> {
-    return this.submit('post', `/${this.endpoint}`, payload)
+  post(payload: any, config?: AxiosRequestConfig): Promise<any> {
+    return this.submit('post', `/${this.endpoint}`, payload, config)
   }
 
-  store(payload: any): Promise<any> {
-    return this.post(payload)
+  store(payload: any, config?: AxiosRequestConfig): Promise<any> {
+    return this.post(payload, config)
   }
 
   put(id: string | number, payload: any): Promise<any> {
     return this.submit('put', `/${this.endpoint}/${id}`, payload)
   }
 
-  putWithFile(id: string | number, payload: any): Promise<any> {
+  putWithFile(
+    id: string | number,
+    payload: any,
+    config?: AxiosRequestConfig,
+  ): Promise<any> {
     payload._method = 'put'
-    return this.submit('post', `/${this.endpoint}/${id}`, payload)
+    return this.submit('post', `/${this.endpoint}/${id}`, payload, config)
   }
 
   patch(id: string | number, payload: any): Promise<any> {
@@ -69,12 +79,17 @@ class BaseProxy {
     return this.submit('delete', `/${this.endpoint}/${id}`)
   }
 
-  submit(requestType: Method, url: string, form?: any): Promise<any> {
+  submit(
+    requestType: Method,
+    url: string,
+    form?: any,
+    config?: AxiosRequestConfig,
+  ): Promise<any> {
     BaseProxy.__validateRequestType(requestType)
     this.beforeSubmit()
     return new Promise((resolve, reject) => {
       const data = this.__hasFiles(form) ? objectToFormData(form) : form
-      this.$http[requestType](this.__getParameterString(url), data)
+      this.$http[requestType](this.__getParameterString(url), data, config)
         .then((response: AxiosResponse) => {
           this.onSuccess()
           const { data } = response
