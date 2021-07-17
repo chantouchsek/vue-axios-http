@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
+    "@commitlint/config-conventional": "^12.1.4",
     "@nuxt/types": "^2.14.7",
     "@nuxt/typescript-build": "latest",
     "@nuxt/typescript-runtime": "latest",
