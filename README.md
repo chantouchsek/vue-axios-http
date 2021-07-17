@@ -5,6 +5,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![npm](https://img.shields.io/npm/dt/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
 [![npm](https://img.shields.io/npm/dm/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
+[![npm](https://img.shields.io/npm/dw/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
 
 🔥  If you use Laravel, this package matches perfectly with [andersao/l5-repository](https://github.com/andersao/l5-repository).
 
