@@ -9,7 +9,7 @@ import PaginationTransformer from '../core/PaginationTransformer'
 import { merge } from '../util/objects'
 
 let proxy: PostProxy
-let mockAdapter
+let mockAdapter: MockAdapter
 let validator: ValidatorType
 
 describe('BaseProxy', () => {
@@ -23,7 +23,7 @@ describe('BaseProxy', () => {
   })
 
   it('check if http was installed', async () => {
-    BaseProxy.$http = null
+    BaseProxy.$http = undefined
     try {
       await proxy.all()
     } catch (e) {
@@ -201,7 +201,7 @@ describe('BaseProxy', () => {
 
   it('transforms the data to a FormData object if there is a File', async () => {
     const file = new File(['hello world!'], 'myfile')
-    const form = { field1: {}, field2: {}, files: [] }
+    const form: any = { field1: {}, field2: {}, files: [] }
     form.field1 = {
       foo: 'testFoo',
       bar: ['testBar1', 'testBar2'],
@@ -267,7 +267,7 @@ describe('BaseProxy', () => {
 
   it('transforms the boolean values in FormData object to "1" or "0"', async () => {
     const file = new File(['hello world!'], 'myfile')
-    const form = { field1: {}, field2: null }
+    const form: any = { field1: {}, field2: null }
     form.field1 = {
       foo: true,
       bar: false,
@@ -357,9 +357,9 @@ describe('BaseProxy', () => {
   })
 })
 
-function getFormDataKeys(formData) {
+function getFormDataKeys(formData: any) {
   // This is because the FormData.keys() is missing from the jsdom implementations.
   return formData[Object.getOwnPropertySymbols(formData)[0]]._entries.map(
-    (e) => e.name,
+    (e: any) => e.name,
   )
 }

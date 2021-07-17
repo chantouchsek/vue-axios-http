@@ -31,7 +31,7 @@ export function cloneDeep(object: any): any {
   }
 
   if (isArray(object)) {
-    const clone: string[] = []
+    const clone: any = []
 
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
@@ -43,7 +43,7 @@ export function cloneDeep(object: any): any {
   }
 
   if (typeof object === 'object') {
-    const clone = {}
+    const clone: any = {}
 
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
@@ -59,6 +59,6 @@ export function cloneDeep(object: any): any {
 
 export function is(errors: any, error: any): boolean {
   return isArray(error)
-    ? error.some((w) => is(errors, w))
+    ? error.some((w: string) => is(errors, w))
     : errors.includes(error)
 }

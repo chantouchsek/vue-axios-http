@@ -19,13 +19,9 @@ export interface ParametersType {
 
 class BaseProxy {
   public errors: Errors
-
   public parameters: any | any[]
-
   public readonly endpoint: string
-
-  public static $http: AxiosInstance
-
+  public static $http: AxiosInstance | undefined
   public static $errorsKeyName = 'errors'
 
   constructor(endpoint: string, parameters?: any | any[]) {
@@ -85,11 +81,13 @@ class BaseProxy {
     form?: any,
     config?: AxiosRequestConfig,
   ): Promise<any> {
-    BaseProxy.__validateRequestType(requestType)
+    const method = BaseProxy.__validateRequestType(requestType)
     this.beforeSubmit()
     return new Promise((resolve, reject) => {
       const data = this.__hasFiles(form) ? objectToFormData(form) : form
-      this.$http[requestType](this.__getParameterString(url), data, config)
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.$http[method](this.__getParameterString(url), data, config)
         .then((response: AxiosResponse) => {
           this.onSuccess()
           const { data } = response
@@ -124,7 +122,7 @@ class BaseProxy {
     return `${url}${query}`
   }
 
-  private static __validateRequestType(requestType: Method): void {
+  private static __validateRequestType(requestType: Method): string {
     const requestTypes: Array<string> = [
       'get',
       'delete',
@@ -139,6 +137,7 @@ class BaseProxy {
           `must be one of: \`${requestTypes.join('`, `')}\`.`,
       )
     }
+    return requestType.toLowerCase()
   }
 
   private __hasFiles(form: any): boolean {

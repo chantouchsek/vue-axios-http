@@ -1,7 +1,7 @@
 export function objectToFormData(
-  object,
+  object: any,
   formData = new FormData(),
-  parent = null,
+  parent = '',
 ): FormData {
   if (object === null || object === 'undefined' || object.length === 0) {
     formData.append(parent, object)
@@ -15,11 +15,11 @@ export function objectToFormData(
   return formData
 }
 
-function getKey(parent, property) {
+function getKey(parent: any, property: any) {
   return parent ? parent + '[' + property + ']' : property
 }
 
-function appendToFormData(formData, key, value) {
+function appendToFormData(formData: FormData, key: string, value: any) {
   if (value instanceof Date) {
     return formData.append(key, value.toISOString())
   }

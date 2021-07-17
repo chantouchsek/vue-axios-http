@@ -54,9 +54,9 @@ class Validator {
     return this.has(field) ? this.missed(field) : null
   }
 
-  any(fields = [], returnObject?: boolean): boolean | string[] | any {
+  any(fields: string[] = [], returnObject?: boolean): boolean | string[] | any {
     if (returnObject) {
-      const errors = {}
+      const errors: any = {}
       if (!fields.length) {
         return {}
       }
@@ -66,7 +66,7 @@ class Validator {
     if (!fields.length) {
       return Object.keys(this.errors).length > 0
     }
-    const errors = {}
+    const errors: any = {}
     fields.forEach((key: string) => (errors[key] = this.get(key)))
     return Object.keys(errors).length > 0
   }
