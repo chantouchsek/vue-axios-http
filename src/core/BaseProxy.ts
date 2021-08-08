@@ -5,10 +5,9 @@ import {
   Method,
   AxiosRequestConfig,
 } from 'axios'
-import { isArray, isFile } from '../util/objects'
 import type { Errors } from '..'
 import Validator from './Validator'
-import { objectToFormData } from '../util/formData'
+import { hasFiles, objectToFormData } from '../util/formData'
 import qs, { ParsedQs } from 'qs'
 import { removeDoubleSlash } from '../util/string'
 
@@ -66,7 +65,7 @@ class BaseProxy {
    * Alternative of find method
    * @param {string | number} id
    */
-  getOne<T>(id: string | number) {
+  getOne<T>(id: number | string) {
     return this.find<T>(id)
   }
 
@@ -180,7 +179,7 @@ class BaseProxy {
     const method = BaseProxy.__validateRequestType(requestType)
     this.beforeSubmit()
     return new Promise((resolve, reject) => {
-      const data = this.__hasFiles(form) ? objectToFormData(form) : form
+      const data = hasFiles(form) ? objectToFormData(form) : form
       const url = parameter
         ? `/${this.endpoint}/${parameter}`
         : `/${this.endpoint}`
@@ -237,44 +236,6 @@ class BaseProxy {
       )
     }
     return requestType.toLowerCase()
-  }
-
-  private __hasFiles(form: any): boolean {
-    for (const property in form) {
-      if (!form.hasOwnProperty(property)) {
-        return false
-      }
-      if (typeof window === 'undefined') {
-        return false
-      }
-      if (this.__hasFilesDeep(form[property])) {
-        return true
-      }
-    }
-    return false
-  }
-
-  private __hasFilesDeep(object: any): boolean {
-    if (object === null) {
-      return false
-    }
-    if (typeof object === 'object') {
-      for (const key in object) {
-        if (object.hasOwnProperty(key)) {
-          if (isFile(object[key])) {
-            return true
-          }
-        }
-      }
-    }
-    if (isArray(object)) {
-      for (const key in object) {
-        if (object.hasOwnProperty(key)) {
-          return this.__hasFilesDeep(object[key])
-        }
-      }
-    }
-    return isFile(object)
   }
 
   /**
