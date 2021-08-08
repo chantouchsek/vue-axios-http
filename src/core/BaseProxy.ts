@@ -22,9 +22,9 @@ class BaseProxy {
   public parameters: any | any[]
   public readonly endpoint: string
   public static $http: AxiosInstance | undefined
-  public static $errorsKeyName = 'errors'
+  public static $errorsKey = 'errors'
 
-  constructor(endpoint: string, parameters?: any | any[]) {
+  constructor(endpoint: string, parameters?: ParametersType) {
     this.endpoint = endpoint
     this.parameters = parameters
     this.errors = Validator
@@ -34,60 +34,157 @@ class BaseProxy {
     return <AxiosInstance>BaseProxy.$http
   }
 
-  get $errorsKeyName(): string {
-    return BaseProxy.$errorsKeyName
+  get $errorsKey(): string {
+    return BaseProxy.$errorsKey
   }
 
-  all(): Promise<any> {
-    return this.submit('get', `/${this.endpoint}`)
+  /**
+   * Get all or by pagination
+   */
+  all<T>(): Promise<T> {
+    return this.submit<T>('get')
   }
 
-  find(id: number | string): Promise<any> {
-    return this.submit('get', `/${this.endpoint}/${id}`)
+  /**
+   * Alternative of all method
+   */
+  getMany<T>(): Promise<T> {
+    return this.all<T>()
   }
 
-  post(payload: any, config?: AxiosRequestConfig): Promise<any> {
-    return this.submit('post', `/${this.endpoint}`, payload, config)
+  /**
+   * Find a record by id
+   * @param {string|number} id
+   */
+  find<T>(id: number | string): Promise<any> {
+    return this.submit<T>('get', id)
   }
 
-  store(payload: any, config?: AxiosRequestConfig): Promise<any> {
-    return this.post(payload, config)
+  /**
+   * Alternative of find method
+   * @param {string | number} id
+   */
+  getOne<T>(id: string | number): Promise<T> {
+    return this.find<T>(id)
   }
 
-  put(id: string | number, payload: any): Promise<any> {
-    return this.submit('put', `/${this.endpoint}/${id}`, payload)
+  /**
+   * Create record
+   * @param {Object|string} payload
+   * @param {AxiosRequestConfig} config
+   */
+  post<T>(payload: any, config?: AxiosRequestConfig): Promise<T> {
+    return this.submit<T>('post', '', payload, config)
   }
 
-  putWithFile(
+  /**
+   * Alternative of post method
+   * @param payload
+   * @param {AxiosRequestConfig} config
+   */
+  store<T>(payload: any, config?: AxiosRequestConfig): Promise<T> {
+    return this.post<T>(payload, config)
+  }
+
+  /**
+   * Alternative of store method
+   * @param payload
+   * @param {AxiosRequestConfig} config
+   */
+  create<T>(payload: any, config?: AxiosRequestConfig): Promise<T> {
+    return this.store<T>(payload, config)
+  }
+
+  /**
+   * Update record by id using PUT method
+   * @param {string|number} id
+   * @param {Object|string} payload
+   */
+  put<T>(id: string | number, payload: any): Promise<T> {
+    return this.submit<T>('put', `/${id}`, payload)
+  }
+
+  /**
+   * Alternative of put method
+   * @param {string|number} id
+   * @param {Object|string} payload
+   */
+  replace<T>(id: string | number, payload?: any): Promise<T> {
+    return this.put<T>(id, payload)
+  }
+
+  /**
+   * This method helpful for laravel developer
+   * @param {string|number} id
+   * @param payload
+   * @param config
+   */
+  putWithFile<T>(
     id: string | number,
     payload: any,
     config?: AxiosRequestConfig,
-  ): Promise<any> {
+  ): Promise<T> {
     payload._method = 'put'
-    return this.submit('post', `/${this.endpoint}/${id}`, payload, config)
+    return this.submit<T>('post', `/${id}`, payload, config)
   }
 
-  patch(id: string | number, payload: any): Promise<any> {
-    return this.submit('patch', `/${this.endpoint}/${id}`, payload)
+  /**
+   * Update record by id
+   * @param id
+   * @param payload
+   */
+  patch<T>(id: string | number, payload: any): Promise<any> {
+    return this.submit<T>('patch', `/${id}`, payload)
   }
 
-  delete(id: string | number): Promise<any> {
-    return this.submit('delete', `/${this.endpoint}/${id}`)
+  /**
+   * Alternative of path method
+   * @param {string|number} id
+   * @param {Object|string} payload
+   */
+  update<T>(id: string | number, payload?: any): Promise<T> {
+    return this.patch<T>(id, payload)
   }
 
-  submit(
+  /**
+   * Delete record by id
+   * @param {string|number} id
+   */
+  delete<T>(id: string | number): Promise<T> {
+    return this.submit<T>('delete', `/${id}`)
+  }
+
+  /**
+   * Alternative of delete method
+   * @param {string|number} id
+   */
+  remove<T>(id: string | number): Promise<T> {
+    return this.delete(id)
+  }
+
+  /**
+   * Main endpoint method to handle requests
+   * @param requestType
+   * @param {string} url
+   * @param {Object|string} form
+   * @param {AxiosRequestConfig} config
+   */
+  submit<T>(
     requestType: Method,
-    url: string,
+    url?: string | number,
     form?: any,
     config?: AxiosRequestConfig,
-  ): Promise<any> {
+  ): Promise<T> {
     const method = BaseProxy.__validateRequestType(requestType)
     this.beforeSubmit()
     return new Promise((resolve, reject) => {
       const data = this.__hasFiles(form) ? objectToFormData(form) : form
+      const url1 = url ? `/${this.endpoint}/${url}` : `/${this.endpoint}`
+      const endpoint = this.__getParameterString(url1)
+      console.info('endpoint', endpoint)
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      this.$http[method](this.__getParameterString(url), data, config)
+      this.$http[method](endpoint, data, config)
         .then((response: AxiosResponse) => {
           this.onSuccess()
           const { data } = response
@@ -101,7 +198,7 @@ class BaseProxy {
             const { data, status } = response
             if (status === UNPROCESSABLE_ENTITY) {
               const errors = {}
-              Object.assign(errors, data[this.$errorsKeyName])
+              Object.assign(errors, data[this.$errorsKey])
               this.onFail(errors)
               validator.fill(errors)
             }
@@ -112,7 +209,6 @@ class BaseProxy {
         })
     })
   }
-
   private __getParameterString(url: string): string {
     const query = qs.stringify(this.parameters, {
       encode: false,
@@ -121,7 +217,6 @@ class BaseProxy {
     })
     return `${url}${query}`
   }
-
   private static __validateRequestType(requestType: Method): string {
     const requestTypes: Array<string> = [
       'get',
@@ -139,7 +234,6 @@ class BaseProxy {
     }
     return requestType.toLowerCase()
   }
-
   private __hasFiles(form: any): boolean {
     for (const property in form) {
       if (!form.hasOwnProperty(property)) {
@@ -154,12 +248,10 @@ class BaseProxy {
     }
     return false
   }
-
   private __hasFilesDeep(object: any): boolean {
     if (object === null) {
       return false
     }
-
     if (typeof object === 'object') {
       for (const key in object) {
         if (object.hasOwnProperty(key)) {
@@ -169,7 +261,6 @@ class BaseProxy {
         }
       }
     }
-
     if (isArray(object)) {
       for (const key in object) {
         if (object.hasOwnProperty(key)) {
@@ -177,10 +268,13 @@ class BaseProxy {
         }
       }
     }
-
     return isFile(object)
   }
 
+  /**
+   * Set parameters by keys
+   * @param {Object} parameters
+   */
   setParameters(parameters: ParametersType): this {
     Object.keys(parameters).forEach((key) => {
       this.parameters[key] = parameters[key]
@@ -188,6 +282,11 @@ class BaseProxy {
     return this
   }
 
+  /**
+   * Set parameters by key
+   * @param {string} parameter
+   * @param {Object|string|Array} value
+   */
   setParameter(parameter: string, value?: any): this {
     if (!value) {
       const options = {
@@ -202,6 +301,10 @@ class BaseProxy {
     return this
   }
 
+  /**
+   * Remove parameters by keys
+   * @param {Array<Object>>} parameters
+   */
   removeParameters(parameters = [] as any[]): this {
     if (!parameters.length) {
       this.parameters = []
@@ -213,16 +316,27 @@ class BaseProxy {
     return this
   }
 
-  removeParameter(parameter: any): this {
+  /**
+   * Remove parameters
+   * @param {string} parameter
+   */
+  removeParameter(parameter: string): this {
     delete this.parameters[parameter]
     return this
   }
 
-  onFail(errors: ParametersType): void {
+  /**
+   * Fill errors on fails passed
+   * @param {Object} errors
+   */
+  onFail(errors: ParametersType) {
     this.errors.fill(errors)
   }
 
-  beforeSubmit(): void {
+  /**
+   * Clean up errors and set processing
+   */
+  beforeSubmit() {
     if (!this.$http) {
       throw new Error('Vue Api Queries, No http library provided.')
     }
@@ -234,7 +348,10 @@ class BaseProxy {
     validator.successful = false
   }
 
-  onSuccess(): void {
+  /**
+   * Clean up errors and set success on after request
+   */
+  onSuccess() {
     this.errors.processing = false
     this.errors.successful = true
     validator.processing = false

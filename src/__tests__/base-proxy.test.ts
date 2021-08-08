@@ -142,6 +142,7 @@ describe('BaseProxy', () => {
     })
     expect(data).toEqual(items)
   })
+
   it('it should be able to remove parameter(s)', async () => {
     const items = [
       { first_name: 'Dara', last_name: 'Hok', id: 1 },
@@ -156,6 +157,7 @@ describe('BaseProxy', () => {
       .all()
     expect(data).toEqual(items)
   })
+
   it('it should accept query params as object', async () => {
     const items = [
       { first_name: 'Dara', last_name: 'Hok', id: 1 },
@@ -179,7 +181,7 @@ describe('BaseProxy', () => {
 
   it('it should find an item by id', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
-    mockAdapter.onGet('/posts/' + 1).reply(200, { data: item })
+    mockAdapter.onGet('/posts' + 1).reply(200, { data: item })
     try {
       const { data } = await proxy.find(1)
       expect(data).toEqual(item)
@@ -242,7 +244,7 @@ describe('BaseProxy', () => {
       villages: ['testBar1', 'testBar2'],
       date: new Date(Date.UTC(2012, 3, 13, 2, 12)),
     }
-    mockAdapter.onPost('/posts/' + 1).reply((request) => {
+    mockAdapter.onPost('/posts' + 1).reply((request) => {
       expect(request.data).toBeInstanceOf(FormData)
       expect(request.data.get('user[name]')).toBe('testFoo')
       expect(request.data.get('user[villages][0]')).toBe('testBar1')
@@ -317,7 +319,7 @@ describe('BaseProxy', () => {
 
   it('it should be able to put item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
-    mockAdapter.onPut('/posts/' + 1).reply(200, { data: item })
+    mockAdapter.onPut('/posts' + 1).reply(200, { data: item })
     try {
       const { data } = await proxy.put(item.id, item)
       expect(data).toEqual(item)
@@ -328,7 +330,7 @@ describe('BaseProxy', () => {
 
   it('it should be able to patch item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
-    mockAdapter.onPatch('/posts/' + 1).reply(200, { data: item })
+    mockAdapter.onPatch('posts' + 1).reply(200, { data: item })
     try {
       const { data } = await proxy.patch(item.id, item)
       expect(data).toEqual(item)
@@ -339,7 +341,7 @@ describe('BaseProxy', () => {
 
   it('it should be able to patch item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
-    mockAdapter.onDelete('/posts/' + 1).reply(200, { data: item })
+    mockAdapter.onDelete('/posts' + 1).reply(200, { data: item })
     try {
       const { data } = await proxy.delete(item.id)
       expect(data).toEqual(item)

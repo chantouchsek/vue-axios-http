@@ -26,5 +26,11 @@ class VueApiQueries {
     })
   }
 }
-export { BaseProxy, BaseTransformer, PaginationTransformer, Validator }
+export {
+  Validator,
+  BaseProxy,
+  BaseTransformer,
+  PaginationTransformer,
+  BaseProxy as BaseService,
+}
 export default new VueApiQueries()

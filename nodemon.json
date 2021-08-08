@@ -1,5 +1,5 @@
 {
-  "watch": ["src", "types", "@types"],
+  "watch": ["src", "types", "@types", "nuxt"],
   "ext": "ts",
-  "exec": "npm run watch && npm link"
+  "exec": "yarn watch && yarn link"
 }
