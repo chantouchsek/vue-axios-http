@@ -190,7 +190,7 @@ describe('BaseProxy', () => {
     }
   })
 
-  it('it should find an item by id', async () => {
+  it('it should create a item by post', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPost('/posts').reply(201, { data: item })
     try {
