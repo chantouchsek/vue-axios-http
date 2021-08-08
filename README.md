@@ -93,7 +93,7 @@ Vue.use(VueApiQueries)
 
 ### Note
 
-Error response must look like:
+Error response must look like: or base on **errorProperty** from config
 
 ```json
 {
@@ -118,6 +118,7 @@ Validator                   | Description
 **any()**                   | check if any errors exist.
 **get(field)**              | get specific field.
 **all()**                   | get all errors.
+**count()**                 | get errors count.
 **fill(errors = {})**       | fill the errors object.
 **flush()**                 | clear all errors.
 **clear(field)**            | clear specific error by field name.
@@ -125,7 +126,7 @@ Validator                   | Description
 
 ## Using with Vuex
 
-1.Create proxies folder
+1.Create **proxies** folder or your prefer folder name for this
 
 ``~/proxies/NewsProxy.js``
 
