@@ -13,7 +13,8 @@
       "@nuxt/types",
       "@types/jest",
       "axios",
-      "axios-mock-adapter"
+      "axios-mock-adapter",
+      "@types/qs"
     ]
   },
   "include": ["src"],

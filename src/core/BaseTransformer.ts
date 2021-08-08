@@ -2,19 +2,22 @@ import snakeCaseKeys from 'snakecase-keys'
 import camelcaseKeys from 'camelcase-keys'
 
 class BaseTransformer {
-  static fetchCollection(items: Array<any>, camelKey?: boolean): Array<any> {
-    return items.map((item: any) => this.fetch(item, camelKey))
+  static fetchCollection<T>(items: T[], camelKey?: boolean): T[] {
+    return items.map((item: T) => this.fetch(item, camelKey))
   }
 
-  static sendCollection(items: Array<any>, snakeKey?: boolean): Array<any> {
-    return items.map((item: any) => this.send(item, snakeKey))
+  static sendCollection<T>(
+    items: T[],
+    snakeKey?: boolean,
+  ): ({ [p: string]: any } | T)[] {
+    return items.map((item: T) => this.send(item, snakeKey))
   }
 
-  static fetch(item: any, camelKey?: boolean) {
+  static fetch<T>(item: T, camelKey?: boolean) {
     return camelKey ? camelcaseKeys(item, { deep: true }) : item
   }
 
-  static send(item: any, snakeKey?: boolean) {
+  static send<T>(item: T, snakeKey?: boolean) {
     return snakeKey ? snakeCaseKeys(item) : item
   }
 }

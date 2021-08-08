@@ -11,7 +11,7 @@ class Validator {
     this.errors = {}
   }
 
-  add(attribute: string, message: string): void {
+  add(attribute: string, message: string) {
     if (this.missed(attribute)) {
       this.errors[attribute] = []
     }
@@ -20,11 +20,11 @@ class Validator {
     }
   }
 
-  has(field: any | any[]): boolean {
+  has(field: any | any[]) {
     if (isArray(field)) {
       return is(Object.keys(this.errors), field)
     }
-    let hasError = this.errors.hasOwnProperty(field)
+    let hasError: boolean = this.errors.hasOwnProperty(field)
     if (!hasError) {
       const errors = Object.keys(this.errors).filter(
         (e: string) => e.startsWith(`${field}.`) || e.startsWith(`${field}[`),
@@ -75,11 +75,15 @@ class Validator {
     return this.errors[field] || []
   }
 
-  all(): string | string[] {
+  all() {
     return this.errors
   }
 
-  fill(errors: any): void {
+  count() {
+    return Object.keys(this.errors).length
+  }
+
+  fill(errors: any) {
     for (const error in errors) {
       if (!errors.hasOwnProperty(error)) {
         continue
@@ -91,11 +95,11 @@ class Validator {
     this.errors = errors
   }
 
-  flush(): void {
+  flush() {
     this.errors = {}
   }
 
-  clear(attribute?: string | string[]): void {
+  clear(attribute?: string | string[]) {
     if (!attribute) {
       return this.flush()
     }
@@ -124,11 +128,11 @@ class Validator {
     this.fill(errors)
   }
 
-  isValid(): boolean {
+  isValid() {
     return !this.any()
   }
 
-  onKeydown(event: any, prefix?: string): void {
+  onKeydown(event: any, prefix?: string) {
     const { name } = event.target
     if (!name) return
     const name2 = prefix ? `${prefix}.${name}` : null

@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueApiQueries, { Validator, BaseProxy } from 'vue-api-queries'
 
-const errorsKeyName = '<%= options.errorsKeyName %>'
+const errorProperty = '<%= options.errorProperty %>'
 
-export default function (ctx, inject) {
+export default function (ctx) {
   Vue.use(VueApiQueries)
   ctx.$errors = Validator
   BaseProxy.$http = ctx.$axios
-  BaseProxy.$errorsKeyName = errorsKeyName || 'errors'
-  inject('queries', BaseProxy)
+  BaseProxy.$errorProperty = errorProperty || 'errors'
+  // inject('queries', BaseProxy)
 }

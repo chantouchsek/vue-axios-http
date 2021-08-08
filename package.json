@@ -1,6 +1,6 @@
 {
   "name": "vue-api-queries",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Elegant and simple way to build requests for REST API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,12 +10,13 @@
     "test": "jest --env=jsdom",
     "test:watch": "jest --watchAll",
     "test:watch:jsdom": "jest --watchAll --env=jsdom",
-    "build": "npm run clean && tsc",
+    "build": "yarn clean && tsc",
     "watch": "tsc -w",
-    "start": "npm link && nodemon",
+    "start": "yarn link && nodemon",
     "semantic-release": "semantic-release",
-    "prepublish": "npm run build",
-    "clean": "rimraf dist"
+    "prepublish": "yarn build",
+    "clean": "rimraf dist",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -39,51 +40,41 @@
     "url": "https://github.com/chantouchsek/vue-api-queries/issues"
   },
   "homepage": "https://github.com/chantouchsek/vue-api-queries#readme",
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm test",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@nuxt/types": "^2.14.7",
-    "@nuxt/typescript-build": "latest",
-    "@nuxt/typescript-runtime": "latest",
-    "@nuxtjs/auth-next": "^5.0.0-1602966760.822bc05",
-    "@nuxtjs/axios": "^5.12.2",
-    "@nuxtjs/eslint-config-typescript": "latest",
     "@types/escape-string-regexp": "^2.0.1",
     "@types/jest": "^26.0.14",
     "@types/lodash.merge": "^4.6.6",
     "@types/node": "^14.11.10",
+    "@types/qs": "^6.9.7",
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.4.1",
+    "@vue/test-utils": "^1.2.2",
+    "axios": "^0.21.1",
     "axios-mock-adapter": "^1.18.2",
-    "bootstrap-vue": "^2.17.3",
     "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.13.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.3.1",
-    "husky": "^4.3.0",
-    "jest": "^26.5.3",
+    "husky": "^7.0.1",
+    "jest": "^27.0.6",
     "nodemon": "^2.0.5",
-    "nuxt-edge": "^2.14.8-26717802.265d0e7a",
+    "nuxt": "^2.15.7",
     "prettier": "^2.1.2",
     "rimraf": "^3.0.2",
     "semantic-release": "^17.2.1",
-    "ts-jest": "^26.4.1",
-    "typescript": "^4.0.3"
+    "ts-jest": "^27.0.4",
+    "typescript": "^4.3.5"
   },
   "files": [
     "dist",
     "nuxt"
   ],
   "dependencies": {
-    "axios": "^0.21.1",
-    "camelcase-keys": "^7.0.0",
+    "camelcase-keys": "^6.2.2",
     "lodash.merge": "^4.6.2",
     "qs": "^6.9.6",
     "snakecase-keys": "^4.0.2"
