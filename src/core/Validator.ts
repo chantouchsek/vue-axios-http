@@ -75,8 +75,12 @@ class Validator {
     return this.errors[field] || []
   }
 
-  all(): string | string[] {
+  all() {
     return this.errors
+  }
+
+  count() {
+    return Object.keys(this.errors).length
   }
 
   fill(errors: any) {

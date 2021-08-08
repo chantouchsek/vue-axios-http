@@ -44,7 +44,7 @@ function appendToFormData(formData: FormData, key: string, value: any) {
 
   if (isArray(value) && hasFilesDeep(value)) {
     for (let i = 0; i < value.length; i++) {
-      formData.append(key + '[' + i + ']', value[i])
+      formData.append(key + '[' + i + ']', value[i], value[i].name)
     }
     return formData
   }
