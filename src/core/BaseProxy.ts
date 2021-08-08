@@ -14,6 +14,7 @@ import { removeDoubleSlash } from '../util/string'
 
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
+
 export interface ParametersType {
   [key: string]: any
 }
@@ -210,6 +211,7 @@ class BaseProxy {
         })
     })
   }
+
   private __getParameterString(url: string): string {
     const query = qs.stringify(this.parameters, {
       encode: false,
@@ -218,6 +220,7 @@ class BaseProxy {
     })
     return `${url}${query}`
   }
+
   private static __validateRequestType(requestType: Method): string {
     const requestTypes: Array<string> = [
       'get',
@@ -235,6 +238,7 @@ class BaseProxy {
     }
     return requestType.toLowerCase()
   }
+
   private __hasFiles(form: any): boolean {
     for (const property in form) {
       if (!form.hasOwnProperty(property)) {
@@ -249,6 +253,7 @@ class BaseProxy {
     }
     return false
   }
+
   private __hasFilesDeep(object: any): boolean {
     if (object === null) {
       return false
