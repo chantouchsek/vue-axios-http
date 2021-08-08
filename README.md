@@ -6,14 +6,16 @@
 [![npm](https://img.shields.io/npm/dt/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
 [![npm](https://img.shields.io/npm/dm/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
 
-🔥  If you use Laravel, this package matches perfectly with [andersao/l5-repository](https://github.com/andersao/l5-repository).
+🔥 If you use Laravel, this package matches perfectly
+with [andersao/l5-repository](https://github.com/andersao/l5-repository).
 
-This package helps you quickly to build requests for REST API. Move your logic and backend requests to dedicated classes. Keep your code clean and elegant.
+This package helps you quickly to build requests for REST API. Move your logic and backend requests to dedicated
+classes. Keep your code clean and elegant.
 
 Wouldn't it be great if you could just use your back end to validate forms on the front end? This package provides a
- `BaseProxy` class that does exactly that. It can post itself to a configured endpoint and manage errors. The class
-  is meant to be used with a Laravel back end, and it doesn't limit that you need only to work with laravel, Ruby on
-   Rail, NodeJs, ExpressJs, or any other languages.
+`BaseProxy` class that does exactly that. It can post itself to a configured endpoint and manage errors. The class is
+meant to be used with a Laravel back end, and it doesn't limit that you need only to work with laravel, Ruby on Rail,
+NodeJs, ExpressJs, or any other languages.
 
 Take a look at the [usage section](#usage) to view a detailed example on how to use it.
 
@@ -24,6 +26,7 @@ You can install the package via yarn (or npm):
 ```npm
 npm install vue-api-queries
 ```
+
 ```yarn
 yarn add vue-api-queries
 ```
@@ -43,32 +46,40 @@ Put it on top of axios module
 
 ```js
 export default {
-    modules: [
-       'vue-api-queries/nuxt',
-       '@nuxtjs/axios',
-    ]
+  modules: [
+    // simple usage
+    'vue-api-queries/nuxt',
+    // With options
+    ['vue-api-queries/nuxt', { errorsKeyName: 'errors' }],
+    '@nuxtjs/axios',
+  ],
+  apiQueries: { errorsKeyName: 'errors' },
 }
 ```
 
 ### Note:
+
 `baseURL` is required.
 
 You can define `baseURL` at .env just one of them
+
 ```bash
 API_URL=http://localhost::3000/api
 API_HOST=http://localhost::3000/api
 ```
 
 if your axios already defined in `nuxt.config.js`
+
 ```js
 export default {
-    axios: {
-        baseURL: process.env.API_URL
-    }
+  axios: {
+    baseURL: process.env.API_URL
+  }
 }
 ```
 
 ### Advance usage
+
 -------------- Todo --------------
 
 ### Vue plugins
@@ -81,14 +92,16 @@ Vue.use(VueApiQueries)
 ```
 
 ### Note
-Error response must look like: 
+
+Error response must look like:
+
 ```json
 {
-    "errors": {
-        "field": [
-            "The field is required."
-        ]
-    }
+  "errors": {
+    "field": [
+      "The field is required."
+    ]
+  }
 }
 ```
 
@@ -131,6 +144,7 @@ export default NewsProxy
 2.Store
 
 - Create news store
+
 1. actions.js
 2. getters.js
 3. mutation-types.js
@@ -139,6 +153,7 @@ export default NewsProxy
 
 ---
 actions.js
+
 ```js
 import { ALL } from './mutation-types'
 import { NewsProxy } from '~/proxies'
@@ -170,8 +185,10 @@ export default {
   all
 }
 ```
+
 ---
 getters.js
+
 ```js
 export default {
   all: (state) => state.all
@@ -180,13 +197,16 @@ export default {
 
 ---
 mutation-types.js
+
 ```js
 export const ALL = 'ALL'
 
 export default { ALL }
 ```
+
 ---
 mutations.js
+
 ```js
 import { ALL } from './mutation-types'
 
@@ -198,54 +218,60 @@ export default {
   }
 }
 ```
+
 ---
 state.js
+
 ```js
 export default () => ({
   all: [],
   pagination: {}
 })
 ```
+
 ## How to call in components or pages
+
 - news.vue pages
 
 It can be called in `mounted()` or `asyncData()`
 
 - `asyncData()`
+
 ```js
 export default {
-    async asyncData({ app, store }) {
-        const { id = null } = app.$auth.user
-        await store.dispatch('news/all', {
-          fn: (proxy) => {
-            proxy
-              .setParameters({
-                userId: id,
-                include: ['categories']
-              })
-              .removeParameters(['page', 'limit'])
-          }
-        })
-    }
+  async asyncData({ app, store }) {
+    const { id = null } = app.$auth.user
+    await store.dispatch('news/all', {
+      fn: (proxy) => {
+        proxy
+          .setParameters({
+            userId: id,
+            include: ['categories']
+          })
+          .removeParameters(['page', 'limit'])
+      }
+    })
+  }
 }
 ```
 
 - `mounted()`
+
 ```js
 export default {
-    mounted() {
-        const { id = null } = this.$auth.user
-        this.$store.dispatch('news/all', {
-          fn: (proxy) => {
-            proxy
-              .setParameters({
-                userId: id,
-                include: ['categories']
-              })
-              .removeParameters(['page', 'limit'])
-          }
-        })
-    }
+  mounted() {
+    const { id = null } = this.$auth.user
+    this.$store.dispatch('news/all', {
+      fn: (proxy) => {
+        proxy
+          .setParameters({
+            userId: id,
+            include: ['categories']
+          })
+          .removeParameters(['page', 'limit'])
+      }
+    })
+  }
 }
 ```
 
@@ -289,6 +315,7 @@ const parameters = {
 const { data } = proxy.setParameters(parameters).all()
 this.data = data
 ```
+
 **Note**: Query object above will transform into query string like:
 
 ```text
@@ -300,24 +327,32 @@ if setParameter that value is empty or null it will remove that param for query 
 #### setParameter()
 
 #### Example 1
+
 ```js
 const proxy = new ExampleProxy()
 const { data } = await proxy.setParameter('page', 1).all()
 this.data = data
 ```
+
 Expected will be:
+
 ```json
-{ "page": 1 }
+{
+  "page": 1
+}
 ```
 
 #### Example 2
+
 ```js
 const proxy = new ExampleProxy()
 const queryString = 'limit=10&page=1&search[name]=hello'
 const { data } = await proxy.setParameter(queryString).all()
 this.data = data
 ```
+
 Expected will be:
+
 ```json
 {
   "limit": 10,
@@ -340,25 +375,25 @@ import { NewsProxy } from '~/proxies'
 const proxy = new NewsProxy()
 
 export default {
-    methods: {
-        async fetchNews(id) {
-            try {
-              const { data } = await proxy.find(id)
-              this.detail = data
-            } catch (e) {
-              console.log(e)
-            }
-        }
-    },
-    mounted() {
-        this.fetchNews(this.$route.params.id)
+  methods: {
+    async fetchNews(id) {
+      try {
+        const { data } = await proxy.find(id)
+        this.detail = data
+      } catch (e) {
+        console.log(e)
+      }
     }
+  },
+  mounted() {
+    this.fetchNews(this.$route.params.id)
+  }
 }
 ```
 
 ## Validations
 
-Can use `vue-vlidator` for client-side validator that inspired by Laravel. 
+Can use `vue-vlidator` for client-side validator that inspired by Laravel.
 [Chantouch/vue-vlidator](https://github.com/Chantouch/vue-vlidator)
 
 ### Errors methods available
@@ -372,44 +407,44 @@ Method                           | Description
 **has(attributes)**                        | To check multiple attributes given have any errors
 **first(attribute)**                        | To get errors message by an attribute
 
-
 ## How to use in vue component
 
 ```vue
+
 <template>
-  <v-form v-model="valid" lazy-validation @keydown.native="$errors.onKeydown" @submit.prevent='submit'>
+  <v-form v-model='valid' lazy-validation @keydown.native='$errors.onKeydown' @submit.prevent='submit'>
     <v-container>
       <v-row>
-        <v-col cols="12" md="4">
+        <v-col cols='12' md='4'>
           <v-text-field
-            v-model="firstname"
+            v-model='firstname'
             :error-messages="$errors.first(['firstname'])"
-            :counter="10"
-            label="First name"
+            :counter='10'
+            label='First name'
             required
-            name="firstname"
+            name='firstname'
           />
         </v-col>
-        <v-col cols="12" md="4">
+        <v-col cols='12' md='4'>
           <v-text-field
-            v-model="lastname"
-            :counter="10"
-            label="Last name"
+            v-model='lastname'
+            :counter='10'
+            label='Last name'
             required
             :error-messages="$errors.first(['lastname'])"
           />
         </v-col>
-        <v-col cols="12" md="4">
+        <v-col cols='12' md='4'>
           <v-text-field
-            v-model="email"
-            :counter="10"
-            label="Email"
+            v-model='email'
+            :counter='10'
+            label='Email'
             required
             :error-messages="$errors.first('email')"
           />
         </v-col>
-        <v-col cols="12" md="4">
-          <v-text-field v-model="email" label="E-mail" required />
+        <v-col cols='12' md='4'>
+          <v-text-field v-model='email' label='E-mail' required />
         </v-col>
       </v-row>
     </v-container>

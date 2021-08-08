@@ -10,6 +10,7 @@ import type { Errors } from '..'
 import Validator from './Validator'
 import { objectToFormData } from '../util/formData'
 import qs, { ParsedQs } from 'qs'
+import { removeDoubleSlash } from '../util/string'
 
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
@@ -34,21 +35,21 @@ class BaseProxy {
     return <AxiosInstance>BaseProxy.$http
   }
 
-  get $errorsKey(): string {
+  get $errorsKey() {
     return BaseProxy.$errorsKey
   }
 
   /**
    * Get all or by pagination
    */
-  all<T>(): Promise<T> {
+  all<T>() {
     return this.submit<T>('get')
   }
 
   /**
    * Alternative of all method
    */
-  getMany<T>(): Promise<T> {
+  getMany<T>() {
     return this.all<T>()
   }
 
@@ -56,7 +57,7 @@ class BaseProxy {
    * Find a record by id
    * @param {string|number} id
    */
-  find<T>(id: number | string): Promise<any> {
+  find<T>(id: number | string) {
     return this.submit<T>('get', id)
   }
 
@@ -64,7 +65,7 @@ class BaseProxy {
    * Alternative of find method
    * @param {string | number} id
    */
-  getOne<T>(id: string | number): Promise<T> {
+  getOne<T>(id: string | number) {
     return this.find<T>(id)
   }
 
@@ -73,7 +74,7 @@ class BaseProxy {
    * @param {Object|string} payload
    * @param {AxiosRequestConfig} config
    */
-  post<T>(payload: any, config?: AxiosRequestConfig): Promise<T> {
+  post<T>(payload: any, config?: AxiosRequestConfig) {
     return this.submit<T>('post', '', payload, config)
   }
 
@@ -82,7 +83,7 @@ class BaseProxy {
    * @param payload
    * @param {AxiosRequestConfig} config
    */
-  store<T>(payload: any, config?: AxiosRequestConfig): Promise<T> {
+  store<T>(payload: any, config?: AxiosRequestConfig) {
     return this.post<T>(payload, config)
   }
 
@@ -91,7 +92,7 @@ class BaseProxy {
    * @param payload
    * @param {AxiosRequestConfig} config
    */
-  create<T>(payload: any, config?: AxiosRequestConfig): Promise<T> {
+  create<T>(payload: any, config?: AxiosRequestConfig) {
     return this.store<T>(payload, config)
   }
 
@@ -100,7 +101,7 @@ class BaseProxy {
    * @param {string|number} id
    * @param {Object|string} payload
    */
-  put<T>(id: string | number, payload: any): Promise<T> {
+  put<T>(id: string | number, payload: any) {
     return this.submit<T>('put', `/${id}`, payload)
   }
 
@@ -109,21 +110,21 @@ class BaseProxy {
    * @param {string|number} id
    * @param {Object|string} payload
    */
-  replace<T>(id: string | number, payload?: any): Promise<T> {
+  replace<T>(id: string | number, payload: any) {
     return this.put<T>(id, payload)
   }
 
   /**
    * This method helpful for laravel developer
    * @param {string|number} id
-   * @param payload
+   * @param {Object} payload
    * @param config
    */
   putWithFile<T>(
     id: string | number,
     payload: any,
     config?: AxiosRequestConfig,
-  ): Promise<T> {
+  ) {
     payload._method = 'put'
     return this.submit<T>('post', `/${id}`, payload, config)
   }
@@ -133,7 +134,7 @@ class BaseProxy {
    * @param id
    * @param payload
    */
-  patch<T>(id: string | number, payload: any): Promise<any> {
+  patch<T>(id: string | number, payload: any) {
     return this.submit<T>('patch', `/${id}`, payload)
   }
 
@@ -142,7 +143,7 @@ class BaseProxy {
    * @param {string|number} id
    * @param {Object|string} payload
    */
-  update<T>(id: string | number, payload?: any): Promise<T> {
+  update<T>(id: string | number, payload: any) {
     return this.patch<T>(id, payload)
   }
 
@@ -150,7 +151,7 @@ class BaseProxy {
    * Delete record by id
    * @param {string|number} id
    */
-  delete<T>(id: string | number): Promise<T> {
+  delete<T>(id: string | number) {
     return this.submit<T>('delete', `/${id}`)
   }
 
@@ -158,30 +159,31 @@ class BaseProxy {
    * Alternative of delete method
    * @param {string|number} id
    */
-  remove<T>(id: string | number): Promise<T> {
-    return this.delete(id)
+  remove<T>(id: string | number) {
+    return this.delete<T>(id)
   }
 
   /**
    * Main endpoint method to handle requests
    * @param requestType
-   * @param {string} url
+   * @param {string} parameter
    * @param {Object|string} form
    * @param {AxiosRequestConfig} config
    */
   submit<T>(
     requestType: Method,
-    url?: string | number,
-    form?: any,
+    parameter?: string | number,
+    form?: T,
     config?: AxiosRequestConfig,
   ): Promise<T> {
     const method = BaseProxy.__validateRequestType(requestType)
     this.beforeSubmit()
     return new Promise((resolve, reject) => {
       const data = this.__hasFiles(form) ? objectToFormData(form) : form
-      const url1 = url ? `/${this.endpoint}/${url}` : `/${this.endpoint}`
-      const endpoint = this.__getParameterString(url1)
-      console.info('endpoint', endpoint)
+      const url = parameter
+        ? `/${this.endpoint}/${parameter}`
+        : `/${this.endpoint}`
+      const endpoint = this.__getParameterString(removeDoubleSlash(url))
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       this.$http[method](endpoint, data, config)
@@ -200,7 +202,6 @@ class BaseProxy {
               const errors = {}
               Object.assign(errors, data[this.$errorsKey])
               this.onFail(errors)
-              validator.fill(errors)
             }
             reject(error)
           } else {
@@ -331,6 +332,7 @@ class BaseProxy {
    */
   onFail(errors: ParametersType) {
     this.errors.fill(errors)
+    validator.fill(errors)
   }
 
   /**
