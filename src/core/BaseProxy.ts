@@ -24,7 +24,7 @@ class BaseProxy {
   public parameters: any | any[]
   public readonly endpoint: string
   public static $http: AxiosInstance | undefined
-  public static $errorsKey = 'errors'
+  public static $errorProperty = 'errors'
 
   constructor(endpoint: string, parameters?: ParametersType) {
     this.endpoint = endpoint
@@ -36,8 +36,8 @@ class BaseProxy {
     return <AxiosInstance>BaseProxy.$http
   }
 
-  get $errorsKey() {
-    return BaseProxy.$errorsKey
+  get $errorProperty() {
+    return BaseProxy.$errorProperty
   }
 
   /**
@@ -201,7 +201,7 @@ class BaseProxy {
             const { data, status } = response
             if (status === UNPROCESSABLE_ENTITY) {
               const errors = {}
-              Object.assign(errors, data[this.$errorsKey])
+              Object.assign(errors, data[this.$errorProperty])
               this.onFail(errors)
             }
             reject(error)

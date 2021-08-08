@@ -50,10 +50,10 @@ export default {
     // simple usage
     'vue-api-queries/nuxt',
     // With options
-    ['vue-api-queries/nuxt', { errorsKeyName: 'errors' }],
+    ['vue-api-queries/nuxt', { errorProperty: 'errors' }],
     '@nuxtjs/axios',
   ],
-  apiQueries: { errorsKeyName: 'errors' },
+  apiQueries: { errorProperty: 'errors' },
 }
 ```
 
