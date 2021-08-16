@@ -193,6 +193,15 @@ describe('BaseProxy', () => {
     expect(data).toEqual(item)
   })
 
+  it('it should create items with bulk', async () => {
+    const item = {
+      bulk: [{ first_name: 'Chantouch', last_name: 'Sek', id: 1 }],
+    }
+    mockAdapter.onPost('/posts/bulk').reply(201, item)
+    const data = await proxy.createMany(item)
+    expect(data).toEqual(item)
+  })
+
   it('transforms the data to a FormData object if there is a File', async () => {
     const file = new File(['hello world!'], 'myfile')
     const form: any = { field1: {}, field2: {}, files: [] }

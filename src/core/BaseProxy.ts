@@ -97,6 +97,14 @@ class BaseProxy {
   }
 
   /**
+   * Create many items
+   * @param {Object} payload
+   */
+  createMany<T>(payload: T): Promise<T> {
+    return this.submit<T>('post', 'bulk', payload)
+  }
+
+  /**
    * Update record by id using PUT method
    * @param {string|number} id
    * @param {Object|string} payload
