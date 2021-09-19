@@ -13,7 +13,10 @@ class BaseTransformer {
     return items.map((item: T) => this.send(item, snakeKey))
   }
 
-  static fetch<T>(item: T, camelKey?: boolean) {
+  static fetch<T extends Record<string, any>>(
+    item: T,
+    camelKey?: boolean,
+  ): T | any {
     return camelKey ? camelcaseKeys(item, { deep: true }) : item
   }
 

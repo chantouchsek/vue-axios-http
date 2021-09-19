@@ -33,4 +33,5 @@ export {
   PaginationTransformer,
   BaseProxy as BaseService,
 }
+export * from './util'
 export default new VueApiQueries()
