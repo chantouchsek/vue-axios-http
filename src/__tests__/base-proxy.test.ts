@@ -27,7 +27,8 @@ describe('BaseProxy', () => {
     try {
       await proxy.getMany()
     } catch (e) {
-      expect(e.message).toBe('Vue Api Queries, No http library provided.')
+      const { message } = e as any
+      expect(message).toBe('Vue Api Queries, No http library provided.')
     }
   })
 
@@ -94,7 +95,8 @@ describe('BaseProxy', () => {
     try {
       await proxy.all()
     } catch (e) {
-      expect(e.message).toBe('Network Error')
+      const { message } = e as any
+      expect(message).toBe('Network Error')
     }
   })
 
@@ -307,7 +309,8 @@ describe('BaseProxy', () => {
     try {
       await proxy.post(item)
     } catch (e) {
-      expect(e.message).toBe('Request failed with status code 422')
+      const { message } = e as any
+      expect(message).toBe('Request failed with status code 422')
     }
     expect(validator.has('first_name')).toBeTruthy()
   })

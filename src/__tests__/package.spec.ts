@@ -1,10 +1,7 @@
 import Vue from 'vue'
 import VueApiQueries from '../'
-import {
-  sleep,
-  addElemWithDataAppToBody,
-  disableTransitions,
-} from '../util/createDom'
+import { addElemWithDataAppToBody, disableTransitions } from '../util/createDom'
+import { sleep } from '../util/promise'
 import { mount } from '@vue/test-utils'
 
 describe('Vue Api Queries', () => {

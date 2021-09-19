@@ -1,11 +1,5 @@
 import { createWrapper } from '@vue/test-utils'
 
-export function sleep(ms: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms)
-  })
-}
-
 export function wrap(vm: any) {
   return createWrapper(vm, {
     attachedToDocument: true,
