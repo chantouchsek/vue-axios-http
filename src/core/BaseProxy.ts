@@ -7,9 +7,8 @@ import {
 } from 'axios'
 import type { Errors } from '..'
 import Validator from './Validator'
-import { hasFiles, objectToFormData } from '../util/formData'
+import { hasFiles, objectToFormData, removeDoubleSlash } from '../util'
 import qs, { ParsedQs } from 'qs'
-import { removeDoubleSlash } from '../util/string'
 
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422

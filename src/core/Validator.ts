@@ -1,4 +1,4 @@
-import { is, isArray } from '../util/objects'
+import { is, isArray } from '../util'
 
 class Validator {
   public errors: any
