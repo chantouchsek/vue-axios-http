@@ -6,7 +6,7 @@ import type { ValidatorType } from '../core/Validator'
 import Validator from '../core/Validator'
 import BaseTransformer from '../core/BaseTransformer'
 import PaginationTransformer from '../core/PaginationTransformer'
-import { merge } from '../util/objects'
+import { merge } from '../util'
 
 let proxy: PostProxy
 let mockAdapter: MockAdapter

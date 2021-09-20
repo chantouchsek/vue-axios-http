@@ -2,7 +2,10 @@ import snakeCaseKeys from 'snakecase-keys'
 import camelcaseKeys from 'camelcase-keys'
 
 class BaseTransformer {
-  static fetchCollection<T>(items: T[], camelKey?: boolean): T[] {
+  static fetchCollection<T>(
+    items: T[],
+    camelKey?: boolean,
+  ): (Record<string, any> | T)[] {
     return items.map((item: T) => this.fetch(item, camelKey))
   }
 
@@ -13,10 +16,7 @@ class BaseTransformer {
     return items.map((item: T) => this.send(item, snakeKey))
   }
 
-  static fetch<T extends Record<string, any>>(
-    item: T,
-    camelKey?: boolean,
-  ): T | any {
+  static fetch<T>(item: T, camelKey?: boolean): T | Record<string, any> {
     return camelKey ? camelcaseKeys(item, { deep: true }) : item
   }
 

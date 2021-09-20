@@ -8,7 +8,8 @@ import {
 import type { Errors } from '..'
 import Validator from './Validator'
 import { hasFiles, objectToFormData, removeDoubleSlash } from '../util'
-import qs, { ParsedQs } from 'qs'
+import qs, { IParseOptions } from 'qs'
+import merge from 'lodash.merge'
 
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
@@ -21,8 +22,13 @@ class BaseProxy {
   public errors: Errors
   public parameters: any | any[]
   public readonly endpoint: string
-  public static $http: AxiosInstance | undefined
+  public static $http?: AxiosInstance
   public static $errorProperty = 'errors'
+  public static $parsedQs: IParseOptions = {
+    comma: true,
+    allowDots: true,
+    ignoreQueryPrefix: true,
+  }
 
   constructor(endpoint: string, parameters?: ParametersType) {
     this.endpoint = endpoint
@@ -36,6 +42,10 @@ class BaseProxy {
 
   get $errorProperty() {
     return BaseProxy.$errorProperty
+  }
+
+  get $parsedQs() {
+    return BaseProxy.$parsedQs
   }
 
   /**
@@ -228,7 +238,7 @@ class BaseProxy {
   }
 
   private static __validateRequestType(requestType: Method): string {
-    const requestTypes: Array<string> = [
+    const requestTypes: string[] = [
       'get',
       'delete',
       'head',
@@ -263,12 +273,12 @@ class BaseProxy {
    */
   setParameter(parameter: string, value?: any): this {
     if (!value) {
-      const options = {
+      const options: IParseOptions = merge(this.$parsedQs, {
         comma: true,
         allowDots: true,
         ignoreQueryPrefix: true,
-      }
-      const params: ParsedQs = qs.parse(parameter, options)
+      })
+      const params = qs.parse(parameter, options)
       return this.setParameters(params)
     }
     this.parameters[parameter] = value
@@ -283,9 +293,9 @@ class BaseProxy {
     if (!parameters.length) {
       this.parameters = []
     } else {
-      parameters.forEach((parameter) => {
+      for (const parameter of parameters) {
         delete this.parameters[parameter]
-      })
+      }
     }
     return this
   }
