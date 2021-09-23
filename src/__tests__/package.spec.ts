@@ -7,7 +7,7 @@ describe('Vue Api Queries', () => {
   disableTransitions()
   addElemWithDataAppToBody()
   Vue.use(VueApiQueries, {
-    errorProperty: 'errors',
+    errorProperty: 'message',
   })
 
   test('Get plugin installed', async () => {

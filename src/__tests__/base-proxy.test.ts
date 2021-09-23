@@ -17,6 +17,7 @@ describe('BaseProxy', () => {
     validator = Validator
     const axios = Axios.create({ baseURL: 'https://mock-api.test' })
     BaseProxy.$http = axios
+    BaseProxy.$errorProperty = 'message'
     proxy = new PostProxy()
     mockAdapter = new MockAdapter(axios)
     mockAdapter.reset()
@@ -304,7 +305,7 @@ describe('BaseProxy', () => {
   it('it should throw errors message when data is not valid', async () => {
     const item = { first_name: null, last_name: 'Sek', id: 1 }
     mockAdapter.onPost('/posts').replyOnce(422, {
-      errors: { first_name: ['The first name field is required'] },
+      message: { first_name: 'The first name field is required' },
     })
     try {
       await proxy.post(item)

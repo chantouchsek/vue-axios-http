@@ -2,6 +2,11 @@ export function isArray(object: any): boolean {
   return Object.prototype.toString.call(object) === '[object Array]'
 }
 
+export function hasOwnProperty(obj: any, key: any) {
+  if (!obj || !key) return false
+  return Object.prototype.hasOwnProperty.call(obj, key)
+}
+
 export function isFile(object: any): boolean {
   if (typeof window === 'undefined') {
     return false
@@ -12,9 +17,9 @@ export function isFile(object: any): boolean {
   return object instanceof File || object instanceof FileList
 }
 
-export function merge(a: any, b: any): string[] {
+export function merge(a: any, b: any): Record<any, any> {
   for (const key in b) {
-    if (Object.prototype.hasOwnProperty.call(b, key)) {
+    if (hasOwnProperty(b, key)) {
       a[key] = cloneDeep(b[key])
     }
   }
@@ -34,7 +39,7 @@ export function cloneDeep(object: any): any {
     const clone: any = []
 
     for (const key in object) {
-      if (Object.prototype.hasOwnProperty.call(object, key)) {
+      if (hasOwnProperty(object, key)) {
         clone[key] = cloneDeep(object[key])
       }
     }
@@ -46,7 +51,7 @@ export function cloneDeep(object: any): any {
     const clone: any = {}
 
     for (const key in object) {
-      if (Object.prototype.hasOwnProperty.call(object, key)) {
+      if (hasOwnProperty(object, key)) {
         clone[key] = cloneDeep(object[key])
       }
     }

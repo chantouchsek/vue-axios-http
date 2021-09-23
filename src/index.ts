@@ -3,7 +3,8 @@ import BaseProxy from './core/BaseProxy'
 import Validator from './core/Validator'
 import BaseTransformer from './core/BaseTransformer'
 import PaginationTransformer from './core/PaginationTransformer'
-import merge from 'lodash.merge'
+import { merge } from './util'
+import _Vue from 'vue'
 
 // augment typings of Vue.js
 import './vue'
@@ -13,29 +14,35 @@ export type { ValidatorType }
 
 class VueApiQueries {
   installed = false
-  install(Vue: any, options: any = {}) {
+  parsedQs = {
+    comma: true,
+    allowDots: true,
+    ignoreQueryPrefix: true,
+  }
+  install(Vue: typeof _Vue, options: any = {}) {
     if (this.installed) return
     this.installed = true
-    const defaultOption = merge(options, {
-      parsedQs: {
-        comma: true,
-        allowDots: true,
-        ignoreQueryPrefix: true,
+    const defaultOption = merge(
+      {
+        parsedQs: this.parsedQs,
+        errorProperty: 'errors',
       },
-      errorProperty: 'errors',
-    })
+      options,
+    )
     const { axios, errorProperty, parsedQs } = defaultOption
     BaseProxy.$http = axios
     BaseProxy.$errorProperty = errorProperty || 'errors'
-    BaseProxy.$parsedQs = parsedQs
+    BaseProxy.$parsedQs = parsedQs || this.parsedQs
     Vue.mixin({
       beforeCreate() {
-        this.$options.$errors = {}
-        Vue.util.defineReactive(this.$options, '$errors', Validator)
+        this.$options.$errors = {} as any
+        Vue.set(this.$options, '$errors', Validator)
         if (!this.$options.computed) {
           this.$options.computed = {}
         }
         this.$options.computed.$errors = function () {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           return this.$options.$errors
         }
       },
