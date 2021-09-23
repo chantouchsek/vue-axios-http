@@ -36,7 +36,9 @@ class VueApiQueries {
     Vue.mixin({
       beforeCreate() {
         this.$options.$errors = {} as any
-        Vue.set(this.$options, '$errors', Validator)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        Vue.util.defineReactive(this.$options, '$errors', Validator)
         if (!this.$options.computed) {
           this.$options.computed = {}
         }
