@@ -189,4 +189,28 @@ describe('Validator', () => {
 
     expect(validator.any(['first_name', 'last_name'], false)).toBeTruthy()
   })
+
+  it('get first by field', () => {
+    const errors = {
+      first_name: ['This first name field is required'],
+      last_name: ['This last name field is required'],
+      age: ['This age field is required'],
+    }
+
+    expect(validator.firstBy(errors, 'age')).toEqual(
+      'This age field is required',
+    )
+  })
+
+  it('get first by without any field', () => {
+    const errors = {
+      first_name: ['This fist name field is required'],
+      last_name: ['This last name field is required'],
+      age: ['This age field is required'],
+    }
+
+    expect(validator.firstBy(errors)).toEqual(
+      'This fist name field is required',
+    )
+  })
 })

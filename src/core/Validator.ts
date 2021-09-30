@@ -46,6 +46,19 @@ class Validator {
     return this.get(field)[0]
   }
 
+  firstBy(obj: Record<string, any>, field = '') {
+    let value
+    if (!field) {
+      value = obj[Object.keys(obj)[0]]
+    } else {
+      value = obj[field]
+    }
+    if (isArray(value)) {
+      return value[0]
+    }
+    return value
+  }
+
   missed(field?: string | string[]): boolean {
     return !this.has(field)
   }
