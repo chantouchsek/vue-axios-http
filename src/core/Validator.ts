@@ -54,7 +54,7 @@ class Validator {
       value = obj[field]
     }
     if (isArray(value)) {
-      return value[0]
+      value = value[0]
     }
     return value
   }

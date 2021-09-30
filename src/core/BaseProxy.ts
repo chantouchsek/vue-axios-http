@@ -1,4 +1,4 @@
-import {
+import type {
   AxiosError,
   AxiosInstance,
   AxiosResponse,
@@ -201,12 +201,11 @@ class BaseProxy {
         ? `/${this.endpoint}/${parameter}`
         : `/${this.endpoint}`
       const endpoint = this.__getParameterString(removeDoubleSlash(url))
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      this.$http[method](endpoint, data, config)
+      const axiosConfig: AxiosRequestConfig = { data, method }
+      this.$http(endpoint, Object.assign({}, config, axiosConfig))
         .then((response: AxiosResponse) => {
           this.onSuccess()
-          const { data } = response
+          const { data } = response || {}
           resolve(data)
         })
         .catch((error: AxiosError) => {
@@ -237,7 +236,7 @@ class BaseProxy {
     return `${url}${query}`
   }
 
-  private static __validateRequestType(requestType: Method): string {
+  private static __validateRequestType(requestType: Method): Method {
     const requestTypes: string[] = [
       'get',
       'delete',
@@ -252,7 +251,7 @@ class BaseProxy {
           `must be one of: \`${requestTypes.join('`, `')}\`.`,
       )
     }
-    return requestType.toLowerCase()
+    return requestType
   }
 
   /**
