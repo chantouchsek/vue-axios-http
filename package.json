@@ -5,7 +5,6 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "nuxt-ts demo",
     "lint": "eslint './src/**/*.{js,ts,tsx}'",
     "test": "jest --env=jsdom",
     "test:watch": "jest --watchAll",
