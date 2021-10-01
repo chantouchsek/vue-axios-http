@@ -187,7 +187,7 @@ class BaseProxy {
    * @param {Object|string} form
    * @param {AxiosRequestConfig} config
    */
-  submit<T>(
+  submit<T = any>(
     requestType: Method,
     parameter?: string | number,
     form?: T,
@@ -201,12 +201,11 @@ class BaseProxy {
         ? `/${this.endpoint}/${parameter}`
         : `/${this.endpoint}`
       const endpoint = this.__getParameterString(removeDoubleSlash(url))
-      const axiosConfig: AxiosRequestConfig = { data, method }
-      this.$http(endpoint, Object.assign({}, config, axiosConfig))
+      config = Object.assign({}, config, { data, method })
+      this.$http(endpoint, config)
         .then((response: AxiosResponse) => {
           this.onSuccess()
-          const { data } = response || {}
-          resolve(data)
+          resolve(response.data)
         })
         .catch((error: AxiosError) => {
           this.errors.processing = false

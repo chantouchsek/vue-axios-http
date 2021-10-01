@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import BaseProxy from '../core/BaseProxy'
 import MockAdapter from 'axios-mock-adapter'
-import PostProxy from '../core/PostPorxy'
+import PostProxy from '../util/PostPorxy'
 import type { ValidatorType } from '../core/Validator'
 import Validator from '../core/Validator'
 import BaseTransformer from '../core/BaseTransformer'

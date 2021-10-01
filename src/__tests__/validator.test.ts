@@ -152,7 +152,7 @@ describe('Validator', () => {
     }
     validator.fill(errors)
     validator.onKeydown(event, 'form')
-    expect(validator.has(['form.name'])).toBeFalsy()
+    expect(validator.has(['form.name', 'name'])).toBeFalsy()
   })
 
   it('can pass array of keys to any method and get back error of specified key', () => {

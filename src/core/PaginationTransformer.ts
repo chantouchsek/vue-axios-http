@@ -17,14 +17,13 @@ export interface PaginationOptions {
   pageStop?: number
   include?: string | string[]
 }
-
 export interface MetaOptions {
   pagination?: PaginationOptions
   include?: string | string[]
 }
 
 class PaginationTransformer extends BaseTransformer {
-  static fetch(meta: MetaOptions | any) {
+  static fetch(meta: MetaOptions | Record<string, any>) {
     if (!meta) {
       meta = { pagination: {}, include: [] }
     }

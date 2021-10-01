@@ -1,4 +1,4 @@
-import { isFile, cloneDeep } from '../util/objects'
+import { isFile, cloneDeep } from '../util'
 
 describe('Object Test', () => {
   // const { window, File } = global

@@ -29,11 +29,16 @@
     "rest",
     "query",
     "builder",
-    "laravel"
+    "laravel",
+    "queries",
+    "vue-api-queries",
+    "vue api queries",
+    "api request"
   ],
   "author": {
     "name": "Chantouch Sek",
-    "email": "chantouchsek.cs83@gmail.com"
+    "email": "chantouchsek.cs83@gmail.com",
+    "url": "https://chantouch.me"
   },
   "license": "ISC",
   "bugs": {
