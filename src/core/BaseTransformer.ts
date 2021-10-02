@@ -6,6 +6,9 @@ class BaseTransformer {
     items: T[],
     camelKey?: boolean,
   ): (Record<string, any> | T)[] {
+    if (!items) {
+      return []
+    }
     return items.map((item: T) => this.fetch(item, camelKey))
   }
 
@@ -13,6 +16,9 @@ class BaseTransformer {
     items: T[],
     snakeKey?: boolean,
   ): ({ [p: string]: any } | T)[] {
+    if (!items) {
+      return []
+    }
     return items.map((item: T) => this.send(item, snakeKey))
   }
 

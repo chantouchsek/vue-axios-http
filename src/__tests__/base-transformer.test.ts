@@ -85,4 +85,12 @@ describe('Base transformer.', () => {
     ]
     expect(BaseTransformer.sendCollection(item, true)).toEqual(transformed)
   })
+  it('should return empty array of null or undefined', function () {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    expect(BaseTransformer.fetchCollection(undefined, true)).toEqual([])
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    expect(BaseTransformer.sendCollection(null, true)).toEqual([])
+  })
 })

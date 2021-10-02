@@ -204,7 +204,7 @@ class BaseProxy {
       this.$http(endpoint, config)
         .then((response: AxiosResponse) => {
           this.onSuccess()
-          resolve(response.data)
+          resolve(response.data || {})
         })
         .catch((error: AxiosError) => {
           this.errors.processing = false
