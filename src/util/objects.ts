@@ -80,7 +80,6 @@ export function isPlainObject(value: any) {
   if (ctor === undefined) return true
 
   const prot = ctor.prototype
-  console.warn('is obj', isObject(prot))
   if (!isObject(prot)) return false
 
   return hasOwnProperty(prot, 'isPrototypeOf')
