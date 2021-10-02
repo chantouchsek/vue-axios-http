@@ -11248,6 +11248,15 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
+vue-api-queries@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/vue-api-queries/-/vue-api-queries-1.1.4.tgz#e6ad78d7d7a4e591e70bb9a2455bd8c150b94690"
+  integrity sha512-79KGszDl4MfsmTFy+/bH8sU5oYtTQP6SMsu8TiidaxG1yeBYluB1JZzObBuzXJb57vhDCaA/zgoEjQ4+sgSPdQ==
+  dependencies:
+    camelcase-keys "^7.0.0"
+    qs "^6.10.1"
+    snakecase-keys "^5.0.0"
+
 vue-client-only@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-client-only/-/vue-client-only-2.1.0.tgz#1a67a47b8ecacfa86d75830173fffee3bf8a4ee3"

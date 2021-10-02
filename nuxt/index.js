@@ -1,8 +1,14 @@
 import { resolve, join } from 'path'
 
 module.exports = function nuxtVueApiQueriesModule(moduleOptions = {}) {
-  const { apiQueries = {} } = this.options
-  const options = Object.assign({}, moduleOptions, apiQueries)
+  const { apiQueries = {}, dev } = this.options
+  const defaultOpts = {
+    debug: dev,
+    onPageChange: true,
+    blockByDefault: true,
+    headerBlockerKey: '',
+  }
+  const options = Object.assign(defaultOpts, moduleOptions, apiQueries)
   this.addPlugin({
     options,
     ssr: true,

@@ -50,12 +50,26 @@ export default {
     // simple usage
     'vue-api-queries/nuxt',
     // With options
-    ['vue-api-queries/nuxt', { errorProperty: 'errors' }],
+    ['vue-api-queries/nuxt', { errorProperty: 'errors', blockDuplicate: false }],
     '@nuxtjs/axios',
   ],
-  apiQueries: { errorProperty: 'errors' },
+  apiQueries: { errorProperty: 'errors', blockDuplicate: false },
 }
 ```
+
+### Options
+
+If `blockDuplicate` enabled, the default option of `axios-duplicate-blocker` will be:
+```js
+{
+  blockDuplicate: false
+  debug: true
+  onPageChange: true
+  blockByDefault: true
+  headerBlockerKey: ''
+}
+```
+you can overwrite it, by adding in config above.
 
 ### Note:
 
