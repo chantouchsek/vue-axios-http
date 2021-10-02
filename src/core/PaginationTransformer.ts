@@ -1,4 +1,5 @@
 import BaseTransformer from './BaseTransformer'
+import { hasOwnProperty } from '../util'
 
 export interface PaginationOptions {
   perPage: number
@@ -25,14 +26,13 @@ export interface MetaOptions {
 class PaginationTransformer extends BaseTransformer {
   static fetch(meta: MetaOptions | Record<string, any>) {
     if (!meta) {
-      meta = { pagination: {}, include: [] }
+      meta = Object.assign({}, meta, { pagination: {}, include: [] })
     }
-    if (!Object.prototype.hasOwnProperty.call(meta, 'pagination')) {
+    if (!hasOwnProperty(meta, 'pagination')) {
       return super.fetch(meta, true)
     }
-    const { pagination = {}, include } = meta
-    const payload = {
-      ...pagination,
+    const { pagination, include } = meta
+    const payload: PaginationOptions = Object.assign({}, pagination, {
       perPage: pagination.per_page,
       totalPages: pagination.total_pages,
       currentPage: pagination.current_page || 1,
@@ -46,7 +46,7 @@ class PaginationTransformer extends BaseTransformer {
       pageStart: 0,
       pageStop: pagination.count,
       include,
-    }
+    })
 
     return super.fetch(payload, true)
   }

@@ -1,4 +1,4 @@
-import { isFile, cloneDeep } from '../util'
+import { isFile, cloneDeep, hasOwnProperty, merge } from '../util'
 
 describe('Object Test', () => {
   // const { window, File } = global
@@ -34,5 +34,15 @@ describe('cloneDeep', () => {
   it('Object is typeof Array', () => {
     const obj = [{ name: 'Chantouch' }]
     expect(cloneDeep(obj)).toBeInstanceOf(Object)
+  })
+  it('Has own property undefined', () => {
+    const obj = [{ name: 'Chantouch' }]
+    expect(hasOwnProperty(obj, undefined)).toBeFalsy()
+  })
+  it('Merge object into object', () => {
+    const obj1 = { name: 'Chantouch' }
+    const obj2 = { email: 'chantouchsek.cs83@gmail.com' }
+    const merged = { email: 'chantouchsek.cs83@gmail.com', name: 'Chantouch' }
+    expect(merge(obj1, obj2)).toEqual(merged)
   })
 })

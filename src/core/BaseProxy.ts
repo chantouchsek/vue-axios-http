@@ -9,7 +9,6 @@ import type { Errors } from '..'
 import Validator from './Validator'
 import { hasFiles, objectToFormData, removeDoubleSlash } from '../util'
 import qs, { IParseOptions } from 'qs'
-import merge from 'lodash.merge'
 
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
@@ -232,14 +231,7 @@ class BaseProxy {
   }
 
   private static __validateRequestType(requestType: Method): Method {
-    const requestTypes: string[] = [
-      'get',
-      'delete',
-      'head',
-      'post',
-      'put',
-      'patch',
-    ]
+    const requestTypes = ['get', 'delete', 'head', 'post', 'put', 'patch']
     if (!requestTypes.includes(requestType)) {
       throw new Error(
         `\`${requestType}\` is not a valid request type, ` +
@@ -267,7 +259,7 @@ class BaseProxy {
    */
   setParameter(parameter: string, value?: any): this {
     if (!value) {
-      const options: IParseOptions = merge(this.$parsedQs, {
+      const options: IParseOptions = Object.assign({}, this.$parsedQs, {
         comma: true,
         allowDots: true,
         ignoreQueryPrefix: true,
