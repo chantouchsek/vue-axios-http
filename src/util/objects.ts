@@ -68,3 +68,20 @@ export function is(errors: any, error: any): boolean {
     ? error.some((w: string) => is(errors, w))
     : errors.includes(error)
 }
+
+export function isObject(value: any) {
+  return Object.prototype.toString.call(value) === '[object Object]'
+}
+
+export function isPlainObject(value: any) {
+  if (!isObject(value)) return false
+
+  const ctor = value.constructor
+  if (ctor === undefined) return true
+
+  const prot = ctor.prototype
+  console.warn('is obj', isObject(prot))
+  if (!isObject(prot)) return false
+
+  return hasOwnProperty(prot, 'isPrototypeOf')
+}

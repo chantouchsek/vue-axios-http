@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import VueApiQueries, { Validator } from 'vue-api-queries'
 
-const options = <%= serialize(options) %> || {}
-const { errorProperty, parsedQs } = options
+const errorProperty = '<%= options.errorProperty %>'
+const parsedQs = '<%= options.parsedQs %>'
 
 export default function ({ $axios }, inject) {
-  Vue.use(VueApiQueries, { errorProperty, axios: $axios, parsedQs })
+  Vue.use(VueApiQueries, { errorProperty, $axios, parsedQs })
   inject('errors', Validator)
 }

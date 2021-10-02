@@ -1,4 +1,10 @@
-import { isFile, cloneDeep, hasOwnProperty, merge } from '../util'
+import {
+  isFile,
+  cloneDeep,
+  hasOwnProperty,
+  merge,
+  isPlainObject,
+} from '../util'
 
 describe('Object Test', () => {
   // const { window, File } = global
@@ -44,5 +50,27 @@ describe('cloneDeep', () => {
     const obj2 = { email: 'chantouchsek.cs83@gmail.com' }
     const merged = { email: 'chantouchsek.cs83@gmail.com', name: 'Chantouch' }
     expect(merge(obj1, obj2)).toEqual(merged)
+  })
+  it('should return `true` if the object is created by the `Object` constructor.', () => {
+    expect(isPlainObject(Object.create({}))).toBeTruthy()
+    expect(isPlainObject(Object.create(Object.prototype))).toBeTruthy()
+    expect(isPlainObject({ foo: 'bar' })).toBeTruthy()
+    expect(isPlainObject({})).toBeTruthy()
+    expect(isPlainObject(Object.create(null))).toBeTruthy()
+  })
+  it('should return `false` if the object is not created by the `Object` constructor.', () => {
+    function Foo(this: any) {
+      this.abc = {}
+    }
+    expect(isPlainObject(/foo/)).toBeFalsy()
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    expect(isPlainObject(function () {})).toBeFalsy()
+    expect(isPlainObject(1)).toBeFalsy()
+    expect(isPlainObject(['foo', 'bar'])).toBeFalsy()
+    expect(isPlainObject([])).toBeFalsy()
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    expect(isPlainObject(new Foo())).toBeFalsy()
+    expect(isPlainObject(null)).toBeFalsy()
   })
 })
