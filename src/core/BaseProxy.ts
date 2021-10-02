@@ -1,4 +1,4 @@
-import {
+import type {
   AxiosError,
   AxiosInstance,
   AxiosResponse,
@@ -9,7 +9,6 @@ import type { Errors } from '..'
 import Validator from './Validator'
 import { hasFiles, objectToFormData, removeDoubleSlash } from '../util'
 import qs, { IParseOptions } from 'qs'
-import merge from 'lodash.merge'
 
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
@@ -187,7 +186,7 @@ class BaseProxy {
    * @param {Object|string} form
    * @param {AxiosRequestConfig} config
    */
-  submit<T>(
+  submit<T = any>(
     requestType: Method,
     parameter?: string | number,
     form?: T,
@@ -201,29 +200,23 @@ class BaseProxy {
         ? `/${this.endpoint}/${parameter}`
         : `/${this.endpoint}`
       const endpoint = this.__getParameterString(removeDoubleSlash(url))
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      this.$http[method](endpoint, data, config)
+      config = Object.assign({}, config, { data, method })
+      this.$http(endpoint, config)
         .then((response: AxiosResponse) => {
           this.onSuccess()
-          const { data } = response
-          resolve(data)
+          resolve(response.data)
         })
         .catch((error: AxiosError) => {
           this.errors.processing = false
           validator.processing = false
           const { response } = error
-          if (response) {
-            const { data, status } = response
-            if (status === UNPROCESSABLE_ENTITY) {
-              const errors = {}
-              Object.assign(errors, data[this.$errorProperty])
-              this.onFail(errors)
-            }
-            reject(error)
-          } else {
-            reject(error)
+          if (response && response.status === UNPROCESSABLE_ENTITY) {
+            const { data } = response
+            const errors: Record<string, any> = {}
+            Object.assign(errors, data[this.$errorProperty])
+            this.onFail(errors)
           }
+          reject(error)
         })
     })
   }
@@ -237,22 +230,15 @@ class BaseProxy {
     return `${url}${query}`
   }
 
-  private static __validateRequestType(requestType: Method): string {
-    const requestTypes: string[] = [
-      'get',
-      'delete',
-      'head',
-      'post',
-      'put',
-      'patch',
-    ]
+  private static __validateRequestType(requestType: Method): Method {
+    const requestTypes = ['get', 'delete', 'head', 'post', 'put', 'patch']
     if (!requestTypes.includes(requestType)) {
       throw new Error(
         `\`${requestType}\` is not a valid request type, ` +
           `must be one of: \`${requestTypes.join('`, `')}\`.`,
       )
     }
-    return requestType.toLowerCase()
+    return requestType
   }
 
   /**
@@ -273,7 +259,7 @@ class BaseProxy {
    */
   setParameter(parameter: string, value?: any): this {
     if (!value) {
-      const options: IParseOptions = merge(this.$parsedQs, {
+      const options: IParseOptions = Object.assign({}, this.$parsedQs, {
         comma: true,
         allowDots: true,
         ignoreQueryPrefix: true,

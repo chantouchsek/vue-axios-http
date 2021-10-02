@@ -1,7 +1,7 @@
-import { is, isArray } from '../util'
+import { hasOwnProperty, is, isArray } from '../util'
 
 class Validator {
-  public errors: any
+  public errors: Record<string, any>
   public successful: boolean
   public processing: boolean
 
@@ -24,7 +24,7 @@ class Validator {
     if (isArray(field)) {
       return is(Object.keys(this.errors), field)
     }
-    let hasError: boolean = this.errors.hasOwnProperty(field)
+    let hasError = hasOwnProperty(this.errors, field)
     if (!hasError) {
       const errors = Object.keys(this.errors).filter(
         (e: string) => e.startsWith(`${field}.`) || e.startsWith(`${field}[`),
@@ -37,13 +37,26 @@ class Validator {
   first(field: any | any[]): string {
     if (field instanceof Array) {
       for (let i = 0; i < field.length; i++) {
-        if (!this.errors.hasOwnProperty(field[i])) {
+        if (!hasOwnProperty(this.errors, field[i])) {
           continue
         }
         return this.first(field[i])
       }
     }
     return this.get(field)[0]
+  }
+
+  firstBy(obj: Record<string, any>, field?: string) {
+    let value
+    if (!field) {
+      value = obj[Object.keys(obj)[0]]
+    } else {
+      value = obj[field]
+    }
+    if (isArray(value)) {
+      value = value[0]
+    }
+    return value
   }
 
   missed(field?: string | string[]): boolean {
@@ -56,7 +69,7 @@ class Validator {
 
   any(fields: string[] = [], returnObject?: boolean): boolean | string[] | any {
     if (returnObject) {
-      const errors: any = {}
+      const errors: Record<string, any> = {}
       if (!fields.length) {
         return {}
       }
@@ -66,7 +79,7 @@ class Validator {
     if (!fields.length) {
       return Object.keys(this.errors).length > 0
     }
-    const errors: any = {}
+    const errors: Record<string, any> = {}
     fields.forEach((key: string) => (errors[key] = this.get(key)))
     return Object.keys(errors).length > 0
   }
@@ -83,9 +96,9 @@ class Validator {
     return Object.keys(this.errors).length
   }
 
-  fill(errors: any) {
+  fill(errors: Record<string, any>) {
     for (const error in errors) {
-      if (!errors.hasOwnProperty(error)) {
+      if (!hasOwnProperty(errors, error)) {
         continue
       }
       if (!(errors[error] instanceof Array)) {
@@ -135,8 +148,8 @@ class Validator {
   onKeydown(event: any, prefix?: string) {
     const { name } = event.target
     if (!name) return
-    const name2 = prefix ? `${prefix}.${name}` : null
-    this.clear([name, name2])
+    const nameWithPrefix = prefix ? `${prefix}.${name}` : null
+    this.clear([name, nameWithPrefix])
   }
 }
 

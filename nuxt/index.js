@@ -1,13 +1,19 @@
 import { resolve, join } from 'path'
-import merge from 'lodash.merge'
 
 module.exports = function nuxtVueApiQueriesModule(moduleOptions = {}) {
-  const { apiQueries = {} } = this.options
-  const options = merge({}, moduleOptions, apiQueries)
+  const { apiQueries = {}, dev } = this.options
+  const defaultOpts = {
+    debug: dev,
+    onPageChange: true,
+    blockByDefault: true,
+    headerBlockerKey: '',
+  }
+  const options = Object.assign(defaultOpts, moduleOptions, apiQueries)
   this.addPlugin({
+    options,
+    ssr: true,
     src: resolve(__dirname, './templates/plugin.js'),
     fileName: join('vue-api-queries.js'),
-    options,
   })
   this.options.build.transpile.push(/^escape-string-regexp/)
 }

@@ -8,10 +8,11 @@ export function hasOwnProperty(obj: any, key: any) {
 }
 
 export function isFile(object: any): boolean {
-  if (typeof window === 'undefined') {
-    return false
-  }
-  if (typeof File !== 'function' || typeof FileList !== 'function') {
+  if (
+    typeof window === 'undefined' ||
+    typeof File !== 'function' ||
+    typeof FileList !== 'function'
+  ) {
     return false
   }
   return object instanceof File || object instanceof FileList
@@ -66,4 +67,20 @@ export function is(errors: any, error: any): boolean {
   return isArray(error)
     ? error.some((w: string) => is(errors, w))
     : errors.includes(error)
+}
+
+export function isObject(value: any) {
+  return Object.prototype.toString.call(value) === '[object Object]'
+}
+
+export function isPlainObject(value: any) {
+  if (!isObject(value)) return false
+
+  const ctor = value.constructor
+  if (ctor === undefined) return true
+
+  const prot = ctor.prototype
+  if (!isObject(prot)) return false
+
+  return hasOwnProperty(prot, 'isPrototypeOf')
 }

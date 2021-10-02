@@ -1,4 +1,4 @@
-import { isArray, isFile } from './objects'
+import { hasOwnProperty, isArray, isFile } from './objects'
 
 export function objectToFormData(
   object: any,
@@ -9,7 +9,7 @@ export function objectToFormData(
     formData.append(parent, object)
   } else {
     for (const property in object) {
-      if (Object.hasOwnProperty.call(object, property)) {
+      if (hasOwnProperty(object, property)) {
         appendToFormData(formData, getKey(parent, property), object[property])
       }
     }
@@ -58,7 +58,7 @@ export function hasFilesDeep(object: any): boolean {
   }
   if (typeof object === 'object') {
     for (const key in object) {
-      if (object.hasOwnProperty(key)) {
+      if (hasOwnProperty(object, key)) {
         if (isFile(object[key])) {
           return true
         }
@@ -67,7 +67,7 @@ export function hasFilesDeep(object: any): boolean {
   }
   if (isArray(object)) {
     for (const key in object) {
-      if (object.hasOwnProperty(key)) {
+      if (hasOwnProperty(object, key)) {
         return hasFilesDeep(object[key])
       }
     }
@@ -76,14 +76,9 @@ export function hasFilesDeep(object: any): boolean {
 }
 
 export function hasFiles(form: any): boolean {
-  for (const property in form) {
-    if (!form.hasOwnProperty(property)) {
-      return false
-    }
-    if (typeof window === 'undefined') {
-      return false
-    }
-    if (hasFilesDeep(form[property])) {
+  for (const prop in form) {
+    const hasProp = hasOwnProperty(form, prop) || typeof window !== 'undefined'
+    if (hasProp && hasFilesDeep(form[prop])) {
       return true
     }
   }

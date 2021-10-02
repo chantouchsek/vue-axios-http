@@ -1,4 +1,4 @@
-import BaseProxy from './BaseProxy'
+import BaseProxy from '../core/BaseProxy'
 
 class PostProxy extends BaseProxy {
   constructor(parameters = {}) {
@@ -7,6 +7,10 @@ class PostProxy extends BaseProxy {
 
   tags<T>(id: string | number) {
     return this.submit<T>('get', `${id}/tags`)
+  }
+
+  throwException<T>(id: string | number) {
+    return this.submit<T>('unlink', `${id}/tags`)
   }
 }
 

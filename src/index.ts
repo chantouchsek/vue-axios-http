@@ -19,7 +19,7 @@ class VueApiQueries {
     allowDots: true,
     ignoreQueryPrefix: true,
   }
-  install(Vue: typeof _Vue, options: any = {}) {
+  install(Vue: typeof _Vue, options: Record<string, any> = {}) {
     if (this.installed) return
     this.installed = true
     const defaultOption = merge(
@@ -29,8 +29,8 @@ class VueApiQueries {
       },
       options,
     )
-    const { axios, errorProperty, parsedQs } = defaultOption
-    BaseProxy.$http = axios
+    const { $axios, errorProperty, parsedQs } = defaultOption
+    BaseProxy.$http = $axios
     BaseProxy.$errorProperty = errorProperty || 'errors'
     BaseProxy.$parsedQs = parsedQs || this.parsedQs
     Vue.mixin({

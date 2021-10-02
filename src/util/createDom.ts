@@ -1,11 +1,3 @@
-import { createWrapper } from '@vue/test-utils'
-
-export function wrap(vm: any) {
-  return createWrapper(vm, {
-    attachedToDocument: true,
-  })
-}
-
 export function disableTransitions() {
   const css = `
   * {
