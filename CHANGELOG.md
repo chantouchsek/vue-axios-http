@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/chantouchsek/vue-api-queries/compare/v1.2.0...v1.2.1) (2021-10-02)
+
+
+### Bug Fixes
+
+* prevent transform on undefined or null and set default response data ([47071fa](https://github.com/chantouchsek/vue-api-queries/commit/47071fa89e617cb93e51a1e799c61c3d31d16df4))
+
 ## [1.2.0](https://github.com/chantouchsek/vue-api-queries/compare/v1.1.3...v1.2.0) (2021-10-02)
 
 
