@@ -211,17 +211,13 @@ class BaseProxy {
           this.errors.processing = false
           validator.processing = false
           const { response } = error
-          if (response) {
-            const { data, status } = response
-            if (status === UNPROCESSABLE_ENTITY) {
-              const errors = {}
-              Object.assign(errors, data[this.$errorProperty])
-              this.onFail(errors)
-            }
-            reject(error)
-          } else {
-            reject(error)
+          if (response && response.status === UNPROCESSABLE_ENTITY) {
+            const { data } = response
+            const errors: Record<string, any> = {}
+            Object.assign(errors, data[this.$errorProperty])
+            this.onFail(errors)
           }
+          reject(error)
         })
     })
   }
