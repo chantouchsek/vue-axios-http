@@ -10101,12 +10101,13 @@ snake-case@^3.0.4:
     tslib "^2.0.3"
 
 snakecase-keys@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/snakecase-keys/-/snakecase-keys-5.0.0.tgz#a242c59ebab86d025eb06577423eced05b396bea"
-  integrity sha512-G13idFUoQ9lueFszdktpzj+p0yE4+w/Kk5g/AD3cY8Wqww3Kuz4xlrUMTFvdwCd91JDAAYOgmg6Z8MnJ4XoD4Q==
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/snakecase-keys/-/snakecase-keys-5.1.1.tgz#025a0a5072ccd4002d39b67561c15d2dc576f3b8"
+  integrity sha512-XjMkUh0xOxWHl1xSACcaG6N1fw/v0Dq4CJAEvgGekySp9+NCymw4nLLlat+5r2v8b7QJPOBH1i5oAfJJieGA5A==
   dependencies:
     map-obj "^4.1.0"
     snake-case "^3.0.4"
+    type-fest "^2.5.2"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
@@ -10941,6 +10942,11 @@ type-fest@^1.2.1:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-1.4.0.tgz#e9fb813fe3bf1744ec359d55d1affefa76f14be1"
   integrity sha512-yGSza74xk0UG8k+pLh5oeoYirvIiWo5t0/o3zHHAO2tRDiZcxWP7fywNlXhqb6/r6sWvwi+RsyQMWhVLe4BVuA==
+
+type-fest@^2.5.2:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-2.5.3.tgz#2538287381b24d0c1d4911279934f28aaa10d620"
+  integrity sha512-7VNmE7FlsrdcWjKbtuRuynZz96Gmf35p5DvoR2tbceNP0vd58ISx87PvUUInlhtRC49vSX6qlxEKc7AoiHRirg==
 
 typedarray-to-buffer@^3.1.5:
   version "3.1.5"
