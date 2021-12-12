@@ -6,8 +6,10 @@
 [![npm](https://img.shields.io/npm/dt/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
 [![npm](https://img.shields.io/npm/dm/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
 
-🔥 If you use Laravel, this package matches perfectly
-with [andersao/l5-repository](https://github.com/andersao/l5-repository).
+## Warning: 
+From 12th, Dec 2022 this package deprecated, Plz use [vue-axios-http](https://www.npmjs.com/package/vue-axios-http), it has the same API. just replace this package with this new one.
+
+--------------------------------------------------------------------------------------------------------
 
 This package helps you quickly to build requests for REST API. Move your logic and backend requests to dedicated
 classes. Keep your code clean and elegant.
