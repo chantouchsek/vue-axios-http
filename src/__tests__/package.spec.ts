@@ -1,12 +1,12 @@
 import Vue from 'vue'
-import VueApiQueries from '../'
+import AxiosHttp from '../'
 import { addElemWithDataAppToBody, disableTransitions, sleep } from '../util'
 import { mount } from '@vue/test-utils'
 
 describe('Vue Api Queries', () => {
   disableTransitions()
   addElemWithDataAppToBody()
-  Vue.use(VueApiQueries, {
+  Vue.use(AxiosHttp, {
     errorProperty: 'message',
   })
 

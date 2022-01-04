@@ -1,5 +1,5 @@
 {
-  "name": "vue-api-queries",
+  "name": "vue-axios-http",
   "version": "1.2.1",
   "description": "Elegant and simple way to build requests for REST API",
   "main": "dist/index.js",
@@ -11,7 +11,7 @@
     "test:watch:jsdom": "jest --watchAll --env=jsdom",
     "build": "yarn clean && tsc",
     "watch": "tsc -w",
-    "start": "yarn link && nodemon",
+    "start": "nodemon",
     "release": "standard-version && git push --follow-tags origin main && yarn publish",
     "prepublish": "yarn test && yarn build",
     "clean": "rimraf dist",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/chantouchsek/vue-api-queries.git"
+    "url": "https://github.com/chantouchsek/vue-axios-http.git"
   },
   "keywords": [
     "vue",
@@ -30,7 +30,7 @@
     "builder",
     "laravel",
     "queries",
-    "vue-api-queries",
+    "vue-axios",
     "vue api queries",
     "api request"
   ],
@@ -39,47 +39,46 @@
     "email": "chantouchsek.cs83@gmail.com",
     "url": "https://chantouch.me"
   },
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chantouchsek/vue-api-queries/issues"
+    "url": "https://github.com/chantouchsek/vue-axios-http/issues"
   },
-  "homepage": "https://github.com/chantouchsek/vue-api-queries#readme",
+  "homepage": "https://github.com/chantouchsek/vue-axios-http#readme",
   "devDependencies": {
-    "@commitlint/cli": "^13.1.0",
-    "@commitlint/config-conventional": "^13.1.0",
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
     "@nuxt/types": "^2.15.8",
     "@types/jest": "^27.0.1",
-    "@types/node": "^16.9.3",
+    "@types/node": "^17.0.0",
     "@types/qs": "^6.9.7",
-    "@typescript-eslint/eslint-plugin": "^4.31.1",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.31.1",
     "@vue/test-utils": "^1.2.2",
-    "axios": "^0.21.4",
+    "axios": "^0.24.0",
     "axios-mock-adapter": "^1.20.0",
     "eslint": "^7.32.0",
-    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-promise": "^5.1.0",
-    "husky": "^7.0.2",
+    "husky": "^7.0.4",
     "jest": "^27.2.0",
     "nodemon": "^2.0.12",
     "nuxt-edge": "^2.16.0-27217455.034b9901",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
     "standard-version": "^9.3.1",
-    "ts-jest": "^27.0.5",
-    "typescript": "^4.4.3",
-    "vue": "^2.6.14",
-    "vue-api-queries": "^1.1.4"
+    "ts-jest": "^27.1.1",
+    "typescript": "^4.5.3",
+    "vue": "^2.6.14"
   },
   "files": [
     "dist",
     "nuxt"
   ],
   "dependencies": {
-    "camelcase-keys": "^7.0.0",
-    "qs": "^6.10.1",
-    "snakecase-keys": "^5.0.0"
+    "camelcase-keys": "^7.0.1",
+    "qs": "^6.10.2",
+    "snakecase-keys": "^5.1.2"
   }
 }

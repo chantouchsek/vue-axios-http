@@ -1,21 +1,15 @@
 import { resolve, join } from 'path'
 
-module.exports = function nuxtVueApiQueriesModule(moduleOptions = {}) {
-  const { apiQueries = {}, dev } = this.options
-  const defaultOpts = {
-    debug: dev,
-    onPageChange: true,
-    blockByDefault: true,
-    headerBlockerKey: '',
-  }
-  const options = Object.assign(defaultOpts, moduleOptions, apiQueries)
+module.exports = function nuxtAxiosHttpModule(moduleOptions = {}) {
+  const { axiosHttp = {} } = this.options
+  const options = Object.assign({}, moduleOptions, axiosHttp)
   this.addPlugin({
     options,
     ssr: true,
     src: resolve(__dirname, './templates/plugin.js'),
-    fileName: join('vue-api-queries.js'),
+    fileName: join('vue-nuxt-axios.js'),
   })
-  this.options.build.transpile.push(/^escape-string-regexp/)
+  // this.options.build.transpile.push(/^escape-string-regexp/)
 }
 
 // required by nuxt

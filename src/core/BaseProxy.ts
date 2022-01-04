@@ -18,12 +18,12 @@ export interface ParametersType {
 }
 
 class BaseProxy {
-  public errors: Errors
-  public parameters: any | any[]
-  public readonly endpoint: string
-  public static $http?: AxiosInstance
-  public static $errorProperty = 'errors'
-  public static $parsedQs: IParseOptions = {
+  errors: Errors
+  parameters: any | any[]
+  readonly endpoint: string
+  static $http: AxiosInstance
+  static $errorProperty = 'errors'
+  static $parsedQs: IParseOptions = {
     comma: true,
     allowDots: true,
     ignoreQueryPrefix: true,
@@ -35,8 +35,8 @@ class BaseProxy {
     this.errors = Validator
   }
 
-  get $http(): AxiosInstance {
-    return <AxiosInstance>BaseProxy.$http
+  get $http() {
+    return BaseProxy.$http
   }
 
   get $errorProperty() {
@@ -108,7 +108,7 @@ class BaseProxy {
    * Create many items
    * @param {Object} payload
    */
-  createMany<T>(payload: T): Promise<T> {
+  createMany<T>(payload: T) {
     return this.submit<T>('post', 'bulk', payload)
   }
 
@@ -196,12 +196,12 @@ class BaseProxy {
     this.beforeSubmit()
     return new Promise((resolve, reject) => {
       const data = hasFiles(form) ? objectToFormData(form) : form
-      const url = parameter
+      const endpoint = parameter
         ? `/${this.endpoint}/${parameter}`
         : `/${this.endpoint}`
-      const endpoint = this.__getParameterString(removeDoubleSlash(url))
-      config = Object.assign({}, config, { data, method })
-      this.$http(endpoint, config)
+      const url = this.__getParameterString(removeDoubleSlash(endpoint))
+      config = Object.assign({}, config, { url, data, method })
+      this.$http(config)
         .then((response: AxiosResponse) => {
           this.onSuccess()
           resolve(response.data || {})
@@ -232,7 +232,7 @@ class BaseProxy {
 
   private static __validateRequestType(requestType: Method): Method {
     const requestTypes = ['get', 'delete', 'head', 'post', 'put', 'patch']
-    if (!requestTypes.includes(requestType)) {
+    if (!requestTypes.includes(requestType.toLowerCase())) {
       throw new Error(
         `\`${requestType}\` is not a valid request type, ` +
           `must be one of: \`${requestTypes.join('`, `')}\`.`,
@@ -245,7 +245,7 @@ class BaseProxy {
    * Set parameters by keys
    * @param {Object} parameters
    */
-  setParameters(parameters: ParametersType): this {
+  setParameters(parameters: ParametersType): BaseProxy {
     Object.keys(parameters).forEach((key) => {
       this.parameters[key] = parameters[key]
     })
@@ -257,7 +257,7 @@ class BaseProxy {
    * @param {string} parameter
    * @param {Object|string|Array} value
    */
-  setParameter(parameter: string, value?: any): this {
+  setParameter(parameter: string, value?: any): BaseProxy {
     if (!value) {
       const options: IParseOptions = Object.assign({}, this.$parsedQs, {
         comma: true,
@@ -275,7 +275,7 @@ class BaseProxy {
    * Remove parameters by keys
    * @param {Array<Object>>} parameters
    */
-  removeParameters(parameters = [] as any[]): this {
+  removeParameters(parameters = [] as any[]): BaseProxy {
     if (!parameters.length) {
       this.parameters = []
     } else {
@@ -290,7 +290,7 @@ class BaseProxy {
    * Remove parameters
    * @param {string} parameter
    */
-  removeParameter(parameter: string): this {
+  removeParameter(parameter: string): BaseProxy {
     delete this.parameters[parameter]
     return this
   }
@@ -309,7 +309,7 @@ class BaseProxy {
    */
   beforeSubmit() {
     if (!this.$http) {
-      throw new Error('Vue Api Queries, No http library provided.')
+      throw new Error('Vue Axios Http, No http library provided.')
     }
     this.errors.flush()
     this.errors.processing = true

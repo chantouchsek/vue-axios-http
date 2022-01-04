@@ -1,15 +1,10 @@
-# Vue Api Queries.
+# Vue Axios Http
 
-[![Build Status](https://travis-ci.com/chantouchsek/vue-api-queries.svg?branch=master)](https://travis-ci.com/chantouchsek/vue-api-queries)
-[![Latest Version on NPM](https://img.shields.io/npm/v/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![npm](https://img.shields.io/npm/dt/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
-[![npm](https://img.shields.io/npm/dm/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
-
-## Warning: 
-From 12th, Dec 2022 this package deprecated, Plz use [vue-axios-http](https://www.npmjs.com/package/vue-axios-http), it has the same API. just replace this package with this new one.
-
---------------------------------------------------------------------------------------------------------
+[![ci](https://github.com/chantouchsek/vue-axios-http/actions/workflows/ci.yml/badge.svg)](https://github.com/chantouchsek/vue-axios-http/actions/workflows/ci.yml)
+[![Latest Version on NPM](https://img.shields.io/npm/v/vue-axios-http.svg?style=flat-square)](https://npmjs.com/package/vue-axios-http)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![npm](https://img.shields.io/npm/dt/vue-axios-http.svg?style=flat-square)](https://npmjs.com/package/vue-axios-http)
+[![npm](https://img.shields.io/npm/dm/vue-axios-http.svg?style=flat-square)](https://npmjs.com/package/vue-axios-http)
 
 This package helps you quickly to build requests for REST API. Move your logic and backend requests to dedicated
 classes. Keep your code clean and elegant.
@@ -26,20 +21,20 @@ Take a look at the [usage section](#usage) to view a detailed example on how to 
 You can install the package via yarn (or npm):
 
 ```npm
-npm install vue-api-queries
+npm install vue-axios-http
 ```
 
 ```yarn
-yarn add vue-api-queries
+yarn add vue-axios-http
 ```
 
 ## Usage
 
 ```js
 import Vue from 'vue'
-import VueApiQueries from 'vue-api-queries'
+import AxiosHttp from 'vue-axios-http'
 
-Vue.use(VueApiQueries)
+Vue.use(AxiosHttp)
 ```
 
 ## Nuxt Support
@@ -50,27 +45,17 @@ Put it on top of axios module
 export default {
   modules: [
     // simple usage
-    'vue-api-queries/nuxt',
+    'vue-axios-http/nuxt',
     // With options
-    ['vue-api-queries/nuxt', { errorProperty: 'errors', blockDuplicate: false }],
+    ['vue-axios-http/nuxt', { errorProperty: 'errors' }],
     '@nuxtjs/axios',
   ],
-  apiQueries: { errorProperty: 'errors', blockDuplicate: false },
+  axiosHttp: { errorProperty: 'errors' },
 }
 ```
 
 ### Options
 
-If `blockDuplicate` enabled, the default option of `axios-duplicate-blocker` will be:
-```js
-{
-  blockDuplicate: false
-  debug: true
-  onPageChange: true
-  blockByDefault: true
-  headerBlockerKey: ''
-}
-```
 you can overwrite it, by adding in config above.
 
 ### Note:
@@ -102,9 +87,9 @@ export default {
 
 ```js
 import Vue from 'vue'
-import VueApiQueries from 'vue-api-queries'
+import AxiosHttp from 'vue-axios-http'
 
-Vue.use(VueApiQueries)
+Vue.use(AxiosHttp)
 ```
 
 ### Note
@@ -147,7 +132,7 @@ Validator                   | Description
 ``~/proxies/NewsProxy.js``
 
 ```js
-import { BaseProxy } from 'vue-api-queries'
+import { BaseProxy } from 'vue-axios-http'
 
 class NewsProxy extends BaseProxy {
   constructor(parameters = {}) {
@@ -174,7 +159,7 @@ actions.js
 ```js
 import { ALL } from './mutation-types'
 import { NewsProxy } from '~/proxies'
-import { BaseTransformer, PaginationTransformer } from 'vue-api-queries'
+import { BaseTransformer, PaginationTransformer } from 'vue-axios-http'
 import { pagination, notify } from '~/utils'
 
 const proxy = new NewsProxy()
