@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.2](https://github.com/chantouchsek/vue-axios-http/compare/v1.2.1...v1.2.2) (2022-01-04)
+
+
+### Bug Fixes
+
+* :fire: renamed git repository name ([a7682cd](https://github.com/chantouchsek/vue-axios-http/commit/a7682cd425ea5f069f731f957a0bd835781b7d9e))
+* **deps:** bump actions/setup-node from 2.4.1 to 2.5.1 ([838f53f](https://github.com/chantouchsek/vue-axios-http/commit/838f53f7244f9a794988287a54cdf6122aa24f91))
+* downgrade tsconfig target to es2019 ([bd3050f](https://github.com/chantouchsek/vue-axios-http/commit/bd3050fde94ea84c92a517ffb66e0446cfc053e6))
+* lintfix codeql ([2d387e6](https://github.com/chantouchsek/vue-axios-http/commit/2d387e6b15da644a1c5c0957514df5686483d0c5))
+* ran lintfix style ([a8849fa](https://github.com/chantouchsek/vue-axios-http/commit/a8849fa9b4c2232fdcd6a8d34d5415c1347fbb0c))
+
 ### [1.2.1](https://github.com/chantouchsek/vue-api-queries/compare/v1.2.0...v1.2.1) (2021-10-02)
 
 
