@@ -1,6 +1,6 @@
-'use strict'
+import type { InitialOptionsTsJest } from 'ts-jest/dist/types'
 
-module.exports = {
+const config: InitialOptionsTsJest = {
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.ts', 'src/**/*.js'],
   coverageThreshold: {
@@ -14,3 +14,5 @@ module.exports = {
   testEnvironment: 'node',
   preset: 'ts-jest',
 }
+
+export default config

@@ -1,15 +1,10 @@
-# Vue Api Queries.
+# Vue Axios Http
 
-[![Build Status](https://travis-ci.com/chantouchsek/vue-api-queries.svg?branch=master)](https://travis-ci.com/chantouchsek/vue-api-queries)
-[![Latest Version on NPM](https://img.shields.io/npm/v/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![npm](https://img.shields.io/npm/dt/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
-[![npm](https://img.shields.io/npm/dm/vue-api-queries.svg?style=flat-square)](https://npmjs.com/package/vue-api-queries)
-
-## Warning: 
-From 12th, Dec 2022 this package deprecated, Plz use [vue-axios-http](https://www.npmjs.com/package/vue-axios-http), it has the same API. just replace this package with this new one.
-
---------------------------------------------------------------------------------------------------------
+[![ci](https://github.com/chantouchsek/vue-axios-http/actions/workflows/ci.yml/badge.svg)](https://github.com/chantouchsek/vue-axios-http/actions/workflows/ci.yml)
+[![Latest Version on NPM](https://img.shields.io/npm/v/vue-axios-http.svg?style=flat-square)](https://npmjs.com/package/vue-axios-http)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![npm](https://img.shields.io/npm/dt/vue-axios-http.svg?style=flat-square)](https://npmjs.com/package/vue-axios-http)
+[![npm](https://img.shields.io/npm/dm/vue-axios-http.svg?style=flat-square)](https://npmjs.com/package/vue-axios-http)
 
 This package helps you quickly to build requests for REST API. Move your logic and backend requests to dedicated
 classes. Keep your code clean and elegant.
@@ -26,20 +21,20 @@ Take a look at the [usage section](#usage) to view a detailed example on how to 
 You can install the package via yarn (or npm):
 
 ```npm
-npm install vue-api-queries
+npm install vue-axios-http
 ```
 
 ```yarn
-yarn add vue-api-queries
+yarn add vue-axios-http
 ```
 
 ## Usage
 
 ```js
 import Vue from 'vue'
-import VueApiQueries from 'vue-api-queries'
+import AxiosHttp from 'vue-axios-http'
 
-Vue.use(VueApiQueries)
+Vue.use(AxiosHttp)
 ```
 
 ## Nuxt Support
@@ -50,27 +45,17 @@ Put it on top of axios module
 export default {
   modules: [
     // simple usage
-    'vue-api-queries/nuxt',
+    'vue-axios-http/nuxt',
     // With options
-    ['vue-api-queries/nuxt', { errorProperty: 'errors', blockDuplicate: false }],
+    ['vue-axios-http/nuxt', { errorProperty: 'errors' }],
     '@nuxtjs/axios',
   ],
-  apiQueries: { errorProperty: 'errors', blockDuplicate: false },
+  axiosHttp: { errorProperty: 'errors' },
 }
 ```
 
 ### Options
 
-If `blockDuplicate` enabled, the default option of `axios-duplicate-blocker` will be:
-```js
-{
-  blockDuplicate: false
-  debug: true
-  onPageChange: true
-  blockByDefault: true
-  headerBlockerKey: ''
-}
-```
 you can overwrite it, by adding in config above.
 
 ### Note:
@@ -89,8 +74,8 @@ if your axios already defined in `nuxt.config.js`
 ```js
 export default {
   axios: {
-    baseURL: process.env.API_URL
-  }
+    baseURL: process.env.API_URL,
+  },
 }
 ```
 
@@ -102,9 +87,9 @@ export default {
 
 ```js
 import Vue from 'vue'
-import VueApiQueries from 'vue-api-queries'
+import AxiosHttp from 'vue-axios-http'
 
-Vue.use(VueApiQueries)
+Vue.use(AxiosHttp)
 ```
 
 ### Note
@@ -114,40 +99,38 @@ Error response must look like: or base on **errorProperty** from config
 ```json
 {
   "errors": {
-    "field": [
-      "The field is required."
-    ]
+    "field": ["The field is required."]
   }
 }
 ```
 
-It will create ```$errors``` object inside components.
+It will create `$errors` object inside components.
 
 ## Methods are available:
 
-Validator                   | Description
---------------------------- | --------------------------------------
-**has(field = null)**       | check specific field error
-**first(field)**            | get message by field name.
-**missed(field = null)**    | check if there is no any error of given field name.
-**nullState(field = null)** | false|null of given field.
-**any()**                   | check if any errors exist.
-**get(field)**              | get specific field.
-**all()**                   | get all errors.
-**count()**                 | get errors count.
-**fill(errors = {})**       | fill the errors object.
-**flush()**                 | clear all errors.
-**clear(field)**            | clear specific error by field name.
-**onKeydown(event, 'baseFormName')**        | event to clear error by event.target.name. (input the has name).
+| Validator                            | Description                                                      |
+| ------------------------------------ | ---------------------------------------------------------------- | -------------------- |
+| **has(field = null)**                | check specific field error                                       |
+| **first(field)**                     | get message by field name.                                       |
+| **missed(field = null)**             | check if there is no any error of given field name.              |
+| **nullState(field = null)**          | false                                                            | null of given field. |
+| **any()**                            | check if any errors exist.                                       |
+| **get(field)**                       | get specific field.                                              |
+| **all()**                            | get all errors.                                                  |
+| **count()**                          | get errors count.                                                |
+| **fill(errors = {})**                | fill the errors object.                                          |
+| **flush()**                          | clear all errors.                                                |
+| **clear(field)**                     | clear specific error by field name.                              |
+| **onKeydown(event, 'baseFormName')** | event to clear error by event.target.name. (input the has name). |
 
 ## Using with Vuex
 
 1.Create **proxies** folder or your prefer folder name for this
 
-``~/proxies/NewsProxy.js``
+`~/proxies/NewsProxy.js`
 
 ```js
-import { BaseProxy } from 'vue-api-queries'
+import { BaseProxy } from 'vue-axios-http'
 
 class NewsProxy extends BaseProxy {
   constructor(parameters = {}) {
@@ -169,12 +152,13 @@ export default NewsProxy
 5. state
 
 ---
+
 actions.js
 
 ```js
 import { ALL } from './mutation-types'
 import { NewsProxy } from '~/proxies'
-import { BaseTransformer, PaginationTransformer } from 'vue-api-queries'
+import { BaseTransformer, PaginationTransformer } from 'vue-axios-http'
 import { pagination, notify } from '~/utils'
 
 const proxy = new NewsProxy()
@@ -188,7 +172,7 @@ const all = async ({ commit, dispatch }, payload = {}) => {
     const { data, meta } = await proxy.all()
     const all = {
       items: BaseTransformer.fetchCollection(data),
-      pagination: PaginationTransformer.fetch(meta)
+      pagination: PaginationTransformer.fetch(meta),
     }
     await commit(ALL, all)
   } catch (e) {
@@ -199,20 +183,22 @@ const all = async ({ commit, dispatch }, payload = {}) => {
 }
 
 export default {
-  all
+  all,
 }
 ```
 
 ---
+
 getters.js
 
 ```js
 export default {
-  all: (state) => state.all
+  all: (state) => state.all,
 }
 ```
 
 ---
+
 mutation-types.js
 
 ```js
@@ -222,6 +208,7 @@ export default { ALL }
 ```
 
 ---
+
 mutations.js
 
 ```js
@@ -232,17 +219,18 @@ export default {
     const { items = [], pagination = {} } = payload
     state.all = items
     state.pagination = pagination
-  }
+  },
 }
 ```
 
 ---
+
 state.js
 
 ```js
 export default () => ({
   all: [],
-  pagination: {}
+  pagination: {},
 })
 ```
 
@@ -263,12 +251,12 @@ export default {
         proxy
           .setParameters({
             userId: id,
-            include: ['categories']
+            include: ['categories'],
           })
           .removeParameters(['page', 'limit'])
-      }
+      },
     })
-  }
+  },
 }
 ```
 
@@ -283,12 +271,12 @@ export default {
         proxy
           .setParameters({
             userId: id,
-            include: ['categories']
+            include: ['categories'],
           })
           .removeParameters(['page', 'limit'])
-      }
+      },
     })
-  }
+  },
 }
 ```
 
@@ -296,13 +284,13 @@ You can set or remove any parameters you like.
 
 ## Proxy's methods are available
 
-Method                                              | Description
---------------------------------------------------- | --------------------------------------
-**setParameter(key, value)**                        | Set param by key and value
-**removeParameter(key)**                            | Remove param by key
-**setParameters({ key: value, key1: value1 })**     | Set params by key and value
-**removeParameters([key1, key2])**                  | Remove params by keys
-**removeParameters()**                              | Remove all params
+| Method                                          | Description                 |
+| ----------------------------------------------- | --------------------------- |
+| **setParameter(key, value)**                    | Set param by key and value  |
+| **removeParameter(key)**                        | Remove param by key         |
+| **setParameters({ key: value, key1: value1 })** | Set params by key and value |
+| **removeParameters([key1, key2])**              | Remove params by keys       |
+| **removeParameters()**                          | Remove all params           |
 
 #### setParameters()
 
@@ -317,17 +305,17 @@ const proxy = new ExampleProxy()
 const parameters = {
   search: {
     first_name: 'Sek',
-    last_name: 'Chantouch'
+    last_name: 'Chantouch',
   },
   page: {
     limit: 20,
-    offset: 1
+    offset: 1,
   },
   order: {
     first_name: 'ASC',
-    last_name: 'DESC'
+    last_name: 'DESC',
   },
-  category_id: 6
+  category_id: 6,
 }
 const { data } = proxy.setParameters(parameters).all()
 this.data = data
@@ -384,7 +372,7 @@ Be sure to use only once in `mounted()` or `asyncData()` and `asyncData()` is on
 
 ## Use proxy in components
 
-- news/_id.vue pages
+- news/\_id.vue pages
 
 ```js
 import { NewsProxy } from '~/proxies'
@@ -400,11 +388,11 @@ export default {
       } catch (e) {
         console.log(e)
       }
-    }
+    },
   },
   mounted() {
     this.fetchNews(this.$route.params.id)
-  }
+  },
 }
 ```
 
@@ -417,51 +405,55 @@ Can use `vue-vlidator` for client-side validator that inspired by Laravel.
 
 It can be called by `this.$errors.**`
 
-Method                           | Description
--------------------------------- | --------------------------------------
-**all()**                        | To get all errors messages
-**has(attribute)**                        | To check an attribute as any error
-**has(attributes)**                        | To check multiple attributes given have any errors
-**first(attribute)**                        | To get errors message by an attribute
+| Method               | Description                                        |
+| -------------------- | -------------------------------------------------- |
+| **all()**            | To get all errors messages                         |
+| **has(attribute)**   | To check an attribute as any error                 |
+| **has(attributes)**  | To check multiple attributes given have any errors |
+| **first(attribute)** | To get errors message by an attribute              |
 
 ## How to use in vue component
 
 ```vue
-
 <template>
-  <v-form v-model='valid' lazy-validation @keydown.native='$errors.onKeydown' @submit.prevent='submit'>
+  <v-form
+    v-model="valid"
+    lazy-validation
+    @keydown.native="$errors.onKeydown"
+    @submit.prevent="submit"
+  >
     <v-container>
       <v-row>
-        <v-col cols='12' md='4'>
+        <v-col cols="12" md="4">
           <v-text-field
-            v-model='firstname'
+            v-model="firstname"
             :error-messages="$errors.first(['firstname'])"
-            :counter='10'
-            label='First name'
+            :counter="10"
+            label="First name"
             required
-            name='firstname'
+            name="firstname"
           />
         </v-col>
-        <v-col cols='12' md='4'>
+        <v-col cols="12" md="4">
           <v-text-field
-            v-model='lastname'
-            :counter='10'
-            label='Last name'
+            v-model="lastname"
+            :counter="10"
+            label="Last name"
             required
             :error-messages="$errors.first(['lastname'])"
           />
         </v-col>
-        <v-col cols='12' md='4'>
+        <v-col cols="12" md="4">
           <v-text-field
-            v-model='email'
-            :counter='10'
-            label='Email'
+            v-model="email"
+            :counter="10"
+            label="Email"
             required
             :error-messages="$errors.first('email')"
           />
         </v-col>
-        <v-col cols='12' md='4'>
-          <v-text-field v-model='email' label='E-mail' required />
+        <v-col cols="12" md="4">
+          <v-text-field v-model="email" label="E-mail" required />
         </v-col>
       </v-row>
     </v-container>
@@ -480,13 +472,13 @@ export default {
       this.$axios.$post('/account/create', {
         firstname: this.firstname,
         lastname: this.lastname,
-        email: this.email
+        email: this.email,
       })
-    }
+    },
   },
   beforeDestroy() {
     this.$errors.flush()
-  }
+  },
 }
 </script>
 ```

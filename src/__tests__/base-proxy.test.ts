@@ -24,12 +24,12 @@ describe('BaseProxy', () => {
   })
 
   it('check if http was installed', async () => {
-    BaseProxy.$http = undefined
+    BaseProxy.$http = undefined as any
     try {
       await proxy.getMany()
     } catch (e) {
       const { message } = e as any
-      expect(message).toBe('Vue Api Queries, No http library provided.')
+      expect(message).toBe('Vue Axios Http, No http library provided.')
     }
   })
 

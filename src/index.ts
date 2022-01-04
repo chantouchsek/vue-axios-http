@@ -12,7 +12,7 @@ import './vue'
 export type Errors = ValidatorType
 export type { ValidatorType }
 
-class VueApiQueries {
+class AxiosHttp {
   installed = false
   parsedQs = {
     comma: true,
@@ -59,4 +59,4 @@ export {
   BaseProxy as BaseService,
 }
 export * from './util'
-export default new VueApiQueries()
+export default new AxiosHttp()

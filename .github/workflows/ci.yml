@@ -1,13 +1,12 @@
-name: Node.js Package Lint And Test
+name: ci
 
 on:
   push:
     branches:
-      - "*"
-      - "!master"
+      - 'main'
   pull_request:
     branches:
-      - "*"
+      - 'main'
 
 jobs:
   lint-and-test:
@@ -19,10 +18,10 @@ jobs:
         os: [ubuntu-latest, macOS-latest]
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.4.0
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v2.4.1
+      - uses: actions/setup-node@v2.5.0
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn
