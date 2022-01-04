@@ -1839,13 +1839,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/escape-string-regexp@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@types/escape-string-regexp/-/escape-string-regexp-2.0.1.tgz#05d249ffde63aba70d1dfdea1e0cad16dcec9629"
-  integrity sha512-QbTY9C4ZdLxqnJ+2vo8IBxMXcC3t//eVTNpnQVkTlVYtuQyZkUTNbFAwtXZ0qJ+YFpib2+raDMtYWh8hBfhlgQ==
-  dependencies:
-    escape-string-regexp "*"
-
 "@types/etag@1.8.0":
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/@types/etag/-/etag-1.8.0.tgz#37f0b1f3ea46da7ae319bbedb607e375b4c99f7e"
@@ -1920,9 +1913,9 @@
     "@types/istanbul-lib-report" "*"
 
 "@types/jest@^27.0.1":
-  version "27.0.2"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-27.0.2.tgz#ac383c4d4aaddd29bbf2b916d8d105c304a5fcd7"
-  integrity sha512-4dRxkS/AFX0c5XW6IPMNOydLn2tEhNhJV7DnYK+0bjoJZ+QTmfucBlihX7aoEsh/ocYtkLC73UbnBXBXIxsULA==
+  version "27.4.0"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-27.4.0.tgz#037ab8b872067cae842a320841693080f9cb84ed"
+  integrity sha512-gHl8XuC1RZ8H2j5sHv/JqsaxXkDDM9iDOgu0Wp8sjs4u/snb2PVehyWXJPr+ORA0RPpgw231mnutWI1+0hgjIQ==
   dependencies:
     jest-diff "^27.0.0"
     pretty-format "^27.0.0"
@@ -4820,11 +4813,6 @@ escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
-
-escape-string-regexp@*:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-5.0.0.tgz#4683126b500b61762f2dbebace1806e8be31b1c8"
-  integrity sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==
 
 escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
