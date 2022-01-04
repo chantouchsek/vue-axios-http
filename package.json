@@ -5,7 +5,6 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "lint": "eslint './src/**/*.{js,ts,tsx}'",
     "test": "jest --env=jsdom",
     "test:watch": "jest --watchAll",
     "test:watch:jsdom": "jest --watchAll --env=jsdom",
@@ -15,7 +14,11 @@
     "release": "standard-version && git push --follow-tags origin main && yarn publish",
     "prepublish": "yarn test && yarn build",
     "clean": "rimraf dist",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint:js": "eslint --ext \".js,.ts\" --ignore-path .gitignore .",
+    "lint:prettier": "prettier --check .",
+    "lint": "yarn lint:js && yarn lint:prettier",
+    "lintfix": "prettier --write --list-different . && yarn lint:js --fix"
   },
   "repository": {
     "type": "git",
