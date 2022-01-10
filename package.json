@@ -1,6 +1,6 @@
 {
   "name": "vue-axios-http",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Elegant and simple way to build requests for REST API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.3](https://github.com/chantouchsek/vue-axios-http/compare/v1.2.2...v1.2.3) (2022-01-10)
+
+
+### Bug Fixes
+
+* :beer: fix return correct type of base service and add lint staged ([3dd7501](https://github.com/chantouchsek/vue-axios-http/commit/3dd75011ee33ff02467389a4914de63d7d330f02))
+
 ### [1.2.2](https://github.com/chantouchsek/vue-axios-http/compare/v1.2.1...v1.2.2) (2022-01-04)
 
 
