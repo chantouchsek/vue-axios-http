@@ -11,7 +11,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.2.2](https://github.com/chantouchsek/vue-axios-http/compare/v1.2.1...v1.2.2) (2022-01-04)
 
-
 ### Bug Fixes
 
 * :fire: renamed git repository name ([a7682cd](https://github.com/chantouchsek/vue-axios-http/commit/a7682cd425ea5f069f731f957a0bd835781b7d9e))
