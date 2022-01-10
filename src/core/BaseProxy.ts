@@ -245,7 +245,7 @@ class BaseProxy {
    * Set parameters by keys
    * @param {Object} parameters
    */
-  setParameters(parameters: ParametersType): BaseProxy {
+  setParameters(parameters: ParametersType): this {
     Object.keys(parameters).forEach((key) => {
       this.parameters[key] = parameters[key]
     })
@@ -257,7 +257,7 @@ class BaseProxy {
    * @param {string} parameter
    * @param {Object|string|Array} value
    */
-  setParameter(parameter: string, value?: any): BaseProxy {
+  setParameter(parameter: string, value?: any): this {
     if (!value) {
       const options: IParseOptions = Object.assign({}, this.$parsedQs, {
         comma: true,
@@ -275,7 +275,7 @@ class BaseProxy {
    * Remove parameters by keys
    * @param {Array<Object>>} parameters
    */
-  removeParameters(parameters = [] as any[]): BaseProxy {
+  removeParameters(parameters = [] as any[]): this {
     if (!parameters.length) {
       this.parameters = []
     } else {
@@ -290,7 +290,7 @@ class BaseProxy {
    * Remove parameters
    * @param {string} parameter
    */
-  removeParameter(parameter: string): BaseProxy {
+  removeParameter(parameter: string): this {
     delete this.parameters[parameter]
     return this
   }
