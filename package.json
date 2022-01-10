@@ -12,7 +12,7 @@
     "watch": "tsc -w",
     "start": "nodemon",
     "release": "standard-version && git push --follow-tags origin main && yarn publish",
-    "prepublish": "yarn test && yarn build",
+    "prepublish": "yarn lint && yarn test && yarn build",
     "clean": "rimraf dist",
     "prepare": "husky install",
     "lint:js": "eslint --ext \".js,.ts\" --ignore-path .gitignore .",
