@@ -46,7 +46,7 @@ class Validator {
     return this.get(field)[0]
   }
 
-  firstBy(obj: Record<string, any>, field?: string) {
+  firstBy(obj: Record<string, any>, field?: string): string {
     let value
     if (!field) {
       value = obj[Object.keys(obj)[0]]

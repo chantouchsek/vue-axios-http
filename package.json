@@ -63,9 +63,10 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-promise": "^6.0.0",
     "husky": "^7.0.4",
     "jest": "^27.4.5",
+    "lint-staged": ">=10",
     "nodemon": "^2.0.12",
     "nuxt-edge": "^2.16.0-27217455.034b9901",
     "prettier": "^2.4.1",
@@ -83,5 +84,9 @@
     "camelcase-keys": "^7.0.1",
     "qs": "^6.10.2",
     "snakecase-keys": "^5.1.2"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --cache",
+    "*.**": "prettier --check --ignore-unknown"
   }
 }
