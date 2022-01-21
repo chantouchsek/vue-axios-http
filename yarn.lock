@@ -4169,12 +4169,7 @@ color@^3.0.0:
     color-convert "^1.9.3"
     color-string "^1.6.0"
 
-colorette@^2.0.10:
-  version "2.0.13"
-  resolved "https://registry.yarnpkg.com/colorette/-/colorette-2.0.13.tgz#c8d3c7a1b57fbddb0b6b681ee51f8105c4e86eaf"
-  integrity sha512-lvA4NbohpqUypdfTtJpb5BwhdUrwi1ACLM6uW3lEj0CWKOXrCSJlexv9IgUUN6obat0YGTSy7wfLDLEfOvzFLA==
-
-colorette@^2.0.16:
+colorette@^2.0.10, colorette@^2.0.16:
   version "2.0.16"
   resolved "https://registry.yarnpkg.com/colorette/-/colorette-2.0.16.tgz#713b9af84fdb000139f04546bd4a93f62a5085da"
   integrity sha512-hUewv7oMjCp+wkBv5Rm0v87eJhq4woh5rSR+42YSQJKecCqgIqNkZ6lAlQms/BwHPJA5NKMRlpxPRv0n8HQW6g==
@@ -7885,9 +7880,9 @@ lines-and-columns@^1.1.6:
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
 lint-staged@>=10:
-  version "12.1.7"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-12.1.7.tgz#fe9137992ac18a456422bb8484dd30be0140629f"
-  integrity sha512-bltv/ejiLWtowExpjU+s5z8j1Byjg9AlmaAjMmqNbIicY69u6sYIwXGg0dCn0TlkrrY2CphtHIXAkbZ+1VoWQQ==
+  version "12.2.2"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-12.2.2.tgz#e03d93b41092316e0f38b37c9630da807aae3cca"
+  integrity sha512-bcHEoM1M/f+K1BYdHcEuIn8K+zMOSJR3mkny6PAuQiTgcSUcRbUWaUD6porAYypxF4k1vYZZ2HutZt1p94Z1jQ==
   dependencies:
     cli-truncate "^3.1.0"
     colorette "^2.0.16"
@@ -8765,12 +8760,7 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
-object-inspect@^1.11.0, object-inspect@^1.9.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.11.0.tgz#9dceb146cedd4148a0d9e51ab88d34cf509922b1"
-  integrity sha512-jp7ikS6Sd3GxQfZJPyH3cjcbJF6GZPClgdV+EFygjFLQ5FmW/dRUnTd9PQ9k0JhoNDabWFbpF1yCdSWCC6gexg==
-
-object-inspect@^1.11.1:
+object-inspect@^1.11.0, object-inspect@^1.11.1, object-inspect@^1.9.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/object-inspect/-/object-inspect-1.12.0.tgz#6e2c120e868fd1fd18cb4f18c31741d0d6e776f0"
   integrity sha512-Ho2z80bVIvJloH+YzRmpZVQe87+qASmBUKZDWgx9cu+KDrX2ZDH/3tMy+gXbZETVGs2M8YdxObOh7XAtim9Y0g==
