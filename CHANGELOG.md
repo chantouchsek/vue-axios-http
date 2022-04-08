@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.4](https://github.com/chantouchsek/vue-axios-http/compare/v1.2.3...v1.2.4) (2022-04-08)
+
+
+### Bug Fixes
+
+* **deps:** bump actions/checkout from 2.4.0 to 3.0.0 ([76108e6](https://github.com/chantouchsek/vue-axios-http/commit/76108e649103ce8e1eaf68ba41163d3ce7035cc6))
+* **deps:** bump actions/setup-node from 2.5.1 to 3.1.0 ([907bd7e](https://github.com/chantouchsek/vue-axios-http/commit/907bd7e37fc882d044273a460e1c6684ba2ac618))
+* **deps:** bump camelcase-keys from 7.0.1 to 7.0.2 ([3b7293d](https://github.com/chantouchsek/vue-axios-http/commit/3b7293d3271bdc644c8c5a35e3db9ebd00240387))
+* **deps:** bump follow-redirects from 1.14.6 to 1.14.7 ([24c86c8](https://github.com/chantouchsek/vue-axios-http/commit/24c86c82907933f045236a624dfa022eac2aef66))
+* **deps:** bump follow-redirects from 1.14.7 to 1.14.8 ([2b2a457](https://github.com/chantouchsek/vue-axios-http/commit/2b2a457603466d6e62192ec446e590d1e7ff0622))
+* **deps:** bump minimist from 1.2.5 to 1.2.6 ([8abaf7d](https://github.com/chantouchsek/vue-axios-http/commit/8abaf7d6ed277de89904a9781b527d4173439461))
+* **deps:** bump nanoid from 3.1.28 to 3.2.0 ([cb3d4c8](https://github.com/chantouchsek/vue-axios-http/commit/cb3d4c8ceb4720b8f4ad0f68dbcc9ca410adbb74))
+* **deps:** bump node-fetch from 2.6.5 to 2.6.7 ([e37e9db](https://github.com/chantouchsek/vue-axios-http/commit/e37e9dba23a23da90de3b36535e15cb39e9aa9ff))
+* **deps:** bump qs from 6.10.2 to 6.10.3 ([d573f28](https://github.com/chantouchsek/vue-axios-http/commit/d573f2816e764e71479f50a937ba747e1f204742))
+* **deps:** bump snakecase-keys from 5.1.2 to 5.4.0 ([f195b47](https://github.com/chantouchsek/vue-axios-http/commit/f195b478384d93355381257f5f53105abfd7063d))
+
 ### [1.2.3](https://github.com/chantouchsek/vue-axios-http/compare/v1.2.2...v1.2.3) (2022-01-10)
 
 
