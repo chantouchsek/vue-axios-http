@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/chantouchsek/vue-axios-http/compare/v1.3.0...v2.0.0) (2022-04-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** remove transformers and snackcase and camelcase keys
+
+* **deps:** remove transformers and snackcase and camelcase keys ([260dfa1](https://github.com/chantouchsek/vue-axios-http/commit/260dfa1a4c766e7aa2f2df1fb3a8ee8687a5e00d))
+
 ## [1.3.0](https://github.com/chantouchsek/vue-axios-http/compare/v1.2.5...v1.3.0) (2022-04-09)
 
 
