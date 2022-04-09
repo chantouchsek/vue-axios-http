@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.5](https://github.com/chantouchsek/vue-axios-http/compare/v1.2.4...v1.2.5) (2022-04-09)
+
+
+### Bug Fixes
+
+* :beer: allow more http methods ([a1aac4d](https://github.com/chantouchsek/vue-axios-http/commit/a1aac4d58367c5a109534a191bb14b031cdc34d9))
+
 ### [1.2.4](https://github.com/chantouchsek/vue-axios-http/compare/v1.2.3...v1.2.4) (2022-04-08)
 
 
