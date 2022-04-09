@@ -1,8 +1,6 @@
 import type { ValidatorType } from './core/Validator'
 import BaseProxy from './core/BaseProxy'
 import Validator from './core/Validator'
-import BaseTransformer from './core/BaseTransformer'
-import PaginationTransformer from './core/PaginationTransformer'
 import { merge } from './util'
 import _Vue from 'vue'
 
@@ -51,12 +49,6 @@ class AxiosHttp {
     })
   }
 }
-export {
-  Validator,
-  BaseProxy,
-  BaseTransformer,
-  PaginationTransformer,
-  BaseProxy as BaseService,
-}
+export { Validator, BaseProxy, BaseProxy as BaseService }
 export * from './util'
 export default new AxiosHttp()

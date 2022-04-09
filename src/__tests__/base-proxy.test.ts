@@ -4,8 +4,6 @@ import MockAdapter from 'axios-mock-adapter'
 import PostProxy from '../util/PostPorxy'
 import type { ValidatorType } from '../core/Validator'
 import Validator from '../core/Validator'
-import BaseTransformer from '../core/BaseTransformer'
-import PaginationTransformer from '../core/PaginationTransformer'
 import { merge } from '../util'
 
 let proxy: PostProxy
@@ -39,10 +37,10 @@ describe('BaseProxy', () => {
       pagination: { count: 1, page: 1, perPage: 20 },
     }
     mockAdapter.onGet('/posts').reply(200, items)
-    const { data, pagination = {} } = await proxy.removeParameters().all()
+    const { data, pagination } = await proxy.removeParameters().all()
     const all = {
-      items: BaseTransformer.fetchCollection(data),
-      pagination: PaginationTransformer.fetch(pagination),
+      pagination,
+      items: data,
     }
     expect(all).toHaveProperty('pagination')
     expect(data).toEqual(all.items)
@@ -53,35 +51,19 @@ describe('BaseProxy', () => {
     const items = {
       data: [{ first_name: 'Chantouch', last_name: 'Sek' }],
       meta: {
-        pagination: { count: 1, current_page: 1, perPage: 20 },
+        pagination: { count: 1, page: 1, perPage: 20 },
         include: [],
       },
     }
     mockAdapter.onGet('/posts').reply(200, items)
-    const { data, meta = {} } = await proxy.removeParameters().all()
-    const all = {
-      items: BaseTransformer.fetchCollection(data),
-      pagination: PaginationTransformer.fetch(meta),
+    const { data, meta } = await proxy.removeParameters().all()
+    const item = {
+      items: data,
+      pagination: meta.pagination,
     }
     expect(meta).toHaveProperty('pagination')
     expect(data.length).toEqual(1)
-    expect(all.pagination.page).toEqual(1)
-  })
-
-  it('should assign default object meta if it is null or undefined', async () => {
-    const items = {
-      data: [{ first_name: 'Chantouch', last_name: 'Sek' }],
-      meta: undefined,
-    }
-    mockAdapter.onGet('/posts').reply(200, items)
-    const { data, meta } = await proxy.removeParameters([]).all()
-    const all = {
-      items: BaseTransformer.fetchCollection(data),
-      pagination: PaginationTransformer.fetch(meta),
-    }
-    expect(meta).toBeUndefined()
-    expect(data.length).toEqual(1)
-    expect(all.pagination.currentPage).toEqual(1)
+    expect(item.pagination.page).toEqual(1)
   })
 
   it('will fetch all records', async () => {
