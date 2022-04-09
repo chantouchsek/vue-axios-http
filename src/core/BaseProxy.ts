@@ -122,6 +122,14 @@ class BaseProxy {
   }
 
   /**
+   * Update record by payload using PUT method
+   * @param {Object|string} payload
+   */
+  putWithoutId<T>(payload: any) {
+    return this.submit<T>('put', '', payload)
+  }
+
+  /**
    * Alternative of put method
    * @param {string|number} id
    * @param {Object|string} payload
