@@ -330,6 +330,13 @@ describe('BaseProxy', () => {
     expect(data).toEqual(item)
   })
 
+  it('it should be able to put item without id parameter', async () => {
+    const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
+    mockAdapter.onPut('posts').reply(200, { data: item })
+    const { data } = await proxy.putWithoutId(item)
+    expect(data).toEqual(item)
+  })
+
   it('it should be able to patch item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPatch('posts/1').reply(200, { data: item })
