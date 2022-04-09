@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/chantouchsek/vue-axios-http/compare/v1.2.5...v1.3.0) (2022-04-09)
+
+
+### Features
+
+* :tada: added new method putWithoutId to base service ([8a9e0c2](https://github.com/chantouchsek/vue-axios-http/commit/8a9e0c29aed4e2c9e69aa895b21085a7e0adbc04))
+
 ### [1.2.5](https://github.com/chantouchsek/vue-axios-http/compare/v1.2.4...v1.2.5) (2022-04-09)
 
 
