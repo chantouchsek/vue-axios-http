@@ -7,8 +7,8 @@ const config: InitialOptionsTsJest = {
     global: {
       lines: 100,
       functions: 100,
-      branches: 93.44,
-      statements: 99.39,
+      branches: 92.72,
+      statements: 99.33,
     },
   },
   testEnvironment: 'node',

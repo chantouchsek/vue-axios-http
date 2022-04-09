@@ -81,9 +81,7 @@
     "nuxt"
   ],
   "dependencies": {
-    "camelcase-keys": "^7.0.1",
-    "qs": "^6.10.2",
-    "snakecase-keys": "^5.1.2"
+    "qs": "^6.10.2"
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --cache",
