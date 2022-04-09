@@ -221,7 +221,7 @@ class BaseProxy {
     })
   }
 
-  private __getParameterString(url: string): string {
+  private __getParameterString(url: string) {
     const query = qs.stringify(this.parameters, {
       encode: false,
       skipNulls: true,
@@ -230,9 +230,24 @@ class BaseProxy {
     return `${url}${query}`
   }
 
-  private static __validateRequestType(requestType: Method): Method {
-    const requestTypes = ['get', 'delete', 'head', 'post', 'put', 'patch']
-    if (!requestTypes.includes(requestType.toLowerCase())) {
+  private static __validateRequestType(requestType: Method) {
+    const requestTypes: Method[] = [
+      'get',
+      'GET',
+      'delete',
+      'DELETE',
+      'head',
+      'HEAD',
+      'options',
+      'OPTIONS',
+      'post',
+      'POST',
+      'put',
+      'PUT',
+      'patch',
+      'PATCH',
+    ]
+    if (!requestTypes.includes(requestType)) {
       throw new Error(
         `\`${requestType}\` is not a valid request type, ` +
           `must be one of: \`${requestTypes.join('`, `')}\`.`,

@@ -48,7 +48,7 @@ describe('PostProxy', () => {
       await proxy.throwException(1)
     } catch (e: any) {
       expect(e.message).toEqual(
-        '`unlink` is not a valid request type, must be one of: `get`, `delete`, `head`, `post`, `put`, `patch`.',
+        '`unlink` is not a valid request type, must be one of: `get`, `GET`, `delete`, `DELETE`, `head`, `HEAD`, `options`, `OPTIONS`, `post`, `POST`, `put`, `PUT`, `patch`, `PATCH`.',
       )
     }
   })
