@@ -200,6 +200,8 @@ class BaseService {
     return this
   }
 
+  setParameter(parameter: string): this
+  setParameter(parameter: string, value?: any): this
   setParameter(parameter: string, value?: any): this {
     if (!value) {
       const options: IParseOptions = Object.assign({}, this.$parsedQs, {
@@ -214,8 +216,10 @@ class BaseService {
     return this
   }
 
+  removeParameters(): this
+  removeParameters(parameters: any[]): this
   removeParameters(parameters = [] as any[]): this {
-    if (!parameters.length) {
+    if (!parameters || !parameters.length) {
       this.parameters = []
     } else {
       for (const parameter of parameters) {
