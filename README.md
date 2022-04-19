@@ -10,7 +10,7 @@ This package helps you quickly to build requests for REST API. Move your logic a
 classes. Keep your code clean and elegant.
 
 Wouldn't it be great if you could just use your back end to validate forms on the front end? This package provides a
-`BaseProxy` class that does exactly that. It can post itself to a configured endpoint and manage errors. The class is
+`BaseService` class that does exactly that. It can post itself to a configured endpoint and manage errors. The class is
 meant to be used with a Laravel back end, and it doesn't limit that you need only to work with laravel, Ruby on Rail,
 NodeJs, ExpressJs, or any other languages.
 
@@ -130,9 +130,9 @@ It will create `$errors` object inside components.
 `~/proxies/NewsProxy.js`
 
 ```js
-import { BaseProxy } from 'vue-axios-http'
+import { BaseService } from 'vue-axios-http'
 
-class NewsProxy extends BaseProxy {
+class NewsProxy extends BaseService {
   constructor(parameters = {}) {
     super('news', parameters)
   }

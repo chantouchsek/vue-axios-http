@@ -1,28 +1,28 @@
 import Axios from 'axios'
-import BaseProxy from '../core/BaseProxy'
+import BaseService from '../core/BaseService'
 import MockAdapter from 'axios-mock-adapter'
-import PostProxy from '../util/PostPorxy'
+import PostService from '../util/PostService'
 import type { ValidatorType } from '../core/Validator'
 import Validator from '../core/Validator'
 import { merge } from '../util'
 
-let proxy: PostProxy
+let proxy: PostService
 let mockAdapter: MockAdapter
 let validator: ValidatorType
 
-describe('BaseProxy', () => {
+describe('BaseService', () => {
   beforeEach(() => {
     validator = Validator
     const axios = Axios.create({ baseURL: 'https://mock-api.test' })
-    BaseProxy.$http = axios
-    BaseProxy.$errorProperty = 'message'
-    proxy = new PostProxy()
+    BaseService.$http = axios
+    BaseService.$errorProperty = 'message'
+    proxy = new PostService()
     mockAdapter = new MockAdapter(axios)
     mockAdapter.reset()
   })
 
   it('check if http was installed', async () => {
-    BaseProxy.$http = undefined as any
+    BaseService.$http = undefined as any
     try {
       await proxy.all()
     } catch (e) {
@@ -346,10 +346,10 @@ describe('BaseProxy', () => {
   })
 
   it('can accept a custom http instance in options', () => {
-    BaseProxy.$http = Axios.create({ baseURL: 'https://another-example.com' })
+    BaseService.$http = Axios.create({ baseURL: 'https://another-example.com' })
     expect(proxy.$http.defaults.baseURL).toBe('https://another-example.com')
 
-    BaseProxy.$http = Axios.create()
+    BaseService.$http = Axios.create()
     expect(proxy.$http.defaults.baseURL).toBe(undefined)
   })
 })

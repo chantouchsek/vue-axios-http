@@ -18,7 +18,7 @@ import qs, { IParseOptions } from 'qs'
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
 
-class BaseProxy {
+class BaseService {
   errors: Errors
   parameters: Record<string, any>
   endpoint: string
@@ -37,15 +37,15 @@ class BaseProxy {
   }
 
   get $http() {
-    return BaseProxy.$http
+    return BaseService.$http
   }
 
   get $errorProperty() {
-    return BaseProxy.$errorProperty
+    return BaseService.$errorProperty
   }
 
   get $parsedQs() {
-    return BaseProxy.$parsedQs
+    return BaseService.$parsedQs
   }
 
   all<T>() {
@@ -129,7 +129,7 @@ class BaseProxy {
     form?: T,
     config?: AxiosRequestConfig,
   ): Promise<T> {
-    const method = BaseProxy.__validateRequestType(requestType)
+    const method = BaseService.__validateRequestType(requestType)
     this.beforeSubmit()
     return new Promise((resolve, reject) => {
       const data = hasFiles(form) ? objectToFormData(form) : form
@@ -255,4 +255,4 @@ class BaseProxy {
   }
 }
 
-export default BaseProxy
+export default BaseService

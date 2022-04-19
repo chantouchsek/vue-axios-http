@@ -1,16 +1,16 @@
 import Axios from 'axios'
-import BaseProxy from '../core/BaseProxy'
-import PostProxy from '../util/PostPorxy'
+import BaseService from '../core/BaseService'
+import PostService from '../util/PostService'
 import MockAdapter from 'axios-mock-adapter'
 
-let proxy: PostProxy
+let proxy: PostService
 let mockAdapter: MockAdapter
 
-describe('PostProxy', () => {
+describe('PostService', () => {
   beforeEach(() => {
     const axios = Axios.create({ baseURL: 'https://mock-api.test' })
-    BaseProxy.$http = axios
-    proxy = new PostProxy()
+    BaseService.$http = axios
+    proxy = new PostService()
     mockAdapter = new MockAdapter(axios)
     mockAdapter.reset()
   })

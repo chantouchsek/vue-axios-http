@@ -1,5 +1,5 @@
 import type { ValidatorType } from './core/Validator'
-import BaseProxy from './core/BaseProxy'
+import BaseService from './core/BaseService'
 import Validator from './core/Validator'
 import { merge } from './util'
 import _Vue from 'vue'
@@ -28,9 +28,9 @@ class AxiosHttp {
       options,
     )
     const { $axios, errorProperty, parsedQs } = defaultOption
-    BaseProxy.$http = $axios
-    BaseProxy.$errorProperty = errorProperty || 'errors'
-    BaseProxy.$parsedQs = parsedQs || this.parsedQs
+    BaseService.$http = $axios
+    BaseService.$errorProperty = errorProperty || 'errors'
+    BaseService.$parsedQs = parsedQs || this.parsedQs
     Vue.mixin({
       beforeCreate() {
         this.$options.$errors = {} as any
@@ -49,6 +49,6 @@ class AxiosHttp {
     })
   }
 }
-export { Validator, BaseProxy, BaseProxy as BaseService }
+export { Validator, BaseService }
 export * from './util'
 export default new AxiosHttp()
