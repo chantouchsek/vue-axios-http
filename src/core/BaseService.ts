@@ -12,6 +12,7 @@ import {
   objectToFormData,
   removeDoubleSlash,
   isObject,
+  isArray,
 } from '../util'
 import qs, { IParseOptions } from 'qs'
 
@@ -221,7 +222,7 @@ class BaseService {
   removeParameters(parameters = [] as any[]): this {
     if (!parameters || !parameters.length) {
       this.parameters = []
-    } else {
+    } else if (isArray(parameters)) {
       for (const parameter of parameters) {
         delete this.parameters[parameter]
       }
