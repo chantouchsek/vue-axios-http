@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/chantouchsek/vue-axios-http/compare/v2.0.1...v3.0.0) (2022-04-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* renamed all proxy to service
+* :fire: rename BaseProxy class to BaseService class
+* **break:** remove unused methods
+* **methods:** remvoe redundant methods from base proxy class
+
+### Features
+
+* add more options to methods ([66de43c](https://github.com/chantouchsek/vue-axios-http/commit/66de43cf08d89cfc57ff5179e50286c353f46050))
+
+
+### Bug Fixes
+
+* check set remove param method ([e8f3cf4](https://github.com/chantouchsek/vue-axios-http/commit/e8f3cf4038fd72a8d0cc476c79a075c43faaa378))
+* make paraeter type to be object type ([129b46d](https://github.com/chantouchsek/vue-axios-http/commit/129b46d88a7ba38621d468eb7f6d0617e5239209))
+
+
+* :fire: rename BaseProxy class to BaseService class ([1e486c3](https://github.com/chantouchsek/vue-axios-http/commit/1e486c3ef8c8e6a7a8780d78a671681bd4129369))
+* **break:** remove unused methods ([47f65cb](https://github.com/chantouchsek/vue-axios-http/commit/47f65cbf9cb4c33dc44af693cc8aa9984cd548cb))
+* **methods:** remvoe redundant methods from base proxy class ([4fb5adb](https://github.com/chantouchsek/vue-axios-http/commit/4fb5adb4ad824e8c16d89167a609df6631ebb70b))
+* renamed all proxy to service ([a69a5ba](https://github.com/chantouchsek/vue-axios-http/commit/a69a5ba93982c068ea7370df7b30d6c03178f7a6))
+
 ### [2.0.1](https://github.com/chantouchsek/vue-axios-http/compare/v2.0.0...v2.0.1) (2022-04-19)
 
 
