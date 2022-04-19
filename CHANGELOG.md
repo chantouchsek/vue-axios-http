@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/chantouchsek/vue-axios-http/compare/v2.0.0...v2.0.1) (2022-04-19)
+
+
+### Bug Fixes
+
+* :fire: remove readonly from endpoint property ([8f6f8e7](https://github.com/chantouchsek/vue-axios-http/commit/8f6f8e7cdcc308b0a649a80addfd08ce4898116e))
+* **deps:** bump actions/checkout from 3.0.0 to 3.0.1 ([dd8e124](https://github.com/chantouchsek/vue-axios-http/commit/dd8e1243126a35532647a41129a093417ed93120))
+* **deps:** bump actions/setup-node from 3.1.0 to 3.1.1 ([58d0d0a](https://github.com/chantouchsek/vue-axios-http/commit/58d0d0a5a16cd5962bd7bc9d883ceb8d1201e678))
+* **deps:** bump actions/stale from 4 to 5 ([32a293d](https://github.com/chantouchsek/vue-axios-http/commit/32a293d13b9c9bbe746c4460bf3c57d7811bbcf6))
+
 ## [2.0.0](https://github.com/chantouchsek/vue-axios-http/compare/v1.3.0...v2.0.0) (2022-04-09)
 
 
