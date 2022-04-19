@@ -1,16 +1,16 @@
 import Axios from 'axios'
-import BaseProxy from '../core/BaseProxy'
-import PostProxy from '../util/PostPorxy'
+import BaseService from '../core/BaseService'
+import PostService from '../util/PostService'
 import MockAdapter from 'axios-mock-adapter'
 
-let proxy: PostProxy
+let service: PostService
 let mockAdapter: MockAdapter
 
-describe('PostProxy', () => {
+describe('PostService', () => {
   beforeEach(() => {
     const axios = Axios.create({ baseURL: 'https://mock-api.test' })
-    BaseProxy.$http = axios
-    proxy = new PostProxy()
+    BaseService.$http = axios
+    service = new PostService()
     mockAdapter = new MockAdapter(axios)
     mockAdapter.reset()
   })
@@ -24,12 +24,11 @@ describe('PostProxy', () => {
       },
     }
     mockAdapter.onGet('/posts/1/tags').reply(200, items)
-    const { data, meta } = await proxy.tags(1)
+    const { data, meta } = await service.removeParameters([]).tags(1)
     const item = {
       items: data,
       pagination: meta.pagination,
     }
-    console.warn('meta', item.pagination)
     expect(meta).toHaveProperty('pagination')
     expect(data.length).toEqual(1)
     expect(item.pagination.page).toEqual(1)
@@ -44,7 +43,7 @@ describe('PostProxy', () => {
     }
     mockAdapter.onGet('/posts/1/tags').reply(500, items)
     try {
-      await proxy.throwException(1)
+      await service.throwException(1)
     } catch (e: any) {
       expect(e.message).toEqual(
         '`unlink` is not a valid request type, must be one of: `get`, `GET`, `delete`, `DELETE`, `head`, `HEAD`, `options`, `OPTIONS`, `post`, `POST`, `put`, `PUT`, `patch`, `PATCH`.',

@@ -1,30 +1,30 @@
 import Axios from 'axios'
-import BaseProxy from '../core/BaseProxy'
+import BaseService from '../core/BaseService'
 import MockAdapter from 'axios-mock-adapter'
-import PostProxy from '../util/PostPorxy'
+import PostService from '../util/PostService'
 import type { ValidatorType } from '../core/Validator'
 import Validator from '../core/Validator'
 import { merge } from '../util'
 
-let proxy: PostProxy
+let service: PostService
 let mockAdapter: MockAdapter
 let validator: ValidatorType
 
-describe('BaseProxy', () => {
+describe('BaseService', () => {
   beforeEach(() => {
     validator = Validator
     const axios = Axios.create({ baseURL: 'https://mock-api.test' })
-    BaseProxy.$http = axios
-    BaseProxy.$errorProperty = 'message'
-    proxy = new PostProxy()
+    BaseService.$http = axios
+    BaseService.$errorProperty = 'message'
+    service = new PostService()
     mockAdapter = new MockAdapter(axios)
     mockAdapter.reset()
   })
 
   it('check if http was installed', async () => {
-    BaseProxy.$http = undefined as any
+    BaseService.$http = undefined as any
     try {
-      await proxy.getMany()
+      await service.all()
     } catch (e) {
       const { message } = e as any
       expect(message).toBe('Vue Axios Http, No http library provided.')
@@ -37,7 +37,7 @@ describe('BaseProxy', () => {
       pagination: { count: 1, page: 1, perPage: 20 },
     }
     mockAdapter.onGet('/posts').reply(200, items)
-    const { data, pagination } = await proxy.removeParameters().all()
+    const { data, pagination } = await service.removeParameters().all()
     const all = {
       pagination,
       items: data,
@@ -56,7 +56,7 @@ describe('BaseProxy', () => {
       },
     }
     mockAdapter.onGet('/posts').reply(200, items)
-    const { data, meta } = await proxy.removeParameters().all()
+    const { data, meta } = await service.removeParameters().all()
     const item = {
       items: data,
       pagination: meta.pagination,
@@ -69,14 +69,14 @@ describe('BaseProxy', () => {
   it('will fetch all records', async () => {
     const items = [{ first_name: 'Chantouch', last_name: 'Sek' }]
     mockAdapter.onGet('/posts').reply(200, { data: items })
-    const { data } = await proxy.removeParameters().all()
+    const { data } = await service.removeParameters().all()
     expect(data).toEqual(items)
   })
 
   it('Check network server return 500', async () => {
     mockAdapter.onGet('/posts').networkError()
     try {
-      await proxy.all()
+      await service.all()
     } catch (e) {
       const { message } = e as any
       expect(message).toBe('Network Error')
@@ -89,7 +89,7 @@ describe('BaseProxy', () => {
       { first_name: 'Chantouch', last_name: 'Sek', id: 2 },
     ]
     mockAdapter.onGet('/posts?id=1&first_name=Dara').reply(200, { data: items })
-    const { data } = await proxy
+    const { data } = await service
       .setParameter('id', 1)
       .setParameters({ first_name: 'Dara' })
       .all()
@@ -113,11 +113,11 @@ describe('BaseProxy', () => {
     mockAdapter
       .onGet('/posts?id=1&last_name=Hok&search[name]=hello&first_name=Dara')
       .reply(200, { data: items })
-    const { data } = await proxy
+    const { data } = await service
       .setParameter('id=1&last_name=Hok&search[name]=hello')
       .setParameters({ first_name: 'Dara' })
       .all()
-    expect(proxy.parameters).toEqual({
+    expect(service.parameters).toEqual({
       id: '1',
       first_name: 'Dara',
       last_name: 'Hok',
@@ -134,7 +134,7 @@ describe('BaseProxy', () => {
       { first_name: 'Chantouch', last_name: 'Sek', id: 2 },
     ]
     mockAdapter.onGet('/posts?id=1').reply(200, { data: items })
-    const { data } = await proxy
+    const { data } = await service
       .setParameter('id', 1)
       .setParameters({ first_name: 'Dara', last_name: 'Sek' })
       .removeParameter('first_name')
@@ -156,34 +156,28 @@ describe('BaseProxy', () => {
       first_name: 'Dara',
       last_name: 'Hok',
     }
-    const { data } = await proxy
+    const { data } = await service
       .setParameters(params)
       .removeParameters(['last_name'])
       .all()
     expect(data).toEqual(items)
-    expect(proxy.parameters).toEqual({ search: { id: 1 }, first_name: 'Dara' })
+    expect(service.parameters).toEqual({
+      search: { id: 1 },
+      first_name: 'Dara',
+    })
   })
 
   it('it should find an item by id', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onGet('posts/1').reply(200, { data: item })
-    const { data } = await proxy.getOne(1)
+    const { data } = await service.find(1)
     expect(data).toEqual(item)
   })
 
   it('it should create a item by post', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPost('/posts').reply(201, { data: item })
-    const { data } = await proxy.post(item)
-    expect(data).toEqual(item)
-  })
-
-  it('it should create items with bulk', async () => {
-    const item = {
-      bulk: [{ first_name: 'Chantouch', last_name: 'Sek', id: 1 }],
-    }
-    mockAdapter.onPost('/posts/bulk').reply(201, item)
-    const data = await proxy.createMany(item)
+    const { data } = await service.post(item)
     expect(data).toEqual(item)
   })
 
@@ -218,7 +212,7 @@ describe('BaseProxy', () => {
       return [200, {}]
     })
 
-    await proxy.create(form)
+    await service.store(form)
   })
 
   it('transforms the data to a FormData object if there is a File with post', async () => {
@@ -250,7 +244,7 @@ describe('BaseProxy', () => {
       return [200, {}]
     })
 
-    await proxy.putWithFile(form.id, form)
+    await service.put(form.id, form)
   })
 
   it('transforms the boolean values in FormData object to "1" or "0"', async () => {
@@ -281,7 +275,7 @@ describe('BaseProxy', () => {
       return [200, {}]
     })
 
-    await proxy.post(form)
+    await service.post(form)
   })
 
   it('it should throw errors message when data is not valid', async () => {
@@ -290,7 +284,7 @@ describe('BaseProxy', () => {
       message: { first_name: 'The first name field is required' },
     })
     try {
-      await proxy.post(item)
+      await service.post(item)
     } catch (e) {
       const { message } = e as any
       expect(message).toBe('Request failed with status code 422')
@@ -301,58 +295,65 @@ describe('BaseProxy', () => {
   it('it should store the item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPost('/posts').reply(201, { data: item })
-    const { data } = await proxy.store(item)
+    const { data } = await service.store(item)
     expect(data).toEqual(item)
   })
 
   it('it should be able to put item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPut('posts/1').reply(200, { data: item })
-    const { data } = await proxy.replace(item.id, item)
+    const { data } = await service.put(item.id, item)
     expect(data).toEqual(item)
   })
 
   it('it should be able to put item without id parameter', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPut('posts').reply(200, { data: item })
-    const { data } = await proxy.putWithoutId(item)
+    const { data } = await service.put(item)
     expect(data).toEqual(item)
   })
 
   it('it should be able to patch item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPatch('posts/1').reply(200, { data: item })
-    const { data } = await proxy.patch(item.id, item)
+    const { data } = await service.patch(item.id, item)
+    expect(data).toEqual(item)
+  })
+
+  it('it should be able to patch item without id', async () => {
+    const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
+    mockAdapter.onPatch('posts').reply(200, { data: item })
+    const { data } = await service.patch(item)
     expect(data).toEqual(item)
   })
 
   it('it should be able to update an item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPatch('posts/1').reply(200, { data: item })
-    const { data } = await proxy.update(item.id, item)
+    const { data } = await service.update(item.id, item)
     expect(data).toEqual(item)
   })
 
   it('it should be able to delete an item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onDelete('posts/1').reply(200, { data: item })
-    const { data } = await proxy.delete(item.id)
+    const { data } = await service.delete(item.id)
     expect(data).toEqual(item)
   })
 
   it('it should be able to remove an item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onDelete('posts/1').reply(200, { data: item })
-    const { data } = await proxy.remove(item.id)
+    const { data } = await service.remove(item.id)
     expect(data).toEqual(item)
   })
 
   it('can accept a custom http instance in options', () => {
-    BaseProxy.$http = Axios.create({ baseURL: 'https://another-example.com' })
-    expect(proxy.$http.defaults.baseURL).toBe('https://another-example.com')
+    BaseService.$http = Axios.create({ baseURL: 'https://another-example.com' })
+    expect(service.$http.defaults.baseURL).toBe('https://another-example.com')
 
-    BaseProxy.$http = Axios.create()
-    expect(proxy.$http.defaults.baseURL).toBe(undefined)
+    BaseService.$http = Axios.create()
+    expect(service.$http.defaults.baseURL).toBe(undefined)
   })
 })
 

@@ -1,6 +1,6 @@
-import BaseProxy from '../core/BaseProxy'
+import BaseService from '../core/BaseService'
 
-class PostProxy extends BaseProxy {
+class PostService extends BaseService {
   constructor(parameters = {}) {
     super('posts', parameters)
   }
@@ -14,4 +14,4 @@ class PostProxy extends BaseProxy {
   }
 }
 
-export default PostProxy
+export default PostService

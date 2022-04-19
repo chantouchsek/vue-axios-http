@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import AxiosHttp, { BaseProxy, Validator } from 'vue-axios-http'
+import AxiosHttp, { BaseService, Validator } from 'vue-axios-http'
 
 const errorProperty = '<%= options.errorProperty %>'
 const parsedQs = '<%= options.parsedQs %>'
@@ -7,6 +7,6 @@ const parsedQs = '<%= options.parsedQs %>'
 Vue.use(AxiosHttp, { errorProperty: errorProperty, parsedQs })
 
 export default function ({ $axios }, inject) {
-  BaseProxy.$http = $axios
+  BaseService.$http = $axios
   inject('errors', Validator)
 }
