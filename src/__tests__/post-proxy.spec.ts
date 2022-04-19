@@ -29,7 +29,6 @@ describe('PostProxy', () => {
       items: data,
       pagination: meta.pagination,
     }
-    console.warn('meta', item.pagination)
     expect(meta).toHaveProperty('pagination')
     expect(data.length).toEqual(1)
     expect(item.pagination.page).toEqual(1)

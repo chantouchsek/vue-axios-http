@@ -7,7 +7,12 @@ import type {
 } from 'axios'
 import type { Errors } from '..'
 import Validator from './Validator'
-import { hasFiles, objectToFormData, removeDoubleSlash } from '../util'
+import {
+  hasFiles,
+  objectToFormData,
+  removeDoubleSlash,
+  isObject,
+} from '../util'
 import qs, { IParseOptions } from 'qs'
 
 const validator = Validator
@@ -51,37 +56,46 @@ class BaseProxy {
     return this.submit<T>('get', id)
   }
 
+  post<T>(payload: any): Promise<T>
+  post<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
   post<T>(payload: any, config?: AxiosRequestConfig) {
     return this.submit<T>('post', '', payload, config)
   }
 
+  store<T>(payload: any): Promise<T>
+  store<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
   store<T>(payload: any, config?: AxiosRequestConfig) {
     return this.post<T>(payload, config)
   }
 
-  create<T>(payload: any, config?: AxiosRequestConfig) {
-    return this.store<T>(payload, config)
-  }
-
-  put<T>(id: string | number, payload: any) {
-    return this.submit<T>('put', `/${id}`, payload)
-  }
-
-  putWithoutId<T>(payload: any) {
-    return this.submit<T>('put', '', payload)
-  }
-
-  putWithFile<T>(
+  put<T>(payload: any): Promise<T>
+  put<T>(id: string | number, payload: any): Promise<T>
+  put<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
+  put<T>(
     id: string | number,
     payload: any,
     config?: AxiosRequestConfig,
-  ) {
-    payload._method = 'put'
-    return this.submit<T>('post', `/${id}`, payload, config)
+  ): Promise<T>
+  put<T>(id: string | number, payload?: any, config?: AxiosRequestConfig) {
+    const parameter = id && !isObject(id) ? `/${id}` : ''
+    const requestType: Method = hasFiles(payload) ? 'post' : 'put'
+    if (hasFiles(payload)) {
+      Object.assign(payload, { _method: 'put' })
+    }
+    return this.submit<T>(requestType, parameter, payload, config)
   }
 
-  patch<T>(id: string | number, payload: any) {
-    return this.submit<T>('patch', `/${id}`, payload)
+  patch<T>(payload: any): Promise<T>
+  patch<T>(id: string | number, payload: any): Promise<T>
+  patch<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
+  patch<T>(
+    id: string | number,
+    payload: any,
+    config?: AxiosRequestConfig,
+  ): Promise<T>
+  patch<T>(id: string | number, payload?: any, config?: AxiosRequestConfig) {
+    const parameter = id && !isObject(id) ? `/${id}` : ''
+    return this.submit<T>('patch', parameter, payload, config)
   }
 
   update<T>(id: string | number, payload: any) {

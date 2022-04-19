@@ -209,7 +209,7 @@ describe('BaseProxy', () => {
       return [200, {}]
     })
 
-    await proxy.create(form)
+    await proxy.store(form)
   })
 
   it('transforms the data to a FormData object if there is a File with post', async () => {
@@ -241,7 +241,7 @@ describe('BaseProxy', () => {
       return [200, {}]
     })
 
-    await proxy.putWithFile(form.id, form)
+    await proxy.put(form.id, form)
   })
 
   it('transforms the boolean values in FormData object to "1" or "0"', async () => {
@@ -306,7 +306,7 @@ describe('BaseProxy', () => {
   it('it should be able to put item without id parameter', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPut('posts').reply(200, { data: item })
-    const { data } = await proxy.putWithoutId(item)
+    const { data } = await proxy.put(item)
     expect(data).toEqual(item)
   })
 
@@ -314,6 +314,13 @@ describe('BaseProxy', () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPatch('posts/1').reply(200, { data: item })
     const { data } = await proxy.patch(item.id, item)
+    expect(data).toEqual(item)
+  })
+
+  it('it should be able to patch item without id', async () => {
+    const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
+    mockAdapter.onPatch('posts').reply(200, { data: item })
+    const { data } = await proxy.patch(item)
     expect(data).toEqual(item)
   })
 
