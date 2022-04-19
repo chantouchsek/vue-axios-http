@@ -24,7 +24,7 @@ describe('PostProxy', () => {
       },
     }
     mockAdapter.onGet('/posts/1/tags').reply(200, items)
-    const { data, meta } = await proxy.tags(1)
+    const { data, meta } = await proxy.removeParameters([]).tags(1)
     const item = {
       items: data,
       pagination: meta.pagination,

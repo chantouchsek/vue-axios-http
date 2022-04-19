@@ -24,7 +24,7 @@ describe('BaseProxy', () => {
   it('check if http was installed', async () => {
     BaseProxy.$http = undefined as any
     try {
-      await proxy.getMany()
+      await proxy.all()
     } catch (e) {
       const { message } = e as any
       expect(message).toBe('Vue Axios Http, No http library provided.')
@@ -167,7 +167,7 @@ describe('BaseProxy', () => {
   it('it should find an item by id', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onGet('posts/1').reply(200, { data: item })
-    const { data } = await proxy.getOne(1)
+    const { data } = await proxy.find(1)
     expect(data).toEqual(item)
   })
 
@@ -175,15 +175,6 @@ describe('BaseProxy', () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPost('/posts').reply(201, { data: item })
     const { data } = await proxy.post(item)
-    expect(data).toEqual(item)
-  })
-
-  it('it should create items with bulk', async () => {
-    const item = {
-      bulk: [{ first_name: 'Chantouch', last_name: 'Sek', id: 1 }],
-    }
-    mockAdapter.onPost('/posts/bulk').reply(201, item)
-    const data = await proxy.createMany(item)
     expect(data).toEqual(item)
   })
 
@@ -308,7 +299,7 @@ describe('BaseProxy', () => {
   it('it should be able to put item', async () => {
     const item = { first_name: 'Chantouch', last_name: 'Sek', id: 1 }
     mockAdapter.onPut('posts/1').reply(200, { data: item })
-    const { data } = await proxy.replace(item.id, item)
+    const { data } = await proxy.put(item.id, item)
     expect(data).toEqual(item)
   })
 
