@@ -20,7 +20,7 @@ export interface ParametersType {
 class BaseProxy {
   errors: Errors
   parameters: any | any[]
-  readonly endpoint: string
+  endpoint: string
   static $http: AxiosInstance
   static $errorProperty = 'errors'
   static $parsedQs: IParseOptions = {
