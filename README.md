@@ -127,18 +127,18 @@ It will create `$errors` object inside components.
 
 1.Create **proxies** folder or your prefer folder name for this
 
-`~/proxies/NewsProxy.js`
+`~/proxies/NewsService.js`
 
 ```js
 import { BaseService } from 'vue-axios-http'
 
-class NewsProxy extends BaseService {
+class NewsService extends BaseService {
   constructor(parameters = {}) {
     super('news', parameters)
   }
 }
 
-export default NewsProxy
+export default NewsService
 ```
 
 2.Store
@@ -157,19 +157,19 @@ actions.js
 
 ```js
 import { ALL } from './mutation-types'
-import { NewsProxy } from '~/proxies'
+import { NewsService } from '~/proxies'
 import { BaseTransformer, PaginationTransformer } from 'vue-axios-http'
 import { pagination, notify } from '~/utils'
 
-const proxy = new NewsProxy()
+const service = new NewsService()
 
 const all = async ({ commit, dispatch }, payload = {}) => {
   const { fn } = payload
   if (typeof fn === 'function') {
-    await fn(proxy)
+    await fn(service)
   }
   try {
-    const { data, meta } = await proxy.all()
+    const { data, meta } = await service.all()
     const all = {
       items: BaseTransformer.fetchCollection(data),
       pagination: PaginationTransformer.fetch(meta),
@@ -247,8 +247,8 @@ export default {
   async asyncData({ app, store }) {
     const { id = null } = app.$auth.user
     await store.dispatch('news/all', {
-      fn: (proxy) => {
-        proxy
+      fn: (service) => {
+        service
           .setParameters({
             userId: id,
             include: ['categories'],
@@ -267,8 +267,8 @@ export default {
   mounted() {
     const { id = null } = this.$auth.user
     this.$store.dispatch('news/all', {
-      fn: (proxy) => {
-        proxy
+      fn: (service) => {
+        service
           .setParameters({
             userId: id,
             include: ['categories'],
@@ -282,7 +282,7 @@ export default {
 
 You can set or remove any parameters you like.
 
-## Proxy's methods are available
+## Service's methods are available
 
 | Method                                          | Description                 |
 | ----------------------------------------------- | --------------------------- |
@@ -301,7 +301,7 @@ Set parameters with key/value.
 #### Example
 
 ```js
-const proxy = new ExampleProxy()
+const service = new ExampleService()
 const parameters = {
   search: {
     first_name: 'Sek',
@@ -317,7 +317,7 @@ const parameters = {
   },
   category_id: 6,
 }
-const { data } = proxy.setParameters(parameters).all()
+const { data } = service.setParameters(parameters).all()
 this.data = data
 ```
 
@@ -334,8 +334,8 @@ if setParameter that value is empty or null it will remove that param for query 
 #### Example 1
 
 ```js
-const proxy = new ExampleProxy()
-const { data } = await proxy.setParameter('page', 1).all()
+const service = new ExampleService()
+const { data } = await service.setParameter('page', 1).all()
 this.data = data
 ```
 
@@ -350,9 +350,9 @@ Expected will be:
 #### Example 2
 
 ```js
-const proxy = new ExampleProxy()
+const service = new ExampleService()
 const queryString = 'limit=10&page=1&search[name]=hello'
-const { data } = await proxy.setParameter(queryString).all()
+const { data } = await service.setParameter(queryString).all()
 this.data = data
 ```
 
@@ -370,20 +370,20 @@ Expected will be:
 
 Be sure to use only once in `mounted()` or `asyncData()` and `asyncData()` is only available in `NuxtJs`
 
-## Use proxy in components
+## Use service in components
 
 - news/\_id.vue pages
 
 ```js
-import { NewsProxy } from '~/proxies'
+import { NewsService } from '~/proxies'
 
-const proxy = new NewsProxy()
+const service = new NewsService()
 
 export default {
   methods: {
     async fetchNews(id) {
       try {
-        const { data } = await proxy.find(id)
+        const { data } = await service.find(id)
         this.detail = data
       } catch (e) {
         console.log(e)
