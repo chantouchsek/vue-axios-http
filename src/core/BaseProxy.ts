@@ -13,13 +13,9 @@ import qs, { IParseOptions } from 'qs'
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
 
-export interface ParametersType {
-  [key: string]: any
-}
-
 class BaseProxy {
   errors: Errors
-  parameters: any | any[]
+  parameters: Record<string, any>
   endpoint: string
   static $http: AxiosInstance
   static $errorProperty = 'errors'
@@ -29,7 +25,7 @@ class BaseProxy {
     ignoreQueryPrefix: true,
   }
 
-  constructor(endpoint: string, parameters?: ParametersType) {
+  constructor(endpoint: string, parameters: Record<string, any>) {
     this.endpoint = endpoint
     this.parameters = parameters
     this.errors = Validator
@@ -268,7 +264,7 @@ class BaseProxy {
    * Set parameters by keys
    * @param {Object} parameters
    */
-  setParameters(parameters: ParametersType): this {
+  setParameters(parameters: Record<string, any>): this {
     Object.keys(parameters).forEach((key) => {
       this.parameters[key] = parameters[key]
     })
@@ -322,7 +318,7 @@ class BaseProxy {
    * Fill errors on fails passed
    * @param {Object} errors
    */
-  onFail(errors: ParametersType) {
+  onFail(errors: Record<string, any>) {
     this.errors.fill(errors)
     validator.fill(errors)
   }
