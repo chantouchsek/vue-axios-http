@@ -149,7 +149,7 @@ class BaseService {
           validator.processing = false
           const { response } = error
           if (response && response.status === UNPROCESSABLE_ENTITY) {
-            const { data } = response
+            const data = response.data as Record<string, any>
             const errors: Record<string, any> = {}
             Object.assign(errors, data[this.$errorProperty])
             this.onFail(errors)
