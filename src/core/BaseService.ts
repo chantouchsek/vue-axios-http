@@ -19,6 +19,10 @@ import qs, { IParseOptions } from 'qs'
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
 
+interface AxiosResponseData {
+  [key: string | number]: any
+}
+
 class BaseService {
   errors: Errors
   parameters: Record<string, any>
@@ -144,12 +148,12 @@ class BaseService {
           this.onSuccess()
           resolve(response.data || {})
         })
-        .catch((error: AxiosError) => {
+        .catch((error: AxiosError<AxiosResponseData>) => {
           this.errors.processing = false
           validator.processing = false
           const { response } = error
           if (response && response.status === UNPROCESSABLE_ENTITY) {
-            const data = response.data as Record<string, any>
+            const { data } = response
             const errors: Record<string, any> = {}
             Object.assign(errors, data[this.$errorProperty])
             this.onFail(errors)
