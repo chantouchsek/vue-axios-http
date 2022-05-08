@@ -103,7 +103,7 @@ class BaseService {
     config?: AxiosRequestConfig,
   ): Promise<T>
   patch<T>(id: string | number, payload?: any, config?: AxiosRequestConfig) {
-    const parameter = id && !isObject(id) ? id : ''
+    const parameter = id && !isObject(id) ? `/${id}` : ''
     return this.submit<T>('patch', parameter, payload, { config })
   }
 
@@ -112,7 +112,7 @@ class BaseService {
   }
 
   delete<T>(id: string | number) {
-    return this.submit<T>('delete', id)
+    return this.submit<T>('delete', `/${id}`)
   }
 
   remove<T>(id: string | number) {
