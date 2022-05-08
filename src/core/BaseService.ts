@@ -12,7 +12,6 @@ import {
   objectToFormData,
   removeDoubleSlash,
   isObject,
-  isArray,
 } from '../util'
 import qs, { IParseOptions } from 'qs'
 
@@ -21,6 +20,11 @@ const UNPROCESSABLE_ENTITY = 422
 
 interface AxiosResponseData {
   [key: string | number]: any
+}
+
+interface RequestOptions {
+  query?: string | Record<string, string | number>
+  config?: AxiosRequestConfig
 }
 
 class BaseService {
@@ -53,8 +57,8 @@ class BaseService {
     return BaseService.$parsedQs
   }
 
-  all<T>() {
-    return this.submit<T>('get')
+  all<T>(query?: Record<string, string | number>) {
+    return this.submit<T>('get', '', undefined, { query })
   }
 
   find<T>(id: number | string) {
@@ -64,7 +68,7 @@ class BaseService {
   post<T>(payload: any): Promise<T>
   post<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
   post<T>(payload: any, config?: AxiosRequestConfig) {
-    return this.submit<T>('post', '', payload, config)
+    return this.submit<T>('post', '', payload, { config })
   }
 
   store<T>(payload: any): Promise<T>
@@ -87,7 +91,7 @@ class BaseService {
     if (hasFiles(payload)) {
       Object.assign(payload, { _method: 'put' })
     }
-    return this.submit<T>(requestType, parameter, payload, config)
+    return this.submit<T>(requestType, parameter, payload, { config })
   }
 
   patch<T>(payload: any): Promise<T>
@@ -99,8 +103,8 @@ class BaseService {
     config?: AxiosRequestConfig,
   ): Promise<T>
   patch<T>(id: string | number, payload?: any, config?: AxiosRequestConfig) {
-    const parameter = id && !isObject(id) ? `/${id}` : ''
-    return this.submit<T>('patch', parameter, payload, config)
+    const parameter = id && !isObject(id) ? id : ''
+    return this.submit<T>('patch', parameter, payload, { config })
   }
 
   update<T>(id: string | number, payload: any) {
@@ -108,40 +112,27 @@ class BaseService {
   }
 
   delete<T>(id: string | number) {
-    return this.submit<T>('delete', `/${id}`)
+    return this.submit<T>('delete', id)
   }
 
   remove<T>(id: string | number) {
     return this.delete<T>(id)
   }
 
-  submit<T = any>(requestType: Method): Promise<T>
-  submit<T = any>(requestType: Method, parameter?: string | number): Promise<T>
   submit<T = any>(
-    requestType: Method,
-    parameter?: string | number,
-    form?: T,
-  ): Promise<T>
-  submit<T = any>(
-    requestType: Method,
-    parameter?: string | number,
-    form?: T,
-    config?: AxiosRequestConfig,
-  ): Promise<T>
-  submit<T = any>(
-    requestType: Method,
-    parameter?: string | number,
-    form?: T,
-    config?: AxiosRequestConfig,
+    method: Method,
+    parameter: string | number = '',
+    form: T | undefined = undefined,
+    { config = {}, query = {} }: RequestOptions = {},
   ): Promise<T> {
-    const method = BaseService.__validateRequestType(requestType)
+    BaseService.__validateRequestType(method)
     this.beforeSubmit()
     return new Promise((resolve, reject) => {
       const data = hasFiles(form) ? objectToFormData(form) : form
       const endpoint = parameter
         ? `/${this.endpoint}/${parameter}`
         : `/${this.endpoint}`
-      const url = this.__getParameterString(removeDoubleSlash(endpoint))
+      const url = this.__getQueryString(removeDoubleSlash(endpoint), query)
       config = Object.assign({}, config, { url, data, method })
       this.$http(config)
         .then((response: AxiosResponse) => {
@@ -161,15 +152,6 @@ class BaseService {
           reject(error)
         })
     })
-  }
-
-  private __getParameterString(url: string) {
-    const query = qs.stringify(this.parameters, {
-      encode: false,
-      skipNulls: true,
-      addQueryPrefix: true,
-    })
-    return `${url}${query}`
   }
 
   private static __validateRequestType(requestType: Method) {
@@ -195,48 +177,18 @@ class BaseService {
           `must be one of: \`${requestTypes.join('`, `')}\`.`,
       )
     }
-    return requestType
   }
 
-  setParameters(parameters: Record<string, any>): this {
-    Object.keys(parameters).forEach((key) => {
-      this.parameters[key] = parameters[key]
+  private __getQueryString(
+    url: string,
+    queryParams?: string | Record<string, string | number>,
+  ) {
+    const query = qs.stringify(queryParams, {
+      encode: false,
+      skipNulls: true,
+      addQueryPrefix: true,
     })
-    return this
-  }
-
-  setParameter(parameter: string): this
-  setParameter(parameter: string, value?: any): this
-  setParameter(parameter: string, value?: any): this {
-    if (!value) {
-      const options: IParseOptions = Object.assign({}, this.$parsedQs, {
-        comma: true,
-        allowDots: true,
-        ignoreQueryPrefix: true,
-      })
-      const params = qs.parse(parameter, options)
-      return this.setParameters(params)
-    }
-    this.parameters[parameter] = value
-    return this
-  }
-
-  removeParameters(): this
-  removeParameters(parameters: any[]): this
-  removeParameters(parameters = [] as any[]): this {
-    if (!parameters || !parameters.length) {
-      this.parameters = []
-    } else if (isArray(parameters)) {
-      for (const parameter of parameters) {
-        delete this.parameters[parameter]
-      }
-    }
-    return this
-  }
-
-  removeParameter(parameter: string): this {
-    delete this.parameters[parameter]
-    return this
+    return `${url}${query}`
   }
 
   onFail(errors: Record<string, any>) {
