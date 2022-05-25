@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1](https://github.com/chantouchsek/vue-axios-http/compare/v3.0.0...v3.0.1) (2022-05-25)
+
+
+### Bug Fixes
+
+* :beer: make type of axios error ([a7b6f9d](https://github.com/chantouchsek/vue-axios-http/commit/a7b6f9d68472a4c7458c3e0b381dc0837adfdf6d))
+* :fire: fix data type wrong ([56d343b](https://github.com/chantouchsek/vue-axios-http/commit/56d343b700d583d609f23fb8e13e164c27e792cb))
+* :fire: fix put and path method with only payload ([9b324f5](https://github.com/chantouchsek/vue-axios-http/commit/9b324f59aa65efa421e2d9c525e9a93f983ae10b))
+* **deps:** bump actions/checkout from 3.0.1 to 3.0.2 ([a5654c9](https://github.com/chantouchsek/vue-axios-http/commit/a5654c9fc19feabdd944966e6983f53c30f81ccd))
+* **deps:** bump actions/setup-node from 3.1.1 to 3.2.0 ([90ac179](https://github.com/chantouchsek/vue-axios-http/commit/90ac1791ff15740e968b65911df1d9a080e999f3))
+* **deps:** bump github/codeql-action from 1 to 2 ([e153058](https://github.com/chantouchsek/vue-axios-http/commit/e153058ddb0ffd1dd29bdd5c1d0c802c9095af13))
+* remove check file in puth method ([d1d0173](https://github.com/chantouchsek/vue-axios-http/commit/d1d017325f490f2d9cf2bb5fd039b278cfe0c1a8))
+* remove type ([3cf6170](https://github.com/chantouchsek/vue-axios-http/commit/3cf61701875d936b8ad0279f6eb5fa9b7b5baf89))
+
 ## [3.0.0](https://github.com/chantouchsek/vue-axios-http/compare/v2.0.1...v3.0.0) (2022-04-19)
 
 
