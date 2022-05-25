@@ -73,8 +73,6 @@ class BaseService {
     return this.post<T>(payload, config)
   }
 
-  put<T>(payload: any): Promise<T>
-  put<T>(id: string | number, payload: any): Promise<T>
   put<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
   put<T>(
     id: string | number,
@@ -91,8 +89,6 @@ class BaseService {
     return this.submit<T>(requestType, parameter, body, config)
   }
 
-  patch<T>(payload: any): Promise<T>
-  patch<T>(id: string | number, payload: any): Promise<T>
   patch<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
   patch<T>(
     id: string | number,
@@ -117,19 +113,6 @@ class BaseService {
     return this.delete<T>(id)
   }
 
-  submit<T = any>(requestType: Method): Promise<T>
-  submit<T = any>(requestType: Method, parameter?: string | number): Promise<T>
-  submit<T = any>(
-    requestType: Method,
-    parameter?: string | number,
-    form?: T,
-  ): Promise<T>
-  submit<T = any>(
-    requestType: Method,
-    parameter?: string | number,
-    form?: T,
-    config?: AxiosRequestConfig,
-  ): Promise<T>
   submit<T = any>(
     requestType: Method,
     parameter?: string | number,
