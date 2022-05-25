@@ -83,11 +83,12 @@ class BaseService {
   ): Promise<T>
   put<T>(id: string | number, payload?: any, config?: AxiosRequestConfig) {
     const parameter = id && !isObject(id) ? `/${id}` : ''
-    const requestType: Method = hasFiles(payload) ? 'post' : 'put'
-    if (hasFiles(payload)) {
-      Object.assign(payload, { _method: 'put' })
+    const body = isObject(id) ? id : payload
+    const requestType: Method = hasFiles(body) ? 'post' : 'put'
+    if (hasFiles(body)) {
+      Object.assign(body, { _method: 'put' })
     }
-    return this.submit<T>(requestType, parameter, payload, config)
+    return this.submit<T>(requestType, parameter, body, config)
   }
 
   patch<T>(payload: any): Promise<T>
@@ -100,7 +101,8 @@ class BaseService {
   ): Promise<T>
   patch<T>(id: string | number, payload?: any, config?: AxiosRequestConfig) {
     const parameter = id && !isObject(id) ? `/${id}` : ''
-    return this.submit<T>('patch', parameter, payload, config)
+    const body = isObject(id) ? id : payload
+    return this.submit<T>('patch', parameter, body, config)
   }
 
   update<T>(id: string | number, payload: any) {
