@@ -84,7 +84,11 @@ class BaseService {
   put<T>(id: string | number, payload?: any, config?: AxiosRequestConfig) {
     const parameter = id && !isObject(id) ? `/${id}` : ''
     const body = isObject(id) ? id : payload
-    return this.submit<T>('put', parameter, body, config)
+    const requestType: Method = hasFiles(body) ? 'post' : 'put'
+    if (hasFiles(body)) {
+      Object.assign(body, { _method: 'put' })
+    }
+    return this.submit<T>(requestType, parameter, body, config)
   }
 
   patch<T>(payload: any): Promise<T>
