@@ -73,8 +73,6 @@ class BaseService {
     return this.post<T>(payload, config)
   }
 
-  put<T>(payload: any): Promise<T>
-  put<T>(id: string | number, payload: any): Promise<T>
   put<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
   put<T>(
     id: string | number,
@@ -83,15 +81,14 @@ class BaseService {
   ): Promise<T>
   put<T>(id: string | number, payload?: any, config?: AxiosRequestConfig) {
     const parameter = id && !isObject(id) ? `/${id}` : ''
-    const requestType: Method = hasFiles(payload) ? 'post' : 'put'
-    if (hasFiles(payload)) {
-      Object.assign(payload, { _method: 'put' })
+    const body = isObject(id) ? id : payload
+    const requestType: Method = hasFiles(body) ? 'post' : 'put'
+    if (hasFiles(body)) {
+      Object.assign(body, { _method: 'put' })
     }
-    return this.submit<T>(requestType, parameter, payload, config)
+    return this.submit<T>(requestType, parameter, body, config)
   }
 
-  patch<T>(payload: any): Promise<T>
-  patch<T>(id: string | number, payload: any): Promise<T>
   patch<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
   patch<T>(
     id: string | number,
@@ -100,7 +97,8 @@ class BaseService {
   ): Promise<T>
   patch<T>(id: string | number, payload?: any, config?: AxiosRequestConfig) {
     const parameter = id && !isObject(id) ? `/${id}` : ''
-    return this.submit<T>('patch', parameter, payload, config)
+    const body = isObject(id) ? id : payload
+    return this.submit<T>('patch', parameter, body, config)
   }
 
   update<T>(id: string | number, payload: any) {
@@ -115,19 +113,6 @@ class BaseService {
     return this.delete<T>(id)
   }
 
-  submit<T = any>(requestType: Method): Promise<T>
-  submit<T = any>(requestType: Method, parameter?: string | number): Promise<T>
-  submit<T = any>(
-    requestType: Method,
-    parameter?: string | number,
-    form?: T,
-  ): Promise<T>
-  submit<T = any>(
-    requestType: Method,
-    parameter?: string | number,
-    form?: T,
-    config?: AxiosRequestConfig,
-  ): Promise<T>
   submit<T = any>(
     requestType: Method,
     parameter?: string | number,
