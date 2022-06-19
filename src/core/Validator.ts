@@ -1,4 +1,6 @@
 import { hasOwnProperty, is, isArray } from '../util'
+import get from 'lodash.get'
+import has from 'lodash.has'
 
 class Validator {
   public errors: Record<string, any>
@@ -20,11 +22,11 @@ class Validator {
     }
   }
 
-  has(field: any | any[]) {
+  has(field: string | string[]) {
     if (isArray(field)) {
       return is(Object.keys(this.errors), field)
     }
-    let hasError = hasOwnProperty(this.errors, field)
+    let hasError = has(this.errors, field)
     if (!hasError) {
       const errors = Object.keys(this.errors).filter(
         (e: string) => e.startsWith(`${field}.`) || e.startsWith(`${field}[`),
@@ -34,16 +36,18 @@ class Validator {
     return hasError
   }
 
-  first(field: any | any[]): string {
-    if (field instanceof Array) {
+  first(field: string | string[]): string | object {
+    if (Array.isArray(field)) {
       for (let i = 0; i < field.length; i++) {
-        if (!hasOwnProperty(this.errors, field[i])) {
+        if (!has(this.errors, field[i])) {
           continue
         }
         return this.first(field[i])
       }
     }
-    return this.get(field)[0]
+    const value = this.get(field as string)
+    if (Array.isArray(value)) return value[0]
+    return value
   }
 
   firstBy(obj: Record<string, any>, field?: string): string {
@@ -53,17 +57,15 @@ class Validator {
     } else {
       value = obj[field]
     }
-    if (isArray(value)) {
-      value = value[0]
-    }
+    if (isArray(value)) value = value[0]
     return value
   }
 
-  missed(field?: string | string[]): boolean {
+  missed(field: string | string[]): boolean {
     return !this.has(field)
   }
 
-  nullState(field?: string | string[]): boolean | null {
+  nullState(field: string | string[]): boolean | null {
     return this.has(field) ? this.missed(field) : null
   }
 
@@ -85,7 +87,7 @@ class Validator {
   }
 
   get(field: string): string | string[] {
-    return this.errors[field] || []
+    return get(this.errors, field) || []
   }
 
   all() {

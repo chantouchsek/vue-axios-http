@@ -58,7 +58,7 @@ describe('Validator', () => {
   test('Get all errors by keys', () => {
     validator.add('email', 'The email field is required.')
     validator.add('form.email', 'The form.name field is required.')
-    expect(validator.first(['name', 'form.email']).length).toBeGreaterThan(0)
+    expect(validator.first(['name', 'form.email'])).toBeDefined()
   })
   test('Get all errors message', () => {
     validator.add('email', 'The email field is required.')
@@ -210,6 +210,22 @@ describe('Validator', () => {
     }
 
     expect(validator.firstBy(errors)).toEqual(
+      'This fist name field is required',
+    )
+  })
+
+  it('get first array by nested array', () => {
+    const errors = { name: [{ kh: ['This fist name field is required'] }] }
+    validator.fill(errors)
+
+    expect(validator.first(['name[0]'])).toEqual(errors.name[0])
+  })
+
+  it('get first by nested array', () => {
+    const errors = { name: [{ kh: ['This fist name field is required'] }] }
+    validator.fill(errors)
+
+    expect(validator.first(['name[0].kh'])).toEqual(
       'This fist name field is required',
     )
   })
