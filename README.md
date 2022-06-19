@@ -131,6 +131,10 @@ const errors = { name: [{ kh: ['This fist name field is required'] }] }
 $errors.first('name') // return array
 $errors.first('name[0]') // return object like
 $errors.first('name[0].kh') // return string like
+
+$errors.first(['name']) // return array
+$errors.first(['name[0]']) // return object like
+$errors.first(['name[0].kh']) // return string like
 ```
 
 ## Using with Vuex
