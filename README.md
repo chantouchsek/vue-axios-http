@@ -125,8 +125,6 @@ It will create `$errors` object inside components.
 
 #### first(field || fields)
 
-In some situations, you may wish to run validation checks against a field only if that field is present in the data being validated. To quickly accomplish this, add the sometimes rule to your rule list:
-
 ```js
 const errors = { name: [{ kh: ['This fist name field is required'] }] }
 
