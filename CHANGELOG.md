@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/chantouchsek/vue-axios-http/compare/v3.0.1...v3.1.0) (2022-06-19)
+
+
+### Features
+
+* add deep array access for first() ([9223a7b](https://github.com/chantouchsek/vue-axios-http/commit/9223a7b4add01a2963378af233d8da150a696f91))
+
+
+### Bug Fixes
+
+* **deps:** bump actions/setup-node from 3.2.0 to 3.3.0 ([aa39996](https://github.com/chantouchsek/vue-axios-http/commit/aa3999645eeb6b23e130df8e623598b255e3ff8c))
+* **deps:** bump qs from 6.10.3 to 6.10.5 ([7e19a9b](https://github.com/chantouchsek/vue-axios-http/commit/7e19a9b0e046a0d01402965644a4b0b881784c41))
+* update readme ([068238b](https://github.com/chantouchsek/vue-axios-http/commit/068238b0a593caabc4e735f02086d6171d5ab20d))
+* update readme ([afeaf69](https://github.com/chantouchsek/vue-axios-http/commit/afeaf69a40dbf52276c32db7b83dd9baa7ff6e25))
+* update readme ([a47a8fc](https://github.com/chantouchsek/vue-axios-http/commit/a47a8fc2ade12503f78295cff8ffd4d9849307c6))
+
 ### [3.0.1](https://github.com/chantouchsek/vue-axios-http/compare/v3.0.0...v3.0.1) (2022-05-25)
 
 
