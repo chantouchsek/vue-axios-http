@@ -47,7 +47,7 @@ class Validator {
     }
     const value = this.get(field as string)
     if (Array.isArray(value)) return value[0]
-    return value
+    return value // return it if object like
   }
 
   firstBy(obj: Record<string, any>, field?: string): string {
