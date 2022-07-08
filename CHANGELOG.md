@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.2](https://github.com/chantouchsek/vue-axios-http/compare/v3.1.1...v3.1.2) (2022-07-08)
+
+
+### Bug Fixes
+
+* :tada: make the clear fuction onkeydown work correctly ([1b9a550](https://github.com/chantouchsek/vue-axios-http/commit/1b9a55053642566d44715cc7a05cc5bed8179fb7))
+* make keydown more specific ([045be20](https://github.com/chantouchsek/vue-axios-http/commit/045be20b878eb105fc22345b6a94d444e390f1b6))
+* remove unused type ([ad383b7](https://github.com/chantouchsek/vue-axios-http/commit/ad383b7c29d02dca6eb708878e08c3dfc37b5c73))
+* typing typo ([29def5b](https://github.com/chantouchsek/vue-axios-http/commit/29def5b85e9e9fc21b8133b4e1f034f6fc11ffbd))
+
 ### [3.1.1](https://github.com/chantouchsek/vue-axios-http/compare/v3.1.0...v3.1.1) (2022-07-08)
 
 
