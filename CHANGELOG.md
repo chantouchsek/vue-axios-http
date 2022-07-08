@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.1](https://github.com/chantouchsek/vue-axios-http/compare/v3.1.0...v3.1.1) (2022-07-08)
+
+
+### Bug Fixes
+
+* :fire: make fill method print the same the value from api ([ddb6b08](https://github.com/chantouchsek/vue-axios-http/commit/ddb6b085b071d6766f4e5cde50deed3db34a275c))
+* **deps:** bump parse-url from 6.0.0 to 6.0.2 ([3e71ffb](https://github.com/chantouchsek/vue-axios-http/commit/3e71ffb4786ac056bb444bae2840bed44549c75c))
+* **deps:** bump qs from 6.10.5 to 6.11.0 ([5ebc28f](https://github.com/chantouchsek/vue-axios-http/commit/5ebc28fbd24497aad09639a1a9b02912f583d668))
+* **deps:** bump shell-quote from 1.7.2 to 1.7.3 ([db6a556](https://github.com/chantouchsek/vue-axios-http/commit/db6a5565d78b8bdd5128eaafca7a9dc7c931e7cf))
+
 ## [3.1.0](https://github.com/chantouchsek/vue-axios-http/compare/v3.0.1...v3.1.0) (2022-06-19)
 
 
