@@ -61,25 +61,15 @@ class BaseService {
     return this.submit<T>('get', id)
   }
 
-  post<T>(payload: any): Promise<T>
-  post<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
   post<T>(payload: any, config?: AxiosRequestConfig) {
     return this.submit<T>('post', '', payload, config)
   }
 
-  store<T>(payload: any): Promise<T>
-  store<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
   store<T>(payload: any, config?: AxiosRequestConfig) {
     return this.post<T>(payload, config)
   }
 
-  put<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
-  put<T>(
-    id: string | number,
-    payload: any,
-    config?: AxiosRequestConfig,
-  ): Promise<T>
-  put<T>(id: string | number, payload?: any, config?: AxiosRequestConfig) {
+  put<T>(id: any, payload?: any, config?: AxiosRequestConfig) {
     const parameter = id && !isObject(id) ? `/${id}` : ''
     const body = isObject(id) ? id : payload
     const requestType: Method = hasFiles(body) ? 'post' : 'put'
@@ -89,13 +79,7 @@ class BaseService {
     return this.submit<T>(requestType, parameter, body, config)
   }
 
-  patch<T>(payload: any, config?: AxiosRequestConfig): Promise<T>
-  patch<T>(
-    id: string | number,
-    payload: any,
-    config?: AxiosRequestConfig,
-  ): Promise<T>
-  patch<T>(id: string | number, payload?: any, config?: AxiosRequestConfig) {
+  patch<T>(id: any, payload?: any, config?: AxiosRequestConfig) {
     const parameter = id && !isObject(id) ? `/${id}` : ''
     const body = isObject(id) ? id : payload
     return this.submit<T>('patch', parameter, body, config)
@@ -114,12 +98,12 @@ class BaseService {
   }
 
   submit<T = any>(
-    requestType: Method,
+    method: Method,
     parameter?: string | number,
     form?: T,
     config?: AxiosRequestConfig,
   ): Promise<T> {
-    const method = BaseService.__validateRequestType(requestType)
+    BaseService.__validateRequestType(method)
     this.beforeSubmit()
     return new Promise((resolve, reject) => {
       const data = hasFiles(form) ? objectToFormData(form) : form
@@ -190,8 +174,6 @@ class BaseService {
     return this
   }
 
-  setParameter(parameter: string): this
-  setParameter(parameter: string, value?: any): this
   setParameter(parameter: string, value?: any): this {
     if (!value) {
       const options: IParseOptions = Object.assign({}, this.$parsedQs, {
@@ -206,8 +188,6 @@ class BaseService {
     return this
   }
 
-  removeParameters(): this
-  removeParameters(parameters: any[]): this
   removeParameters(parameters = [] as any[]): this {
     if (!parameters || !parameters.length) {
       this.parameters = []
