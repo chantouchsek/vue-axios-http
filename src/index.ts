@@ -1,7 +1,7 @@
 import type { ValidatorType } from './core/Validator'
 import BaseService from './core/BaseService'
 import Validator from './core/Validator'
-import { merge } from './util'
+import { merge } from 'lodash'
 import _Vue from 'vue'
 
 // augment typings of Vue.js

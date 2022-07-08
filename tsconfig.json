@@ -24,8 +24,7 @@
       "axios",
       "axios-mock-adapter",
       "@types/qs",
-      "@types/lodash.get",
-      "@types/lodash.has"
+      "@types/lodash"
     ]
   },
   "include": ["src"],

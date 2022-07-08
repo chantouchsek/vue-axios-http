@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter'
 import PostService from '../util/PostService'
 import type { ValidatorType } from '../core/Validator'
 import Validator from '../core/Validator'
-import { merge } from '../util'
+import { merge } from 'lodash'
 
 let service: PostService
 let mockAdapter: MockAdapter
