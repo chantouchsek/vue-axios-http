@@ -1,4 +1,4 @@
-import { hasOwnProperty, is, isArray } from '../util'
+import { is } from '../util'
 import get from 'lodash.get'
 import has from 'lodash.has'
 
@@ -7,10 +7,10 @@ class Validator {
   public successful: boolean
   public processing: boolean
 
-  constructor() {
+  constructor(errors: Record<string, any> = {}) {
     this.processing = false
     this.successful = false
-    this.errors = {}
+    this.errors = errors
   }
 
   add(attribute: string, message: string) {
@@ -23,7 +23,7 @@ class Validator {
   }
 
   has(field: string | string[]) {
-    if (isArray(field)) {
+    if (Array.isArray(field)) {
       return is(Object.keys(this.errors), field)
     }
     let hasError = has(this.errors, field)
@@ -57,7 +57,7 @@ class Validator {
     } else {
       value = obj[field]
     }
-    if (isArray(value)) value = value[0]
+    if (Array.isArray(value)) value = value[0]
     return value
   }
 
@@ -99,14 +99,6 @@ class Validator {
   }
 
   fill(errors: Record<string, any>) {
-    for (const error in errors) {
-      if (!hasOwnProperty(errors, error)) {
-        continue
-      }
-      if (!(errors[error] instanceof Array)) {
-        errors[error] = [errors[error]]
-      }
-    }
     this.errors = errors
   }
 
