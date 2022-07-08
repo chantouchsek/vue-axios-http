@@ -117,11 +117,11 @@ class Validator {
     return !this.any()
   }
 
-  onKeydown(event: any, prefix?: string) {
-    const { name } = event.target
+  onKeydown(event: KeyboardEvent, prefix?: string) {
+    const { name } = event.target as HTMLInputElement
     if (!name) return
-    const nameWithPrefix = prefix ? `${prefix}.${name}` : null
-    this.clear([name, nameWithPrefix])
+    const names = prefix ? [name, `${prefix}.${name}`] : [name]
+    this.clear(names)
   }
 }
 
