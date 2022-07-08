@@ -1,6 +1,5 @@
+import { cloneDeep, get, has, omit, isArray } from 'lodash'
 import { is } from '../util'
-import get from 'lodash.get'
-import has from 'lodash.has'
 
 class Validator {
   public errors: Record<string, any>
@@ -23,7 +22,7 @@ class Validator {
   }
 
   has(field: string | string[]) {
-    if (Array.isArray(field)) {
+    if (isArray(field)) {
       return is(Object.keys(this.errors), field)
     }
     let hasError = has(this.errors, field)
@@ -110,28 +109,7 @@ class Validator {
     if (!attribute) {
       return this.flush()
     }
-    const errors = Object.assign({}, this.errors)
-    if (attribute instanceof Array) {
-      attribute.map((field: string) => {
-        Object.keys(errors)
-          .filter(
-            (e: string) =>
-              e === field ||
-              e.startsWith(`${field}.`) ||
-              e.startsWith(`${field}[`),
-          )
-          .forEach((e: string) => delete errors[e])
-      })
-    } else {
-      Object.keys(errors)
-        .filter(
-          (e: string) =>
-            e === attribute ||
-            e.startsWith(`${attribute}.`) ||
-            e.startsWith(`${attribute}[`),
-        )
-        .forEach((e: string) => delete errors[e])
-    }
+    const errors = omit(cloneDeep(this.errors), attribute)
     this.fill(errors)
   }
 

@@ -7,13 +7,8 @@ import type {
 } from 'axios'
 import type { Errors } from '..'
 import Validator from './Validator'
-import {
-  hasFiles,
-  objectToFormData,
-  removeDoubleSlash,
-  isObject,
-  isArray,
-} from '../util'
+import { hasFiles, objectToFormData, removeDoubleSlash } from '../util'
+import { isObject, isArray } from 'lodash'
 import qs, { IParseOptions } from 'qs'
 
 const validator = Validator

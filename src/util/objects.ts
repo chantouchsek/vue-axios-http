@@ -18,69 +18,8 @@ export function isFile(object: any): boolean {
   return object instanceof File || object instanceof FileList
 }
 
-export function merge(a: any, b: any): Record<any, any> {
-  for (const key in b) {
-    if (hasOwnProperty(b, key)) {
-      a[key] = cloneDeep(b[key])
-    }
-  }
-  return a
-}
-
-export function cloneDeep(object: any): any {
-  if (object === null) {
-    return null
-  }
-
-  if (isFile(object)) {
-    return object
-  }
-
-  if (isArray(object)) {
-    const clone: any = []
-
-    for (const key in object) {
-      if (hasOwnProperty(object, key)) {
-        clone[key] = cloneDeep(object[key])
-      }
-    }
-
-    return clone
-  }
-
-  if (typeof object === 'object') {
-    const clone: any = {}
-
-    for (const key in object) {
-      if (hasOwnProperty(object, key)) {
-        clone[key] = cloneDeep(object[key])
-      }
-    }
-
-    return clone
-  }
-
-  return object
-}
-
 export function is(errors: any, error: any): boolean {
   return isArray(error)
     ? error.some((w: string) => is(errors, w))
     : errors.includes(error)
-}
-
-export function isObject(value: any) {
-  return Object.prototype.toString.call(value) === '[object Object]'
-}
-
-export function isPlainObject(value: any) {
-  if (!isObject(value)) return false
-
-  const ctor = value.constructor
-  if (ctor === undefined) return true
-
-  const prot = ctor.prototype
-  if (!isObject(prot)) return false
-
-  return hasOwnProperty(prot, 'isPrototypeOf')
 }

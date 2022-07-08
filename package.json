@@ -12,7 +12,6 @@
     "watch": "tsc -w",
     "start": "nodemon",
     "release": "standard-version && git push --follow-tags origin main && yarn publish",
-    "prepublish": "yarn lint && yarn test && yarn build",
     "clean": "rimraf dist",
     "prepare": "husky install",
     "lint:js": "eslint --ext \".js,.ts\" --ignore-path .gitignore .",
@@ -52,8 +51,11 @@
     "@commitlint/config-conventional": "^17.0.0",
     "@nuxt/types": "^2.15.8",
     "@types/jest": "^27.4.0",
+    "@types/lodash": "^4.14.182",
+    "@types/lodash.clonedeep": "^4.5.7",
     "@types/lodash.get": "^4.4.7",
     "@types/lodash.has": "^4.5.7",
+    "@types/lodash.omit": "^4.5.7",
     "@types/node": "^18.0.0",
     "@types/qs": "^6.9.7",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
@@ -83,8 +85,7 @@
   ],
   "dependencies": {
     "axios": "^0.27.2",
-    "lodash.get": "^4.4.2",
-    "lodash.has": "^4.5.2",
+    "lodash": "^4.17.21",
     "qs": "^6.10.2"
   },
   "lint-staged": {
