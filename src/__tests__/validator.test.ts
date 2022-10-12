@@ -14,8 +14,12 @@ describe('Validator', () => {
     validator.add('name', 'The name field is required.')
     expect(validator.any()).toBeTruthy()
   })
+  test('Add an error with forceUpdate', () => {
+    validator.add('name', 'The name field is required.', true)
+    expect(validator.any()).toBeTruthy()
+  })
   test('add error with missed attribute', () => {
-    validator.add('name-3diidi', 'The name field is required.')
+    validator.add('name-3', 'The name field is required.')
     expect(validator.any()).toBeTruthy()
   })
   test('Add an error message as string', () => {

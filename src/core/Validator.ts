@@ -12,11 +12,15 @@ class Validator {
     this.errors = errors
   }
 
-  add(attribute: string, message: string) {
+  add(attribute: string, message: string, forceUpdate?: boolean) {
     if (this.missed(attribute)) {
       this.errors[attribute] = []
     }
     if (!this.errors[attribute].includes(message)) {
+      this.errors[attribute].unshift(message)
+    }
+    if (forceUpdate) {
+      this.errors[attribute] = []
       this.errors[attribute].push(message)
     }
   }
