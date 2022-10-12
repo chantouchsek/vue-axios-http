@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.3](https://github.com/chantouchsek/vue-axios-http/compare/v3.1.2...v3.1.3) (2022-10-12)
+
+
+### Bug Fixes
+
+* added force update to add function ([260968d](https://github.com/chantouchsek/vue-axios-http/commit/260968db8e9ef72122792d325aa6764b9fadf802))
+* **deps:** bump actions/checkout from 3.0.2 to 3.1.0 ([43cd574](https://github.com/chantouchsek/vue-axios-http/commit/43cd574467d3b38c4612daf50017967ff3768ac2))
+* **deps:** bump actions/setup-node from 3.3.0 to 3.4.0 ([faeb861](https://github.com/chantouchsek/vue-axios-http/commit/faeb8610b4e5e673d4a76fdb812d69616f9dac38))
+* **deps:** bump actions/setup-node from 3.4.0 to 3.4.1 ([abd4b49](https://github.com/chantouchsek/vue-axios-http/commit/abd4b4939e4a0d0e7e62df9961f334344df41913))
+* **deps:** bump actions/setup-node from 3.4.1 to 3.5.0 ([8a62e57](https://github.com/chantouchsek/vue-axios-http/commit/8a62e5769e4bcf958c13b24a9fcb61aa5db9fcd0))
+* **deps:** bump actions/stale from 5 to 6 ([e6695e7](https://github.com/chantouchsek/vue-axios-http/commit/e6695e7326f2edb49cd3f1b3433d74e6cc303144))
+* **deps:** bump terser from 4.8.0 to 4.8.1 ([1e0203a](https://github.com/chantouchsek/vue-axios-http/commit/1e0203a222f701e78963e791364d7d56740b338c))
+
 ### [3.1.2](https://github.com/chantouchsek/vue-axios-http/compare/v3.1.1...v3.1.2) (2022-07-08)
 
 
