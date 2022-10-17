@@ -81,7 +81,7 @@
     "nuxt"
   ],
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.1.3",
     "lodash": "^4.17.21",
     "qs": "^6.10.2"
   },
