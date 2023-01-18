@@ -20,11 +20,11 @@
     "types": [
       "@types/node",
       "@nuxt/types",
-      "@types/jest",
       "axios",
       "axios-mock-adapter",
       "@types/qs",
-      "@types/lodash"
+      "@types/lodash",
+      "vitest/globals"
     ]
   },
   "include": ["src"],
