@@ -41,14 +41,11 @@ class Validator {
 
   first(field: string | string[]): string | object {
     if (Array.isArray(field)) {
-      for (let i = 0; i < field.length; i++) {
-        if (!has(this.errors, field[i])) {
-          continue
-        }
-        return this.first(field[i])
+      for (const f of field) {
+        if (has(this.errors, f)) return this.first(f)
       }
     }
-    const value = this.get(field as string)
+    const value = this.get(field)
     if (Array.isArray(value)) return value[0]
     return value
   }
@@ -89,7 +86,7 @@ class Validator {
     return Object.keys(errors).length > 0
   }
 
-  get(field: string): string | string[] {
+  get(field: string | string[]): string | string[] {
     return get(this.errors, field, [])
   }
 

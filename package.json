@@ -6,6 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "vitest --run",
+    "test:cov": "vitest run --coverage",
     "test:watch": "yarnr test",
     "build": "yarn clean && tsc",
     "watch": "tsc -w",
@@ -54,6 +55,7 @@
     "@types/qs": "^6.9.7",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
+    "@vitest/coverage-c8": "^0.27.2",
     "@vue/test-utils": "^1.2.2",
     "axios-mock-adapter": "^1.20.0",
     "eslint": "^8.13.0",
@@ -62,6 +64,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "husky": "^8.0.1",
+    "jsdom": "^21.0.0",
     "lint-staged": ">=10",
     "nodemon": "^2.0.12",
     "nuxt-edge": "^2.16.0-27217455.034b9901",
