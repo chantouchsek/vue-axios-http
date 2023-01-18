@@ -50,11 +50,11 @@ class Validator {
     }
     const value = this.get(field as string)
     if (Array.isArray(value)) return value[0]
-    return value // return it if object like
+    return value
   }
 
-  firstBy(obj: Record<string, any>, field?: string): string {
-    let value
+  firstBy(obj: Record<string, any>, field?: string) {
+    let value: string
     if (!field) {
       value = obj[Object.keys(obj)[0]]
     } else {
@@ -64,15 +64,15 @@ class Validator {
     return value
   }
 
-  missed(field: string | string[]): boolean {
+  missed(field: string | string[]) {
     return !this.has(field)
   }
 
-  nullState(field: string | string[]): boolean | null {
+  nullState(field: string | string[]) {
     return this.has(field) ? this.missed(field) : null
   }
 
-  any(fields: string[] = [], returnObject?: boolean): boolean | string[] | any {
+  any(fields: string[] = [], returnObject?: boolean) {
     if (returnObject) {
       const errors: Record<string, any> = {}
       if (!fields.length) {
@@ -90,7 +90,7 @@ class Validator {
   }
 
   get(field: string): string | string[] {
-    return get(this.errors, field) || []
+    return get(this.errors, field, [])
   }
 
   all() {
@@ -106,13 +106,11 @@ class Validator {
   }
 
   flush() {
-    this.errors = {}
+    this.fill({})
   }
 
   clear(attribute?: string | string[]) {
-    if (!attribute) {
-      return this.flush()
-    }
+    if (!attribute) return this.flush()
     const errors = omit(cloneDeep(this.errors), attribute)
     this.fill(errors)
   }
