@@ -88,7 +88,8 @@ describe('Validator', () => {
   })
   test('Clear all errors by flush', () => {
     const errors = {
-      name: ['The name field is required.'],
+      nameKh: ['The name field is required.'],
+      name_kh: ['The name field is required.'],
       email: ['The email field is required.'],
     }
     validator.fill(errors)
