@@ -226,4 +226,12 @@ describe('Validator', () => {
 
     expect(validator.first(['name[0].kh'])).toEqual('This fist name field is required')
   })
+
+  it('should reflect the field name by camel or snake case', () => {
+    const errors = { firstName: ['This fist name field is required'] }
+    validator.fill(errors)
+
+    expect(validator.has(['first_name'])).toBeTruthy()
+    expect(validator.first(['first_name'])).toEqual('This fist name field is required')
+  })
 })

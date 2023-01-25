@@ -31,8 +31,8 @@ class Validator {
   }
 
   first(field: string | string[]): string | Record<string, any> | undefined {
-    const fields = this.fields(field)
     if (Array.isArray(field)) {
+      const fields = this.fields(field)
       for (const f of fields) {
         if (!has(this.errors, f)) continue
         return this.first(f)
@@ -117,7 +117,7 @@ class Validator {
     this.clear(names)
   }
 
-  fields(field: string | string[]) {
+  fields(field: string | string[]): string[] {
     const fields = []
     if (Array.isArray(field)) {
       for (const f of field) {
