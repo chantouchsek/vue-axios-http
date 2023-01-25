@@ -1,5 +1,5 @@
-import { cloneDeep, get, has, omit, isArray } from 'lodash'
-import { is } from '../util'
+import { cloneDeep, get, has, omit } from 'lodash'
+import { is, toCamelCase, toSnakeCase } from '../util'
 
 class Validator {
   public errors: Record<string, any>
@@ -12,49 +12,44 @@ class Validator {
     this.errors = errors
   }
 
-  add(attribute: string, message: string, forceUpdate?: boolean) {
-    if (this.missed(attribute)) {
-      this.errors[attribute] = []
+  add(field: string, message: string, forceUpdate?: boolean) {
+    if (this.missed(field)) {
+      this.errors[field] = []
     }
-    if (!this.errors[attribute].includes(message)) {
-      this.errors[attribute].unshift(message)
+    if (!this.errors[field].includes(message)) {
+      this.errors[field].unshift(message)
     }
     if (forceUpdate) {
-      this.errors[attribute] = []
-      this.errors[attribute].push(message)
+      this.errors[field] = []
+      this.errors[field].push(message)
     }
   }
 
   has(field: string | string[]) {
-    if (isArray(field)) {
-      return is(Object.keys(this.errors), field)
-    }
-    let hasError = has(this.errors, field)
-    if (!hasError) {
-      const errors = Object.keys(this.errors).filter(
-        (e: string) => e.startsWith(`${field}.`) || e.startsWith(`${field}[`),
-      )
-      hasError = errors.length > 0
-    }
-    return hasError
+    const fields = this.fields(field)
+    return is(Object.keys(this.errors), fields)
   }
 
-  first(field: string | string[]): string | object {
+  first(field: string | string[]): string | Record<string, any> | undefined {
     if (Array.isArray(field)) {
-      for (let i = 0; i < field.length; i++) {
-        if (!has(this.errors, field[i])) {
-          continue
+      const fields = this.fields(field)
+      let fd = ''
+      for (const f of fields) {
+        if (has(this.errors, f)) {
+          fd = f
+          break
         }
-        return this.first(field[i])
       }
+      return this.first(fd)
+    } else {
+      const value = this.get(field)
+      if (Array.isArray(value)) return value[0]
+      return value
     }
-    const value = this.get(field as string)
-    if (Array.isArray(value)) return value[0]
-    return value // return it if object like
   }
 
-  firstBy(obj: Record<string, any>, field?: string): string {
-    let value
+  firstBy(obj: Record<string, any>, field?: string) {
+    let value: string
     if (!field) {
       value = obj[Object.keys(obj)[0]]
     } else {
@@ -64,21 +59,24 @@ class Validator {
     return value
   }
 
-  missed(field: string | string[]): boolean {
+  missed(field: string | string[]) {
     return !this.has(field)
   }
 
-  nullState(field: string | string[]): boolean | null {
+  nullState(field: string | string[]) {
     return this.has(field) ? this.missed(field) : null
   }
 
-  any(fields: string[] = [], returnObject?: boolean): boolean | string[] | any {
+  any(field: string[] = [], returnObject?: boolean) {
+    const fields = this.fields(field)
     if (returnObject) {
       const errors: Record<string, any> = {}
-      if (!fields.length) {
-        return {}
+      if (!fields.length) return {}
+      for (const f of fields) {
+        const val = this.get(f)
+        if (!val.length) continue
+        errors[f] = val
       }
-      fields.forEach((key: string) => (errors[key] = this.get(key)))
       return errors
     }
     if (!fields.length) {
@@ -90,7 +88,7 @@ class Validator {
   }
 
   get(field: string): string | string[] {
-    return get(this.errors, field) || []
+    return get(this.errors, field, [])
   }
 
   all() {
@@ -106,14 +104,12 @@ class Validator {
   }
 
   flush() {
-    this.errors = {}
+    this.fill({})
   }
 
-  clear(attribute?: string | string[]) {
-    if (!attribute) {
-      return this.flush()
-    }
-    const errors = omit(cloneDeep(this.errors), attribute)
+  clear(field?: string | string[]) {
+    if (!field) return this.flush()
+    const errors = omit(cloneDeep(this.errors), this.fields(field))
     this.fill(errors)
   }
 
@@ -126,6 +122,18 @@ class Validator {
     if (!name) return
     const names = prefix ? [name, `${prefix}.${name}`] : [name]
     this.clear(names)
+  }
+
+  fields(field: string | string[]): string[] {
+    const fields = []
+    if (Array.isArray(field)) {
+      for (const f of field) {
+        fields.push(toCamelCase(f), toSnakeCase(f))
+      }
+    } else {
+      fields.push(toCamelCase(field), toSnakeCase(field))
+    }
+    return [...new Set(fields)].filter(Boolean)
   }
 }
 

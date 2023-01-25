@@ -89,10 +89,7 @@ describe('BaseService', () => {
       { first_name: 'Chantouch', last_name: 'Sek', id: 2 },
     ]
     mockAdapter.onGet('/posts?id=1&first_name=Dara').reply(200, { data: items })
-    const { data } = await service
-      .setParameter('id', 1)
-      .setParameters({ first_name: 'Dara' })
-      .all()
+    const { data } = await service.setParameter('id', 1).setParameters({ first_name: 'Dara' }).all()
     expect(data).toEqual(items)
   })
 
@@ -110,9 +107,7 @@ describe('BaseService', () => {
       pc: null,
     })
     const items = [user2, { first_name: 'Chantouch', last_name: 'Sek', id: 2 }]
-    mockAdapter
-      .onGet('/posts?id=1&last_name=Hok&search[name]=hello&first_name=Dara')
-      .reply(200, { data: items })
+    mockAdapter.onGet('/posts?id=1&last_name=Hok&search[name]=hello&first_name=Dara').reply(200, { data: items })
     const { data } = await service
       .setParameter('id=1&last_name=Hok&search[name]=hello')
       .setParameters({ first_name: 'Dara' })
@@ -148,18 +143,13 @@ describe('BaseService', () => {
       { first_name: 'Dara', last_name: 'Hok', id: 1 },
       { first_name: 'Chantouch', last_name: 'Sek', id: 2 },
     ]
-    mockAdapter
-      .onGet('/posts?search[id]=1&first_name=Dara')
-      .reply(200, { data: items })
+    mockAdapter.onGet('/posts?search[id]=1&first_name=Dara').reply(200, { data: items })
     const params = {
       search: { id: 1 },
       first_name: 'Dara',
       last_name: 'Hok',
     }
-    const { data } = await service
-      .setParameters(params)
-      .removeParameters(['last_name'])
-      .all()
+    const { data } = await service.setParameters(params).removeParameters(['last_name']).all()
     expect(data).toEqual(items)
     expect(service.parameters).toEqual({
       search: { id: 1 },
@@ -266,12 +256,7 @@ describe('BaseService', () => {
       expect(request.data.get('files[0]')).toEqual(file)
       expect(request.data.get('__proto__')).toEqual(null)
 
-      expect(getFormDataKeys(request.data)).toEqual([
-        'field1[foo]',
-        'field1[bar]',
-        'field2',
-        'files[0]',
-      ])
+      expect(getFormDataKeys(request.data)).toEqual(['field1[foo]', 'field1[bar]', 'field2', 'files[0]'])
       return [200, {}]
     })
 
@@ -359,7 +344,5 @@ describe('BaseService', () => {
 
 function getFormDataKeys(formData: any) {
   // This is because the FormData.keys() is missing from the jsdom implementations.
-  return formData[Object.getOwnPropertySymbols(formData)[0]]._entries.map(
-    (e: any) => e.name,
-  )
+  return formData[Object.getOwnPropertySymbols(formData)[0]]._entries.map((e: any) => e.name)
 }

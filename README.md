@@ -430,12 +430,7 @@ It can be called by `this.$errors.**`
 
 ```vue
 <template>
-  <v-form
-    v-model="valid"
-    lazy-validation
-    @keydown.native="$errors.onKeydown"
-    @submit.prevent="submit"
-  >
+  <v-form v-model="valid" lazy-validation @keydown.native="$errors.onKeydown" @submit.prevent="submit">
     <v-container>
       <v-row>
         <v-col cols="12" md="4">
@@ -458,13 +453,7 @@ It can be called by `this.$errors.**`
           />
         </v-col>
         <v-col cols="12" md="4">
-          <v-text-field
-            v-model="email"
-            :counter="10"
-            label="Email"
-            required
-            :error-messages="$errors.first('email')"
-          />
+          <v-text-field v-model="email" :counter="10" label="Email" required :error-messages="$errors.first('email')" />
         </v-col>
         <v-col cols="12" md="4">
           <v-text-field v-model="email" label="E-mail" required />

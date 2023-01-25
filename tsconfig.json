@@ -2,16 +2,7 @@
   "compilerOptions": {
     "target": "ES2021",
     "module": "CommonJS",
-    "lib": [
-      "ES5",
-      "ES6",
-      "ES2015",
-      "ES2016",
-      "ES2017",
-      "ES2018",
-      "ESNext",
-      "DOM"
-    ],
+    "lib": ["ES5", "ES6", "ES2015", "ES2016", "ES2017", "ES2018", "ESNext", "DOM"],
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "strict": true,
@@ -20,11 +11,11 @@
     "types": [
       "@types/node",
       "@nuxt/types",
-      "@types/jest",
       "axios",
       "axios-mock-adapter",
       "@types/qs",
-      "@types/lodash"
+      "@types/lodash",
+      "vitest/globals"
     ]
   },
   "include": ["src"],

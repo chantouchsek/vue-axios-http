@@ -33,9 +33,7 @@ describe('Validator', () => {
   test('Check if error has "name" key.', () => {
     validator.add('name', 'The name field is required.')
     expect(validator.has('name')).toBeTruthy()
-    expect(validator.first(['name', 'form.name'])).toBe(
-      'The name field is required.',
-    )
+    expect(validator.first(['name', 'form.name'])).toBe('The name field is required.')
   })
   test('Check if has error by multi key', () => {
     validator.add('name', 'The name field is required.')
@@ -88,7 +86,8 @@ describe('Validator', () => {
   })
   test('Clear all errors by flush', () => {
     const errors = {
-      name: ['The name field is required.'],
+      nameKh: ['The name field is required.'],
+      name_kh: ['The name field is required.'],
       email: ['The email field is required.'],
     }
     validator.fill(errors)
@@ -201,9 +200,7 @@ describe('Validator', () => {
       age: ['This age field is required'],
     }
 
-    expect(validator.firstBy(errors, 'age')).toEqual(
-      'This age field is required',
-    )
+    expect(validator.firstBy(errors, 'age')).toEqual('This age field is required')
   })
 
   it('get first by without any field', () => {
@@ -213,9 +210,7 @@ describe('Validator', () => {
       age: ['This age field is required'],
     }
 
-    expect(validator.firstBy(errors)).toEqual(
-      'This fist name field is required',
-    )
+    expect(validator.firstBy(errors)).toEqual('This fist name field is required')
   })
 
   it('get first array by nested array', () => {
@@ -229,8 +224,19 @@ describe('Validator', () => {
     const errors = { name: [{ kh: ['This fist name field is required'] }] }
     validator.fill(errors)
 
-    expect(validator.first(['name[0].kh'])).toEqual(
-      'This fist name field is required',
-    )
+    expect(validator.first(['name[0].kh'])).toEqual('This fist name field is required')
+  })
+
+  it('should reflect the field name by camel or snake case', () => {
+    const errors = { firstName: ['This fist name field is required'] }
+    validator.fill(errors)
+
+    expect(validator.has(['first_name'])).toBeTruthy()
+    expect(validator.first(['first_name'])).toEqual('This fist name field is required')
+    expect(validator.first(['firstName'])).toEqual('This fist name field is required')
+
+    validator.clear(['first_name'])
+
+    expect(validator.has(['firstName'])).toBeFalsy()
   })
 })

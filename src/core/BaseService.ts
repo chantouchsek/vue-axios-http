@@ -1,10 +1,4 @@
-import type {
-  AxiosError,
-  AxiosInstance,
-  AxiosResponse,
-  Method,
-  AxiosRequestConfig,
-} from 'axios'
+import type { AxiosError, AxiosInstance, AxiosResponse, Method, AxiosRequestConfig } from 'axios'
 import type { Errors } from '..'
 import Validator from './Validator'
 import { hasFiles, objectToFormData, removeDoubleSlash } from '../util'
@@ -48,23 +42,23 @@ class BaseService {
     return BaseService.$parsedQs
   }
 
-  all<T>() {
+  all<T = any>() {
     return this.submit<T>('get')
   }
 
-  find<T>(id: number | string) {
+  find<T = any>(id: number | string) {
     return this.submit<T>('get', id)
   }
 
-  post<T>(payload: any, config?: AxiosRequestConfig) {
+  post<T = any>(payload: any, config?: AxiosRequestConfig) {
     return this.submit<T>('post', '', payload, config)
   }
 
-  store<T>(payload: any, config?: AxiosRequestConfig) {
+  store<T = any>(payload: any, config?: AxiosRequestConfig) {
     return this.post<T>(payload, config)
   }
 
-  put<T>(id: any, payload?: any, config?: AxiosRequestConfig) {
+  put<T = any>(id: any, payload?: any, config?: AxiosRequestConfig) {
     const parameter = id && !isObject(id) ? `/${id}` : ''
     const body = isObject(id) ? id : payload
     const requestType: Method = hasFiles(body) ? 'post' : 'put'
@@ -74,43 +68,36 @@ class BaseService {
     return this.submit<T>(requestType, parameter, body, config)
   }
 
-  patch<T>(id: any, payload?: any, config?: AxiosRequestConfig) {
+  patch<T = any>(id: any, payload?: any, config?: AxiosRequestConfig) {
     const parameter = id && !isObject(id) ? `/${id}` : ''
     const body = isObject(id) ? id : payload
     return this.submit<T>('patch', parameter, body, config)
   }
 
-  update<T>(id: string | number, payload: any) {
+  update<T = any>(id: string | number, payload: any) {
     return this.patch<T>(id, payload)
   }
 
-  delete<T>(id: string | number) {
+  delete<T = any>(id: string | number) {
     return this.submit<T>('delete', `/${id}`)
   }
 
-  remove<T>(id: string | number) {
+  remove<T = any>(id: string | number) {
     return this.delete<T>(id)
   }
 
-  submit<T = any>(
-    method: Method,
-    parameter?: string | number,
-    form?: T,
-    config?: AxiosRequestConfig,
-  ): Promise<T> {
+  submit<T = any>(method: Method, parameter?: string | number, form?: T, config?: AxiosRequestConfig): Promise<T> {
     BaseService.__validateRequestType(method)
     this.beforeSubmit()
     return new Promise((resolve, reject) => {
       const data = hasFiles(form) ? objectToFormData(form) : form
-      const endpoint = parameter
-        ? `/${this.endpoint}/${parameter}`
-        : `/${this.endpoint}`
+      const endpoint = parameter ? `/${this.endpoint}/${parameter}` : `/${this.endpoint}`
       const url = this.__getParameterString(removeDoubleSlash(endpoint))
       config = Object.assign({}, config, { url, data, method })
       this.$http(config)
         .then((response: AxiosResponse) => {
           this.onSuccess()
-          resolve(response.data || {})
+          resolve(response.data)
         })
         .catch((error: AxiosError<AxiosResponseData>) => {
           this.errors.processing = false
@@ -155,8 +142,7 @@ class BaseService {
     ]
     if (!requestTypes.includes(requestType)) {
       throw new Error(
-        `\`${requestType}\` is not a valid request type, ` +
-          `must be one of: \`${requestTypes.join('`, `')}\`.`,
+        `\`${requestType}\` is not a valid request type, ` + `must be one of: \`${requestTypes.join('`, `')}\`.`,
       )
     }
     return requestType

@@ -1,10 +1,6 @@
 import { hasOwnProperty, isArray, isFile } from './objects'
 
-export function objectToFormData(
-  object: any,
-  formData = new FormData(),
-  parent = '',
-): FormData {
+export function objectToFormData(object: any, formData = new FormData(), parent = ''): FormData {
   if (object === null || object === 'undefined' || object.length === 0) {
     formData.append(parent, object)
   } else {
@@ -52,27 +48,24 @@ function appendToFormData(formData: FormData, key: string, value: any) {
   objectToFormData(value, formData, key)
 }
 
-export function hasFilesDeep(object: any): boolean {
-  if (object === null) {
-    return false
-  }
-  if (typeof object === 'object') {
-    for (const key in object) {
-      if (hasOwnProperty(object, key)) {
-        if (isFile(object[key])) {
-          return true
-        }
-      }
+export function hasFilesDeep(obj: any): boolean {
+  if (obj === null) return false
+  if (typeof obj === 'object') {
+    for (const key in obj) {
+      if (hasOwnProperty(obj, key) && isFile(obj[key])) return true
     }
   }
-  if (isArray(object)) {
-    for (const key in object) {
-      if (hasOwnProperty(object, key)) {
-        return hasFilesDeep(object[key])
+  if (isArray(obj)) {
+    let f = ''
+    for (const key in obj) {
+      if (hasOwnProperty(obj, key)) {
+        f = key
+        break
       }
     }
+    return hasFilesDeep(obj[f])
   }
-  return isFile(object)
+  return isFile(obj)
 }
 
 export function hasFiles(form: any): boolean {
