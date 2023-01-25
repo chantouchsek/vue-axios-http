@@ -1,4 +1,4 @@
-import { cloneDeep, get, has, isArray, omit } from 'lodash'
+import { cloneDeep, get, has, omit } from 'lodash'
 import { is, toCamelCase, toSnakeCase } from '../util'
 
 class Validator {

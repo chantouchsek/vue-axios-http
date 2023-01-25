@@ -33,9 +33,7 @@ describe('Validator', () => {
   test('Check if error has "name" key.', () => {
     validator.add('name', 'The name field is required.')
     expect(validator.has('name')).toBeTruthy()
-    expect(validator.first(['name', 'form.name'])).toBe(
-      'The name field is required.',
-    )
+    expect(validator.first(['name', 'form.name'])).toBe('The name field is required.')
   })
   test('Check if has error by multi key', () => {
     validator.add('name', 'The name field is required.')
@@ -202,9 +200,7 @@ describe('Validator', () => {
       age: ['This age field is required'],
     }
 
-    expect(validator.firstBy(errors, 'age')).toEqual(
-      'This age field is required',
-    )
+    expect(validator.firstBy(errors, 'age')).toEqual('This age field is required')
   })
 
   it('get first by without any field', () => {
@@ -214,9 +210,7 @@ describe('Validator', () => {
       age: ['This age field is required'],
     }
 
-    expect(validator.firstBy(errors)).toEqual(
-      'This fist name field is required',
-    )
+    expect(validator.firstBy(errors)).toEqual('This fist name field is required')
   })
 
   it('get first array by nested array', () => {
@@ -230,8 +224,6 @@ describe('Validator', () => {
     const errors = { name: [{ kh: ['This fist name field is required'] }] }
     validator.fill(errors)
 
-    expect(validator.first(['name[0].kh'])).toEqual(
-      'This fist name field is required',
-    )
+    expect(validator.first(['name[0].kh'])).toEqual('This fist name field is required')
   })
 })

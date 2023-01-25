@@ -1,10 +1,6 @@
 import { hasOwnProperty, isArray, isFile } from './objects'
 
-export function objectToFormData(
-  object: any,
-  formData = new FormData(),
-  parent = '',
-): FormData {
+export function objectToFormData(object: any, formData = new FormData(), parent = ''): FormData {
   if (object === null || object === 'undefined' || object.length === 0) {
     formData.append(parent, object)
   } else {

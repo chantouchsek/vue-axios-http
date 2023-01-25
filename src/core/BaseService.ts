@@ -1,10 +1,4 @@
-import type {
-  AxiosError,
-  AxiosInstance,
-  AxiosResponse,
-  Method,
-  AxiosRequestConfig,
-} from 'axios'
+import type { AxiosError, AxiosInstance, AxiosResponse, Method, AxiosRequestConfig } from 'axios'
 import type { Errors } from '..'
 import Validator from './Validator'
 import { hasFiles, objectToFormData, removeDoubleSlash } from '../util'
@@ -92,19 +86,12 @@ class BaseService {
     return this.delete<T>(id)
   }
 
-  submit<T = any>(
-    method: Method,
-    parameter?: string | number,
-    form?: T,
-    config?: AxiosRequestConfig,
-  ): Promise<T> {
+  submit<T = any>(method: Method, parameter?: string | number, form?: T, config?: AxiosRequestConfig): Promise<T> {
     BaseService.__validateRequestType(method)
     this.beforeSubmit()
     return new Promise((resolve, reject) => {
       const data = hasFiles(form) ? objectToFormData(form) : form
-      const endpoint = parameter
-        ? `/${this.endpoint}/${parameter}`
-        : `/${this.endpoint}`
+      const endpoint = parameter ? `/${this.endpoint}/${parameter}` : `/${this.endpoint}`
       const url = this.__getParameterString(removeDoubleSlash(endpoint))
       config = Object.assign({}, config, { url, data, method })
       this.$http(config)
@@ -155,8 +142,7 @@ class BaseService {
     ]
     if (!requestTypes.includes(requestType)) {
       throw new Error(
-        `\`${requestType}\` is not a valid request type, ` +
-          `must be one of: \`${requestTypes.join('`, `')}\`.`,
+        `\`${requestType}\` is not a valid request type, ` + `must be one of: \`${requestTypes.join('`, `')}\`.`,
       )
     }
     return requestType
