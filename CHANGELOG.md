@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/chantouchsek/vue-axios-http/compare/v3.1.3...v3.2.0) (2023-01-25)
+
+
+### Features
+
+* :sparkles: clear the field and get any ([e3576c4](https://github.com/chantouchsek/vue-axios-http/commit/e3576c43b49e05dc67e33da2a2ac36f4700a6267))
+* :sparkles: get multiple field by camel or snake case ([b22aae0](https://github.com/chantouchsek/vue-axios-http/commit/b22aae02809c4d67aaea516158e5717c93a7f971))
+
+
+### Bug Fixes
+
+* :bug: remove the return type annotataion ([ce1031e](https://github.com/chantouchsek/vue-axios-http/commit/ce1031e9e7699b04344843e34f9db4f7892cf6e3))
+* **deps:** bump actions/checkout from 3.1.0 to 3.3.0 ([cb1ec39](https://github.com/chantouchsek/vue-axios-http/commit/cb1ec39050690cd4b288a6007697cf349618b034))
+* **deps:** bump actions/setup-node from 3.5.0 to 3.5.1 ([c998da5](https://github.com/chantouchsek/vue-axios-http/commit/c998da50c9e0ac39db976fd7e2c0bb4c3caca80d))
+* **deps:** bump actions/setup-node from 3.5.1 to 3.6.0 ([3629f0b](https://github.com/chantouchsek/vue-axios-http/commit/3629f0b1c917dc5826e00347c2144754baffa5fa))
+* **deps:** bump actions/stale from 6 to 7 ([8043b4a](https://github.com/chantouchsek/vue-axios-http/commit/8043b4ab3922c181e9e8f6c5f294e724b6579b4a))
+* **deps:** bump decode-uri-component from 0.2.0 to 0.2.2 ([94672bc](https://github.com/chantouchsek/vue-axios-http/commit/94672bcab3b1915bdfefafa78ca532f7b288db41))
+* **deps:** bump json5 from 1.0.1 to 1.0.2 ([6d82afd](https://github.com/chantouchsek/vue-axios-http/commit/6d82afd9e9bd0c136ad4c4bd2dd4198541562ef7))
+* **deps:** bump loader-utils from 1.4.0 to 1.4.1 ([c10208e](https://github.com/chantouchsek/vue-axios-http/commit/c10208e20d7d9152ae9d478b564495c4784ffde7))
+* **deps:** bump loader-utils from 1.4.1 to 1.4.2 ([7deeccc](https://github.com/chantouchsek/vue-axios-http/commit/7deeccc676f7f6b46269bacb7adb49bc98331463))
+* **deps:** bump ua-parser-js from 1.0.2 to 1.0.33 ([d2f0dd1](https://github.com/chantouchsek/vue-axios-http/commit/d2f0dd1c380292f5e0c16660503a088f8bc7f808))
+* **deps:** using nuxt instead ([b3c3e7d](https://github.com/chantouchsek/vue-axios-http/commit/b3c3e7dfa5b7150070e9da055adb2c0d82aafbfc))
+* **test:** test coverage ([ba7d69e](https://github.com/chantouchsek/vue-axios-http/commit/ba7d69e24898e97024b391af5e1c1df08fc54bf0))
+
 ### [3.1.3](https://github.com/chantouchsek/vue-axios-http/compare/v3.1.2...v3.1.3) (2022-10-12)
 
 
