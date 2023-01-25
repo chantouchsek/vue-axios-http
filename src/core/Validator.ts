@@ -63,13 +63,16 @@ class Validator {
     return this.has(field) ? this.missed(field) : null
   }
 
-  any(fields: string[] = [], returnObject?: boolean) {
+  any(field: string[] = [], returnObject?: boolean) {
+    const fields = this.fields(field)
     if (returnObject) {
       const errors: Record<string, any> = {}
-      if (!fields.length) {
-        return {}
+      if (!fields.length) return {}
+      for (const f of fields) {
+        const val = this.get(f)
+        if (!val.length) continue
+        errors[f] = val
       }
-      fields.forEach((key: string) => (errors[key] = this.get(key)))
       return errors
     }
     if (!fields.length) {
@@ -102,7 +105,7 @@ class Validator {
 
   clear(field?: string | string[]) {
     if (!field) return this.flush()
-    const errors = omit(cloneDeep(this.errors), field)
+    const errors = omit(cloneDeep(this.errors), this.fields(field))
     this.fill(errors)
   }
 

@@ -233,5 +233,10 @@ describe('Validator', () => {
 
     expect(validator.has(['first_name'])).toBeTruthy()
     expect(validator.first(['first_name'])).toEqual('This fist name field is required')
+    expect(validator.first(['firstName'])).toEqual('This fist name field is required')
+
+    validator.clear(['first_name'])
+
+    expect(validator.has(['firstName'])).toBeFalsy()
   })
 })
