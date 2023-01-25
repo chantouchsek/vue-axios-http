@@ -33,10 +33,14 @@ class Validator {
   first(field: string | string[]): string | Record<string, any> | undefined {
     if (Array.isArray(field)) {
       const fields = this.fields(field)
+      let fd = ''
       for (const f of fields) {
-        if (!has(this.errors, f)) continue
-        return this.first(f)
+        if (has(this.errors, f)) {
+          fd = f
+          break
+        }
       }
+      return this.first(fd)
     } else {
       const value = this.get(field)
       if (Array.isArray(value)) return value[0]

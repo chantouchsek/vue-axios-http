@@ -97,7 +97,7 @@ class BaseService {
       this.$http(config)
         .then((response: AxiosResponse) => {
           this.onSuccess()
-          resolve(response.data || {})
+          resolve(response.data)
         })
         .catch((error: AxiosError<AxiosResponseData>) => {
           this.errors.processing = false
