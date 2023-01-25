@@ -42,23 +42,23 @@ class BaseService {
     return BaseService.$parsedQs
   }
 
-  all<T>() {
+  all<T = any>() {
     return this.submit<T>('get')
   }
 
-  find<T>(id: number | string) {
+  find<T = any>(id: number | string) {
     return this.submit<T>('get', id)
   }
 
-  post<T>(payload: any, config?: AxiosRequestConfig) {
+  post<T = any>(payload: any, config?: AxiosRequestConfig) {
     return this.submit<T>('post', '', payload, config)
   }
 
-  store<T>(payload: any, config?: AxiosRequestConfig) {
+  store<T = any>(payload: any, config?: AxiosRequestConfig) {
     return this.post<T>(payload, config)
   }
 
-  put<T>(id: any, payload?: any, config?: AxiosRequestConfig) {
+  put<T = any>(id: any, payload?: any, config?: AxiosRequestConfig) {
     const parameter = id && !isObject(id) ? `/${id}` : ''
     const body = isObject(id) ? id : payload
     const requestType: Method = hasFiles(body) ? 'post' : 'put'
@@ -68,21 +68,21 @@ class BaseService {
     return this.submit<T>(requestType, parameter, body, config)
   }
 
-  patch<T>(id: any, payload?: any, config?: AxiosRequestConfig) {
+  patch<T = any>(id: any, payload?: any, config?: AxiosRequestConfig) {
     const parameter = id && !isObject(id) ? `/${id}` : ''
     const body = isObject(id) ? id : payload
     return this.submit<T>('patch', parameter, body, config)
   }
 
-  update<T>(id: string | number, payload: any) {
+  update<T = any>(id: string | number, payload: any) {
     return this.patch<T>(id, payload)
   }
 
-  delete<T>(id: string | number) {
+  delete<T = any>(id: string | number) {
     return this.submit<T>('delete', `/${id}`)
   }
 
-  remove<T>(id: string | number) {
+  remove<T = any>(id: string | number) {
     return this.delete<T>(id)
   }
 
