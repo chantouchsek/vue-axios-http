@@ -1,7 +1,6 @@
 import type { ValidatorType } from './Validator'
 import type { AxiosError, AxiosInstance, Method, AxiosRequestConfig, AxiosResponse } from 'axios'
 import type { IParseOptions } from 'qs'
-import type { EmptyObject } from 'type-fest'
 import { isObject, isArray } from 'lodash'
 import qs from 'qs'
 import Validator from './Validator'
@@ -115,7 +114,7 @@ class BaseService {
           const { response } = error
           if (response && response.status === UNPROCESSABLE_ENTITY) {
             const { data } = response
-            const errors: EmptyObject = {}
+            const errors: Record<string, any> = {}
             Object.assign(errors, data[this.$errorProperty])
             this.onFail(errors)
           }
