@@ -1,4 +1,4 @@
-import { resolve, join } from 'path'
+import { resolve, join } from 'node:path'
 
 module.exports = function nuxtAxiosHttpModule(moduleOptions = {}) {
   const { axiosHttp = {} } = this.options
@@ -9,7 +9,6 @@ module.exports = function nuxtAxiosHttpModule(moduleOptions = {}) {
     src: resolve(__dirname, './templates/plugin.js'),
     fileName: join('vue-nuxt-axios.js'),
   })
-  // this.options.build.transpile.push(/^escape-string-regexp/)
 }
 
 // required by nuxt
