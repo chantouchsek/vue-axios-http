@@ -5,6 +5,8 @@
     "lib": ["ES5", "ES6", "ES2015", "ES2016", "ES2017", "ES2018", "ESNext", "DOM"],
     "moduleResolution": "Node",
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
     "strict": true,
     "declaration": true,
     "outDir": "dist",
