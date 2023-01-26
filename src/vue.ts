@@ -1,5 +1,5 @@
-import _Vue from 'vue'
 import type { ValidatorType } from './core/Validator'
+import type _Vue from 'vue'
 
 declare module '@nuxt/types' {
   interface Context {

@@ -1,9 +1,10 @@
-import type { AxiosError, AxiosInstance, AxiosResponse, Method, AxiosRequestConfig } from 'axios'
-import type { Errors } from '..'
-import Validator from './Validator'
-import { hasFiles, objectToFormData, removeDoubleSlash } from '../util'
+import type { ValidatorType } from './Validator'
+import type { AxiosError, AxiosInstance, Method, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { IParseOptions } from 'qs'
 import { isObject, isArray } from 'lodash'
-import qs, { IParseOptions } from 'qs'
+import qs from 'qs'
+import Validator from './Validator'
+import { hasFiles, objectToFormData } from '../util'
 
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
@@ -13,7 +14,7 @@ interface AxiosResponseData {
 }
 
 class BaseService {
-  errors: Errors
+  errors: ValidatorType
   parameters: Record<string, any>
   endpoint: string
   static $http: AxiosInstance
@@ -62,9 +63,7 @@ class BaseService {
     const parameter = id && !isObject(id) ? `/${id}` : ''
     const body = isObject(id) ? id : payload
     const requestType: Method = hasFiles(body) ? 'post' : 'put'
-    if (hasFiles(body)) {
-      Object.assign(body, { _method: 'put' })
-    }
+    if (hasFiles(body)) Object.assign(body, { _method: 'put' })
     return this.submit<T>(requestType, parameter, body, config)
   }
 
@@ -86,18 +85,25 @@ class BaseService {
     return this.delete<T>(id)
   }
 
-  submit<T = any>(method: Method, parameter?: string | number, form?: T, config?: AxiosRequestConfig): Promise<T> {
-    BaseService.__validateRequestType(method)
+  submit<T = any>(method: Method, url?: string | number, form?: any, config?: AxiosRequestConfig) {
+    return new Promise<T>((resolve, reject) => {
+      this.$submit<T>(method, url, form, config)
+        .then(({ data }) => resolve(data))
+        .catch((err) => reject(err))
+    })
+  }
+
+  $submit<T = any>(method: Method, param?: string | number, form?: any, config?: AxiosRequestConfig) {
     this.beforeSubmit()
-    return new Promise((resolve, reject) => {
+    return new Promise<AxiosResponse<T>>((resolve, reject) => {
       const data = hasFiles(form) ? objectToFormData(form) : form
-      const endpoint = parameter ? `/${this.endpoint}/${parameter}` : `/${this.endpoint}`
-      const url = this.__getParameterString(removeDoubleSlash(endpoint))
+      const endpoint = param ? `/${this.endpoint}/${param}` : `/${this.endpoint}`
+      const url = this.__getParameterString(endpoint.replace(/\/\//g, '/'))
       config = Object.assign({}, config, { url, data, method })
       this.$http(config)
-        .then((response: AxiosResponse) => {
+        .then((response) => {
           this.onSuccess()
-          resolve(response.data)
+          resolve(response)
         })
         .catch((error: AxiosError<AxiosResponseData>) => {
           this.errors.processing = false
@@ -115,37 +121,8 @@ class BaseService {
   }
 
   private __getParameterString(url: string) {
-    const query = qs.stringify(this.parameters, {
-      encode: false,
-      skipNulls: true,
-      addQueryPrefix: true,
-    })
+    const query = qs.stringify(this.parameters, { encode: false, skipNulls: true, addQueryPrefix: true })
     return `${url}${query}`
-  }
-
-  private static __validateRequestType(requestType: Method) {
-    const requestTypes: Method[] = [
-      'get',
-      'GET',
-      'delete',
-      'DELETE',
-      'head',
-      'HEAD',
-      'options',
-      'OPTIONS',
-      'post',
-      'POST',
-      'put',
-      'PUT',
-      'patch',
-      'PATCH',
-    ]
-    if (!requestTypes.includes(requestType)) {
-      throw new Error(
-        `\`${requestType}\` is not a valid request type, ` + `must be one of: \`${requestTypes.join('`, `')}\`.`,
-      )
-    }
-    return requestType
   }
 
   setParameters(parameters: Record<string, any>): this {
@@ -173,9 +150,7 @@ class BaseService {
     if (!parameters || !parameters.length) {
       this.parameters = []
     } else if (isArray(parameters)) {
-      for (const parameter of parameters) {
-        delete this.parameters[parameter]
-      }
+      for (const parameter of parameters) delete this.parameters[parameter]
     }
     return this
   }
@@ -191,9 +166,7 @@ class BaseService {
   }
 
   beforeSubmit() {
-    if (!this.$http) {
-      throw new Error('Vue Axios Http, No http library provided.')
-    }
+    if (!this.$http) throw new Error('Vue Axios Http, No http library provided.')
     this.errors.flush()
     this.errors.processing = true
     this.errors.successful = false

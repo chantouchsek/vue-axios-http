@@ -1,18 +1,16 @@
 import type { ValidatorType } from './core/Validator'
+import type { IParseOptions } from 'qs'
+import type _Vue from 'vue'
+import { merge } from 'lodash'
 import BaseService from './core/BaseService'
 import Validator from './core/Validator'
-import { merge } from 'lodash'
-import _Vue from 'vue'
 
 // augment typings of Vue.js
 import './vue'
 
-export type Errors = ValidatorType
-export type { ValidatorType }
-
 class AxiosHttp {
   installed = false
-  parsedQs = {
+  parsedQs: IParseOptions = {
     comma: true,
     allowDots: true,
     ignoreQueryPrefix: true,
@@ -20,26 +18,18 @@ class AxiosHttp {
   install(Vue: typeof _Vue, options: Record<string, any> = {}) {
     if (this.installed) return
     this.installed = true
-    const defaultOption = merge(
-      {
-        parsedQs: this.parsedQs,
-        errorProperty: 'errors',
-      },
-      options,
-    )
+    const defaultOption = merge({ parsedQs: this.parsedQs, errorProperty: 'errors' }, options)
     const { $axios, errorProperty, parsedQs } = defaultOption
     BaseService.$http = $axios
     BaseService.$errorProperty = errorProperty || 'errors'
-    BaseService.$parsedQs = parsedQs || this.parsedQs
+    BaseService.$parsedQs = parsedQs
     Vue.mixin({
       beforeCreate() {
-        this.$options.$errors = {} as any
+        this.$options.$errors = {} as never
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         Vue.util.defineReactive(this.$options, '$errors', Validator)
-        if (!this.$options.computed) {
-          this.$options.computed = {}
-        }
+        if (!this.$options.computed) this.$options.computed = {}
         this.$options.computed.$errors = function () {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
@@ -49,6 +39,8 @@ class AxiosHttp {
     })
   }
 }
-export { Validator, BaseService }
+
 export * from './util'
+export type { ValidatorType }
+export { Validator, BaseService }
 export default new AxiosHttp()
