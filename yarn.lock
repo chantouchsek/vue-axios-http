@@ -2197,7 +2197,7 @@
     "@typescript-eslint/types" "5.49.0"
     eslint-visitor-keys "^3.3.0"
 
-"@vitest/coverage-c8@^0.28.1":
+"@vitest/coverage-c8@^0.28.2":
   version "0.28.2"
   resolved "https://registry.yarnpkg.com/@vitest/coverage-c8/-/coverage-c8-0.28.2.tgz#6fc03502b98102a568a49a357bc3fb41d10933c4"
   integrity sha512-BWiOUk+d5LvK/9pKaYbL8eLng2EFXgTQMH9QN5nOoizWWKXGNO6LjduVpoz8ZQfb8/6tMVhae7SAS+w0zkRkNw==
@@ -10792,7 +10792,7 @@ vite-node@0.28.2:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vitest@0.28.2, vitest@^0.28.1:
+vitest@0.28.2, vitest@^0.28.2:
   version "0.28.2"
   resolved "https://registry.yarnpkg.com/vitest/-/vitest-0.28.2.tgz#952e1ad83fbd04ee1bfce634b106a371a5973603"
   integrity sha512-HJBlRla4Mng0OiZ8aWunCecJ6BzLDA4yuzuxiBuBU2MXjGB6I4zT7QgIBL/UrwGKlNxLwaDC5P/4OpeuTlW8yQ==
