@@ -1,7 +1,7 @@
+import { mount } from '@vue/test-utils'
 import Vue from 'vue'
 import AxiosHttp from '../'
 import { addElemWithDataAppToBody, disableTransitions, sleep } from '../util'
-import { mount } from '@vue/test-utils'
 
 describe('Vue Api Queries', () => {
   disableTransitions()

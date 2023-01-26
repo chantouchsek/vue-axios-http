@@ -1,9 +1,11 @@
-import type { AxiosError, AxiosInstance, AxiosResponse, Method, AxiosRequestConfig } from 'axios'
-import type { Errors } from '..'
+import type { ValidatorType } from './Validator'
+import type { AxiosError, AxiosInstance, Method, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { IParseOptions } from 'qs'
+import type { EmptyObject } from 'type-fest'
+import { isObject, isArray } from 'lodash'
+import qs from 'qs'
 import Validator from './Validator'
 import { hasFiles, objectToFormData, removeDoubleSlash } from '../util'
-import { isObject, isArray } from 'lodash'
-import qs, { IParseOptions } from 'qs'
 
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
@@ -13,7 +15,7 @@ interface AxiosResponseData {
 }
 
 class BaseService {
-  errors: Errors
+  errors: ValidatorType
   parameters: Record<string, any>
   endpoint: string
   static $http: AxiosInstance
@@ -86,18 +88,26 @@ class BaseService {
     return this.delete<T>(id)
   }
 
-  submit<T = any>(method: Method, parameter?: string | number, form?: T, config?: AxiosRequestConfig): Promise<T> {
+  submit<T = any>(method: Method, param?: string | number, form?: any, config?: AxiosRequestConfig) {
+    return new Promise<T>((resolve, reject) => {
+      this.$submit<T>(method, param, form, config)
+        .then(({ data }) => resolve(data))
+        .catch((err) => reject(err))
+    })
+  }
+
+  $submit<T = any>(method: Method, param?: string | number, form?: any, config?: AxiosRequestConfig) {
     BaseService.__validateRequestType(method)
     this.beforeSubmit()
-    return new Promise((resolve, reject) => {
+    return new Promise<AxiosResponse<T>>((resolve, reject) => {
       const data = hasFiles(form) ? objectToFormData(form) : form
-      const endpoint = parameter ? `/${this.endpoint}/${parameter}` : `/${this.endpoint}`
+      const endpoint = param ? `/${this.endpoint}/${param}` : `/${this.endpoint}`
       const url = this.__getParameterString(removeDoubleSlash(endpoint))
       config = Object.assign({}, config, { url, data, method })
       this.$http(config)
-        .then((response: AxiosResponse) => {
+        .then((response) => {
           this.onSuccess()
-          resolve(response.data)
+          resolve(response)
         })
         .catch((error: AxiosError<AxiosResponseData>) => {
           this.errors.processing = false
@@ -105,7 +115,7 @@ class BaseService {
           const { response } = error
           if (response && response.status === UNPROCESSABLE_ENTITY) {
             const { data } = response
-            const errors: Record<string, any> = {}
+            const errors: EmptyObject = {}
             Object.assign(errors, data[this.$errorProperty])
             this.onFail(errors)
           }
