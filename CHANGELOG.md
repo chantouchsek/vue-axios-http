@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.1](https://github.com/chantouchsek/vue-axios-http/compare/v3.2.0...v3.2.1) (2023-01-26)
+
+
+### Bug Fixes
+
+* :bug: change export order ([0863b39](https://github.com/chantouchsek/vue-axios-http/commit/0863b39b40f3d2966b7dfb3389bb844b750e68cd))
+* :bug: make form as any type and added new method ([2b7f45f](https://github.com/chantouchsek/vue-axios-http/commit/2b7f45fb6c76dfe5f4b8a7c1e92e5bb42dcd4514))
+* :bug: remove type-fest ([5f048e9](https://github.com/chantouchsek/vue-axios-http/commit/5f048e99b7f2f30082676dcaad309a457167beba))
+* :bug: removed checking method type ([5f87c91](https://github.com/chantouchsek/vue-axios-http/commit/5f87c917af13da0db04f8608718d5ccfc0803d9e))
+* :fire: renamed property ([9dcb639](https://github.com/chantouchsek/vue-axios-http/commit/9dcb6391ec48f52983c777e8984d9d00f171cb69))
+* :pencil2: inline and make some code ([6ff84d1](https://github.com/chantouchsek/vue-axios-http/commit/6ff84d1807e2cb65ef01b8cbad8436982ce16b82))
+* :pencil2: remove not used function ([64510d0](https://github.com/chantouchsek/vue-axios-http/commit/64510d0b30499ccc26d5d3e06d45850661d1493e))
+* **deps:** update lock file ([f4fe511](https://github.com/chantouchsek/vue-axios-http/commit/f4fe511cdc54035c781ebaab259392578df8ea66))
+* fire: removed unused method ([f55988a](https://github.com/chantouchsek/vue-axios-http/commit/f55988ab7da61003403c327699f58529ba6c9477))
+
 ## [3.2.0](https://github.com/chantouchsek/vue-axios-http/compare/v3.1.3...v3.2.0) (2023-01-25)
 
 
