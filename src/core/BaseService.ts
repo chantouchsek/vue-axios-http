@@ -63,9 +63,7 @@ class BaseService {
     const parameter = id && !isObject(id) ? `/${id}` : ''
     const body = isObject(id) ? id : payload
     const requestType: Method = hasFiles(body) ? 'post' : 'put'
-    if (hasFiles(body)) {
-      Object.assign(body, { _method: 'put' })
-    }
+    if (hasFiles(body)) Object.assign(body, { _method: 'put' })
     return this.submit<T>(requestType, parameter, body, config)
   }
 
@@ -96,7 +94,6 @@ class BaseService {
   }
 
   $submit<T = any>(method: Method, param?: string | number, form?: any, config?: AxiosRequestConfig) {
-    BaseService.__validateRequestType(method)
     this.beforeSubmit()
     return new Promise<AxiosResponse<T>>((resolve, reject) => {
       const data = hasFiles(form) ? objectToFormData(form) : form
@@ -124,37 +121,8 @@ class BaseService {
   }
 
   private __getParameterString(url: string) {
-    const query = qs.stringify(this.parameters, {
-      encode: false,
-      skipNulls: true,
-      addQueryPrefix: true,
-    })
+    const query = qs.stringify(this.parameters, { encode: false, skipNulls: true, addQueryPrefix: true })
     return `${url}${query}`
-  }
-
-  private static __validateRequestType(requestType: Method) {
-    const requestTypes: Method[] = [
-      'get',
-      'GET',
-      'delete',
-      'DELETE',
-      'head',
-      'HEAD',
-      'options',
-      'OPTIONS',
-      'post',
-      'POST',
-      'put',
-      'PUT',
-      'patch',
-      'PATCH',
-    ]
-    if (!requestTypes.includes(requestType)) {
-      throw new Error(
-        `\`${requestType}\` is not a valid request type, ` + `must be one of: \`${requestTypes.join('`, `')}\`.`,
-      )
-    }
-    return requestType
   }
 
   setParameters(parameters: Record<string, any>): this {
@@ -182,9 +150,7 @@ class BaseService {
     if (!parameters || !parameters.length) {
       this.parameters = []
     } else if (isArray(parameters)) {
-      for (const parameter of parameters) {
-        delete this.parameters[parameter]
-      }
+      for (const parameter of parameters) delete this.parameters[parameter]
     }
     return this
   }

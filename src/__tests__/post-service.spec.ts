@@ -33,21 +33,4 @@ describe('PostService', () => {
     expect(data.length).toEqual(1)
     expect(item.pagination.page).toEqual(1)
   })
-  it('it should throw exception if method is not inlist', async () => {
-    const items = {
-      data: [{ name: 'Chantouch', post_id: 1 }],
-      meta: {
-        pagination: { count: 1, page: 1, perPage: 20 },
-        include: [],
-      },
-    }
-    mockAdapter.onGet('/posts/1/tags').reply(500, items)
-    try {
-      await service.throwException(1)
-    } catch (e: any) {
-      expect(e.message).toEqual(
-        '`unlink` is not a valid request type, must be one of: `get`, `GET`, `delete`, `DELETE`, `head`, `HEAD`, `options`, `OPTIONS`, `post`, `POST`, `put`, `PUT`, `patch`, `PATCH`.',
-      )
-    }
-  })
 })
