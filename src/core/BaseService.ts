@@ -4,7 +4,7 @@ import type { IParseOptions } from 'qs'
 import { isObject, isArray } from 'lodash'
 import qs from 'qs'
 import Validator from './Validator'
-import { hasFiles, objectToFormData, removeDoubleSlash } from '../util'
+import { hasFiles, objectToFormData } from '../util'
 
 const validator = Validator
 const UNPROCESSABLE_ENTITY = 422
@@ -98,7 +98,7 @@ class BaseService {
     return new Promise<AxiosResponse<T>>((resolve, reject) => {
       const data = hasFiles(form) ? objectToFormData(form) : form
       const endpoint = param ? `/${this.endpoint}/${param}` : `/${this.endpoint}`
-      const url = this.__getParameterString(removeDoubleSlash(endpoint))
+      const url = this.__getParameterString(endpoint.replace(/\/\//g, '/'))
       config = Object.assign({}, config, { url, data, method })
       this.$http(config)
         .then((response) => {
@@ -166,9 +166,7 @@ class BaseService {
   }
 
   beforeSubmit() {
-    if (!this.$http) {
-      throw new Error('Vue Axios Http, No http library provided.')
-    }
+    if (!this.$http) throw new Error('Vue Axios Http, No http library provided.')
     this.errors.flush()
     this.errors.processing = true
     this.errors.successful = false

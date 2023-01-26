@@ -13,12 +13,8 @@ class Validator {
   }
 
   add(field: string, message: string, forceUpdate?: boolean) {
-    if (this.missed(field)) {
-      this.errors[field] = []
-    }
-    if (!this.errors[field].includes(message)) {
-      this.errors[field].unshift(message)
-    }
+    if (this.missed(field)) this.errors[field] = []
+    if (!this.errors[field].includes(message)) this.errors[field].unshift(message)
     if (forceUpdate) {
       this.errors[field] = []
       this.errors[field].push(message)
@@ -79,9 +75,7 @@ class Validator {
       }
       return errors
     }
-    if (!fields.length) {
-      return Object.keys(this.errors).length > 0
-    }
+    if (!fields.length) return Object.keys(this.errors).length > 0
     const errors: Record<string, any> = {}
     fields.forEach((key: string) => (errors[key] = this.get(key)))
     return Object.keys(errors).length > 0
