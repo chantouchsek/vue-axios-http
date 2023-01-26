@@ -87,9 +87,9 @@ class BaseService {
     return this.delete<T>(id)
   }
 
-  submit<T = any>(method: Method, param?: string | number, form?: any, config?: AxiosRequestConfig) {
+  submit<T = any>(method: Method, url?: string | number, form?: any, config?: AxiosRequestConfig) {
     return new Promise<T>((resolve, reject) => {
-      this.$submit<T>(method, param, form, config)
+      this.$submit<T>(method, url, form, config)
         .then(({ data }) => resolve(data))
         .catch((err) => reject(err))
     })
