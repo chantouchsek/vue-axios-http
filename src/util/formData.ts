@@ -52,7 +52,7 @@ export function hasFilesDeep(obj: any): boolean {
   if (obj === null) return false
   if (typeof obj === 'object') {
     for (const key in obj) {
-      if (hasOwnProperty(obj, key) && isFile(obj[key])) return true
+      if (isFile(obj[key])) return true
     }
   }
   if (isArray(obj)) {

@@ -8,7 +8,7 @@ import Validator from './core/Validator'
 // augment typings of Vue.js
 import './vue'
 
-export class AxiosHttp {
+class AxiosHttp {
   installed = false
   parsedQs: IParseOptions = {
     comma: true,
@@ -22,7 +22,7 @@ export class AxiosHttp {
     const { $axios, errorProperty, parsedQs } = defaultOption
     BaseService.$http = $axios
     BaseService.$errorProperty = errorProperty || 'errors'
-    BaseService.$parsedQs = parsedQs || this.parsedQs
+    BaseService.$parsedQs = parsedQs
     Vue.mixin({
       beforeCreate() {
         this.$options.$errors = {} as never
@@ -39,6 +39,7 @@ export class AxiosHttp {
     })
   }
 }
+
 export * from './util'
 export type { ValidatorType }
 export { Validator, BaseService }
