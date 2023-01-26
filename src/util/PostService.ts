@@ -8,10 +8,6 @@ class PostService extends BaseService {
   tags<T = any>(id: string | number) {
     return this.submit<T>('get', `${id}/tags`)
   }
-
-  throwException<T>(id: string | number) {
-    return this.submit<T>('unlink', `${id}/tags`)
-  }
 }
 
 export default PostService
