@@ -8,8 +8,6 @@ import Validator from './core/Validator'
 // augment typings of Vue.js
 import './vue'
 
-export type { ValidatorType }
-
 export class AxiosHttp {
   installed = false
   parsedQs: IParseOptions = {
@@ -41,6 +39,7 @@ export class AxiosHttp {
     })
   }
 }
-export { Validator, BaseService }
 export * from './util'
+export type { ValidatorType }
+export { Validator, BaseService }
 export default new AxiosHttp()
