@@ -67,7 +67,7 @@
     "jsdom": "^21.1.0",
     "lint-staged": ">=10",
     "nodemon": "^2.0.12",
-    "nuxt": "^2.15.8",
+    "nuxt": "^3.3.1",
     "prettier": "^2.4.1",
     "rimraf": "^4.1.2",
     "standard-version": "^9.3.1",
