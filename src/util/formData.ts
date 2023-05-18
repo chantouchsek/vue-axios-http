@@ -1,14 +1,13 @@
-import { hasOwnProperty, isArray, isFile } from './objects'
+import { isFile } from './objects'
 
-const getKey = (parent: any, property: any) => (parent ? parent + '[' + property + ']' : property)
 export function objectToFormData(obj: any, formData = new FormData(), parent = ''): FormData {
-  if (obj === null || obj === 'undefined' || obj.length === 0) {
+  if (obj == null || (Array.isArray(obj) && obj.length === 0)) {
     formData.append(parent, obj)
   } else {
-    for (const property in obj) {
-      if (hasOwnProperty(obj, property)) {
-        appendToFormData(formData, getKey(parent, property), obj[property])
-      }
+    const propertyMap = new Map(Object.entries(obj))
+    for (const [property, value] of propertyMap) {
+      const key = parent ? `${parent}[${property}]` : property
+      appendToFormData(formData, key, value)
     }
   }
   return formData
@@ -19,37 +18,34 @@ function appendToFormData(formData: FormData, key: string, value: any) {
   if (typeof value === 'boolean') return formData.append(key, value ? '1' : '0')
   if (value === null) return formData.append(key, '')
   if (typeof value !== 'object') return formData.append(key, value)
-  if (isArray(value) && hasFilesDeep(value)) {
+  if (Array.isArray(value) && hasFilesDeep(value)) {
     for (let i = 0; i < value.length; i++) {
       formData.append(key + '[' + i + ']', value[i], value[i].name)
     }
     return formData
   }
-  objectToFormData(value, formData, key)
+  if (typeof value === 'object') return objectToFormData(value, formData, key)
+  throw new Error(`Unexpected value type: ${typeof value}`)
 }
 export function hasFilesDeep(obj: any): boolean {
   if (obj === null) return false
   if (typeof obj === 'object') {
-    for (const key in obj) {
-      if (isFile(obj[key])) return true
+    const values = Object.values(obj)
+    for (let i = 0; i < values.length; i++) {
+      if (isFile(values[i])) return true
     }
   }
-  if (isArray(obj)) {
-    let f = ''
-    for (const key in obj) {
-      if (hasOwnProperty(obj, key)) {
-        f = key
-        break
-      }
-    }
-    return hasFilesDeep(obj[f])
+  if (Array.isArray(obj)) {
+    const firstNonNullElement = obj.find((el) => el !== null)
+    return firstNonNullElement ? hasFilesDeep(firstNonNullElement) : false
   }
   return isFile(obj)
 }
 export function hasFiles(form: any) {
   for (const prop in form) {
-    const hasProp = hasOwnProperty(form, prop) || typeof window !== 'undefined'
-    if (hasProp && hasFilesDeep(form[prop])) return true
+    if (Object.prototype.hasOwnProperty.call(form, prop) && hasFilesDeep(form[prop])) {
+      return true
+    }
   }
   return false
 }

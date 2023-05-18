@@ -1,4 +1,4 @@
-import { hasFiles, hasOwnProperty, isFile } from '../util'
+import { hasFiles, isFile } from '../util'
 
 describe('Object Test', () => {
   // const { window, File } = global
@@ -9,9 +9,6 @@ describe('Object Test', () => {
   it('check if object is a file Instance', () => {
     const file = new File(['hello world!'], 'myfile')
     expect(isFile(file)).toBeTruthy()
-  })
-  it('should check has own property', function () {
-    expect(hasOwnProperty({ dev: null }, '')).toBeFalsy()
   })
   it('check if window is undefined', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
