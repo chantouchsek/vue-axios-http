@@ -9,12 +9,12 @@ import Validator from './core/Validator'
 import './vue'
 
 interface ModuleOptions {
-  removeParams?: boolean
+  resetParameter?: boolean
   parsedQs: IParseOptions
   errorProperty?: string | 'errors' | 'message'
 }
 const optionDefault: ModuleOptions = {
-  removeParams: false,
+  resetParameter: false,
   parsedQs: {
     comma: true,
     allowDots: true,
@@ -29,10 +29,10 @@ class AxiosHttp {
     if (this.installed) return
 
     this.installed = true
-    const { errorProperty, parsedQs, removeParams } = merge(optionDefault, options)
+    const { errorProperty, parsedQs, resetParameter } = merge(optionDefault, options)
 
     BaseService.$parsedQs = parsedQs
-    BaseService.$removeParams = removeParams
+    BaseService.$resetParameter = resetParameter
     BaseService.$errorProperty = errorProperty || 'errors'
     Vue.mixin({
       beforeCreate() {

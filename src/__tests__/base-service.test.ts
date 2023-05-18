@@ -349,7 +349,7 @@ describe('BaseService -> Remove parameters', () => {
     validator = Validator
     const axios = Axios.create({ baseURL: 'https://mock-api.test' })
     BaseService.$http = axios
-    BaseService.$removeParams = true
+    BaseService.$resetParameter = true
     BaseService.$errorProperty = 'message'
 
     service = new PostService()

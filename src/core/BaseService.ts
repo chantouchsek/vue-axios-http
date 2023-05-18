@@ -16,7 +16,7 @@ export default class BaseService {
   public errors = Validator
   static $http: AxiosInstance
   static $errorProperty = 'errors'
-  static $removeParams? = false
+  static $resetParameter? = false
   static $parsedQs: IParseOptions = {
     comma: true,
     allowDots: true,
@@ -33,8 +33,8 @@ export default class BaseService {
     return BaseService.$errorProperty
   }
 
-  get $removeParams() {
-    return BaseService.$removeParams
+  get $resetParameter() {
+    return BaseService.$resetParameter
   }
 
   get $parsedQs() {
@@ -107,7 +107,7 @@ export default class BaseService {
           }
           reject(error)
         })
-      if (this.$removeParams) this.removeParameters()
+      if (this.$resetParameter) this.removeParameters()
     })
   }
 
