@@ -117,7 +117,7 @@ class Validator {
   }
 
   fields(field: string | string[]): string[] {
-    const fields = []
+    const fields: string[] = []
     if (Array.isArray(field)) {
       for (const f of field) {
         fields.push(toCamelCase(f), toSnakeCase(f))

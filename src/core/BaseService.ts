@@ -1,6 +1,6 @@
 import type { AxiosError, AxiosInstance, Method, AxiosRequestConfig, AxiosResponse } from 'axios'
 import type { IParseOptions } from 'qs'
-import { isObject, isArray } from 'lodash'
+import { isObject } from 'lodash'
 import qs from 'qs'
 import Validator from './Validator'
 import { hasFiles, objectToFormData } from '../util'
@@ -86,11 +86,12 @@ export default class BaseService {
   $submit<T = any, F = any>(method: Method, param?: string | number, form?: F, config?: AxiosRequestConfig) {
     this.beforeSubmit()
     return new Promise<AxiosResponse<T>>((resolve, reject) => {
-      const data = hasFiles(form) ? objectToFormData(form) : form
-      const endpoint = param ? `/${this.endpoint}/${param}` : `/${this.endpoint}`
-      const url = this.__getParameterString(endpoint.replace(/\/\//g, '/'))
-      config = Object.assign({}, config, { url, data, method })
-      this.$http(config)
+      const formData = hasFiles(form) ? objectToFormData(form) : form
+      const endpointPath = param ? `/${this.endpoint}/${param}` : `/${this.endpoint}`
+      const endpoint = endpointPath.replace(/\/\//g, '/')
+      const url = this.__getParameterString(endpoint)
+      const axiosConfig = { url, data: formData, method, ...config }
+      this.$http(axiosConfig)
         .then((response) => {
           this.onSuccess()
           resolve(response)
@@ -101,9 +102,9 @@ export default class BaseService {
           const { response } = error
           if (response && response.status === UNPROCESSABLE_ENTITY) {
             const { data } = response
-            const errors: Record<string, any> = {}
-            Object.assign(errors, data[this.$errorProperty])
-            this.onFail(errors)
+            const validationErrors: Record<string, any> = {}
+            Object.assign(validationErrors, data[this.$errorProperty])
+            this.onFail(validationErrors)
           }
           reject(error)
         })
@@ -148,7 +149,7 @@ export default class BaseService {
   removeParameters(parameters: string[] = []) {
     if (!parameters || !parameters.length) {
       this.parameters = {}
-    } else if (isArray(parameters)) {
+    } else if (Array.isArray(parameters)) {
       for (const parameter of parameters) delete this.parameters[parameter]
     }
     return this
