@@ -24,21 +24,23 @@ function appendToFormData(formData: FormData, key: string, value: any) {
     }
     return formData
   }
-  if (typeof value === 'object') return objectToFormData(value, formData, key)
-  throw new Error(`Unexpected value type: ${typeof value}`)
+  objectToFormData(value, formData, key)
 }
 export function hasFilesDeep(obj: any): boolean {
-  if (obj === null) return false
+  if (!obj) return false
+
   if (typeof obj === 'object') {
-    const values = Object.values(obj)
-    for (let i = 0; i < values.length; i++) {
-      if (isFile(values[i])) return true
+    const objValues = Object.values(obj)
+    if (objValues.some(isFile)) return true
+  }
+
+  if (Array.isArray(obj)) {
+    const nonNullElement = obj.find((el) => el !== null)
+    if (nonNullElement) {
+      return hasFilesDeep(nonNullElement)
     }
   }
-  if (Array.isArray(obj)) {
-    const firstNonNullElement = obj.find((el) => el !== null)
-    return firstNonNullElement ? hasFilesDeep(firstNonNullElement) : false
-  }
+
   return isFile(obj)
 }
 export function hasFiles(form: any) {
