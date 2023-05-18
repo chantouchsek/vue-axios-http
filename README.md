@@ -12,7 +12,7 @@ classes. Keep your code clean and elegant.
 Wouldn't it be great if you could just use your back end to validate forms on the front end? This package provides a
 `BaseService` class that does exactly that. It can post itself to a configured endpoint and manage errors. The class is
 meant to be used with a Laravel back end, and it doesn't limit that you need only to work with laravel, Ruby on Rail,
-NodeJs, ExpressJs, or any other languages.
+Node.js, Express.js, or any other languages.
 
 Take a look at the [usage section](#usage) to view a detailed example on how to use it.
 
@@ -56,7 +56,7 @@ export default {
 
 ### Options
 
-you can overwrite it, by adding in config above.
+you can overwrite it by adding in the config above.
 
 ### Note:
 
@@ -94,7 +94,7 @@ Vue.use(AxiosHttp)
 
 ### Note
 
-Error response must look like: or base on **errorProperty** from config
+Error response must look like: or based on **errorProperty** from config
 
 ```json
 {
@@ -137,7 +137,7 @@ $errors.first(['name[0]']) // return object like
 $errors.first(['name[0].kh']) // return string like
 ```
 
-## Using with Vuex
+## Using it with Vuex
 
 1.Create **proxies** folder or your prefer folder name for this
 
@@ -296,7 +296,7 @@ export default {
 
 You can set or remove any parameters you like.
 
-## Service's methods are available
+## Service methods are available
 
 | Method                                          | Description                 |
 | ----------------------------------------------- | --------------------------- |
@@ -310,7 +310,7 @@ You can set or remove any parameters you like.
 
 Set parameters with key/value.
 
-**Note**: If you to pass query string as object that can be response like object format at api side.
+**Note**: If you to pass query string, as an object that can be response like object format at api side.
 
 #### Example
 
@@ -335,13 +335,13 @@ const { data } = service.setParameters(parameters).all()
 this.data = data
 ```
 
-**Note**: Query object above will transform into query string like:
+**Note**: A query object above will transform into query string like:
 
 ```text
 https://my-web-url.com?search[first_name]=Sek&search[last_name]=Chantouch&page[limit]=10&page[offset]=1&order[first_name]=asc&order[last_name]=desc&category_id=6
 ```
 
-if setParameter that value is empty or null it will remove that param for query string
+if setParameter that value is empty or null, it will remove that param for query string
 
 #### setParameter()
 
@@ -426,7 +426,7 @@ It can be called by `this.$errors.**`
 | **has(attributes)**  | To check multiple attributes given have any errors |
 | **first(attribute)** | To get errors message by an attribute              |
 
-## How to use in vue component
+## How to use in a vue component
 
 ```vue
 <template>
