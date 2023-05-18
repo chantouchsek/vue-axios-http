@@ -23,7 +23,7 @@ export default class BaseService {
     ignoreQueryPrefix: true,
   }
 
-  constructor(readonly endpoint: string, public parameters: Record<string, any>) {}
+  constructor(readonly endpoint: string, public parameters: Record<string, any> = {}) {}
 
   get $http() {
     return BaseService.$http
@@ -147,7 +147,7 @@ export default class BaseService {
 
   removeParameters(parameters: string[] = []) {
     if (!parameters || !parameters.length) {
-      this.parameters = []
+      this.parameters = {}
     } else if (isArray(parameters)) {
       for (const parameter of parameters) delete this.parameters[parameter]
     }

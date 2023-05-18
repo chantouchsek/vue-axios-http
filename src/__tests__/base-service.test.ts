@@ -367,7 +367,7 @@ describe('BaseService -> Remove parameters', () => {
     const { data } = await service.setParameter('id', 1).setParameters(parameters).all()
 
     expect(data).toEqual(items)
-    expect(service.parameters).toEqual([])
+    expect(service.parameters).toEqual({})
   })
 })
 
