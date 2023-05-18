@@ -355,7 +355,7 @@ describe('BaseService -> Remove parameters', () => {
     mockAdapter.reset()
   })
 
-  it('should clear the parameters, if the option `removeParam` is true', async () => {
+  it('should clear the parameters, if the option `resetParameter` is true', async () => {
     const items = [
       { first_name: 'Dara', last_name: 'Hok', id: 1 },
       { first_name: 'Chantouch', last_name: 'Sek', id: 2 },
