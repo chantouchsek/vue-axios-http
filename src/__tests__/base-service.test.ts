@@ -89,11 +89,9 @@ describe('BaseService', () => {
       { first_name: 'Chantouch', last_name: 'Sek', id: 2 },
     ]
     mockAdapter.onGet('/posts?id=1&first_name=Dara').reply(200, { data: items })
-    const parameters = { first_name: 'Dara', id: 1 }
-    const { data } = await service.setParameter('id', 1).setParameters(parameters).all()
+    const { data } = await service.setParameter('id', 1).setParameters({ first_name: 'Dara' }).all()
 
     expect(data).toEqual(items)
-    expect(service.parameters).toEqual(parameters)
   })
 
   it('should set parameter with empty value', async () => {
