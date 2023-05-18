@@ -47,10 +47,10 @@ export default {
     // simple usage
     'vue-axios-http/nuxt',
     // With options
-    ['vue-axios-http/nuxt', { errorProperty: 'errors' }],
+    ['vue-axios-http/nuxt', { errorProperty: 'errors', removeParams: true }],
     '@nuxtjs/axios',
   ],
-  axiosHttp: { errorProperty: 'errors' },
+  axiosHttp: { errorProperty: 'errors', removeParams: true },
 }
 ```
 
