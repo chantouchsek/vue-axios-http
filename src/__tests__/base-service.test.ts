@@ -89,8 +89,11 @@ describe('BaseService', () => {
       { first_name: 'Chantouch', last_name: 'Sek', id: 2 },
     ]
     mockAdapter.onGet('/posts?id=1&first_name=Dara').reply(200, { data: items })
-    const { data } = await service.setParameter('id', 1).setParameters({ first_name: 'Dara' }).all()
+    const parameters = { first_name: 'Dara', id: 1 }
+    const { data } = await service.setParameter('id', 1).setParameters(parameters).all()
+
     expect(data).toEqual(items)
+    expect(service.parameters).toEqual(parameters)
   })
 
   it('should set parameter with empty value', async () => {
@@ -339,6 +342,32 @@ describe('BaseService', () => {
 
     BaseService.$http = Axios.create()
     expect(service.$http.defaults.baseURL).toBe(undefined)
+  })
+})
+describe('BaseService -> Remove parameters', () => {
+  beforeEach(() => {
+    validator = Validator
+    const axios = Axios.create({ baseURL: 'https://mock-api.test' })
+    BaseService.$http = axios
+    BaseService.$removeParams = true
+    BaseService.$errorProperty = 'message'
+
+    service = new PostService()
+    mockAdapter = new MockAdapter(axios)
+    mockAdapter.reset()
+  })
+
+  it('should clear the parameters, if the option `removeParam` is true', async () => {
+    const items = [
+      { first_name: 'Dara', last_name: 'Hok', id: 1 },
+      { first_name: 'Chantouch', last_name: 'Sek', id: 2 },
+    ]
+    mockAdapter.onGet('/posts?id=1&first_name=Dara').reply(200, { data: items })
+    const parameters = { first_name: 'Dara', id: 1 }
+    const { data } = await service.setParameter('id', 1).setParameters(parameters).all()
+
+    expect(data).toEqual(items)
+    expect(service.parameters).toEqual([])
   })
 })
 
