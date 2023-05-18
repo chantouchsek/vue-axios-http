@@ -8,21 +8,32 @@ import Validator from './core/Validator'
 // augment typings of Vue.js
 import './vue'
 
-class AxiosHttp {
-  installed = false
-  parsedQs: IParseOptions = {
+interface ModuleOptions {
+  removeParams?: boolean
+  parsedQs: IParseOptions
+  errorProperty?: string | 'errors' | 'message'
+}
+const optionDefault: ModuleOptions = {
+  removeParams: false,
+  parsedQs: {
     comma: true,
     allowDots: true,
     ignoreQueryPrefix: true,
-  }
-  install(Vue: typeof _Vue, options: Record<string, any> = {}) {
+  },
+  errorProperty: 'errors',
+}
+
+class AxiosHttp {
+  installed = false
+  install(Vue: typeof _Vue, options: Partial<ModuleOptions> = {}) {
     if (this.installed) return
+
     this.installed = true
-    const defaultOption = merge({ parsedQs: this.parsedQs, errorProperty: 'errors' }, options)
-    const { $axios, errorProperty, parsedQs } = defaultOption
-    BaseService.$http = $axios
-    BaseService.$errorProperty = errorProperty || 'errors'
+    const { errorProperty, parsedQs, removeParams } = merge(optionDefault, options)
+
     BaseService.$parsedQs = parsedQs
+    BaseService.$removeParams = removeParams
+    BaseService.$errorProperty = errorProperty || 'errors'
     Vue.mixin({
       beforeCreate() {
         this.$options.$errors = {} as never
@@ -41,6 +52,6 @@ class AxiosHttp {
 }
 
 export * from './util'
-export type { ValidatorType }
+export type { ValidatorType, ModuleOptions }
 export { Validator, BaseService }
 export default new AxiosHttp()

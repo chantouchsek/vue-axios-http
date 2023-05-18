@@ -2,14 +2,12 @@ import { cloneDeep, get, has, omit } from 'lodash'
 import { is, toCamelCase, toSnakeCase } from '../util'
 
 class Validator {
-  public errors: Record<string, any>
   public successful: boolean
   public processing: boolean
 
-  constructor(errors: Record<string, any> = {}) {
+  constructor(public errors: Record<string, any> = {}) {
     this.processing = false
     this.successful = false
-    this.errors = errors
   }
 
   add(field: string, message: string, forceUpdate?: boolean) {

@@ -1,4 +1,3 @@
-import type { ValidatorType } from './Validator'
 import type { AxiosError, AxiosInstance, Method, AxiosRequestConfig, AxiosResponse } from 'axios'
 import type { IParseOptions } from 'qs'
 import { isObject, isArray } from 'lodash'
@@ -13,23 +12,18 @@ interface AxiosResponseData {
   [key: string | number]: any
 }
 
-class BaseService {
-  errors: ValidatorType
-  parameters: Record<string, any>
-  endpoint: string
+export default class BaseService {
+  public errors = Validator
   static $http: AxiosInstance
   static $errorProperty = 'errors'
+  static $removeParams? = false
   static $parsedQs: IParseOptions = {
     comma: true,
     allowDots: true,
     ignoreQueryPrefix: true,
   }
 
-  constructor(endpoint: string, parameters: Record<string, any>) {
-    this.endpoint = endpoint
-    this.parameters = parameters
-    this.errors = Validator
-  }
+  constructor(readonly endpoint: string, public parameters: Record<string, any>) {}
 
   get $http() {
     return BaseService.$http
@@ -37,6 +31,10 @@ class BaseService {
 
   get $errorProperty() {
     return BaseService.$errorProperty
+  }
+
+  get $removeParams() {
+    return BaseService.$removeParams
   }
 
   get $parsedQs() {
@@ -85,15 +83,7 @@ class BaseService {
     return this.delete<T>(id)
   }
 
-  submit<T = any>(method: Method, url?: string | number, form?: any, config?: AxiosRequestConfig) {
-    return new Promise<T>((resolve, reject) => {
-      this.$submit<T>(method, url, form, config)
-        .then(({ data }) => resolve(data))
-        .catch((err) => reject(err))
-    })
-  }
-
-  $submit<T = any>(method: Method, param?: string | number, form?: any, config?: AxiosRequestConfig) {
+  $submit<T = any, F = any>(method: Method, param?: string | number, form?: F, config?: AxiosRequestConfig) {
     this.beforeSubmit()
     return new Promise<AxiosResponse<T>>((resolve, reject) => {
       const data = hasFiles(form) ? objectToFormData(form) : form
@@ -117,6 +107,15 @@ class BaseService {
           }
           reject(error)
         })
+      if (this.$removeParams) this.removeParameters()
+    })
+  }
+
+  submit<T = any, F = any>(method: Method, url?: string | number, form?: F, config?: AxiosRequestConfig) {
+    return new Promise<T>((resolve, reject) => {
+      this.$submit<T>(method, url, form, config)
+        .then(({ data }) => resolve(data))
+        .catch((err) => reject(err))
     })
   }
 
@@ -125,14 +124,14 @@ class BaseService {
     return `${url}${query}`
   }
 
-  setParameters(parameters: Record<string, any>): this {
+  setParameters(parameters: Record<string, any>) {
     Object.keys(parameters).forEach((key) => {
       this.parameters[key] = parameters[key]
     })
     return this
   }
 
-  setParameter(parameter: string, value?: any): this {
+  setParameter(parameter: string, value?: any) {
     if (!value) {
       const options: IParseOptions = Object.assign({}, this.$parsedQs, {
         comma: true,
@@ -146,7 +145,7 @@ class BaseService {
     return this
   }
 
-  removeParameters(parameters = [] as any[]): this {
+  removeParameters(parameters: string[] = []) {
     if (!parameters || !parameters.length) {
       this.parameters = []
     } else if (isArray(parameters)) {
@@ -155,7 +154,7 @@ class BaseService {
     return this
   }
 
-  removeParameter(parameter: string): this {
+  removeParameter(parameter: string) {
     delete this.parameters[parameter]
     return this
   }
@@ -182,5 +181,3 @@ class BaseService {
     validator.successful = true
   }
 }
-
-export default BaseService
