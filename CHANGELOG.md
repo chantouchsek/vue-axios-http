@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/chantouchsek/vue-axios-http/compare/v3.2.1...v3.3.0) (2023-05-18)
+
+
+### Features
+
+* :sparkles: add remove param option ([267afba](https://github.com/chantouchsek/vue-axios-http/commit/267afbac4926f40c97dff4146d4b519da15442b1))
+* :tada: optimize some logic of util ([ad4fd10](https://github.com/chantouchsek/vue-axios-http/commit/ad4fd100d8c218d7682fae42f621893dcb03b021))
+
+
+### Bug Fixes
+
+* :bug: correty default value of parameters ([9fc25a1](https://github.com/chantouchsek/vue-axios-http/commit/9fc25a1d3b29a913a3d2c08dff72ebde966c0b22))
+* :pencil2: fix the typos ([39e989c](https://github.com/chantouchsek/vue-axios-http/commit/39e989c208025adb4bd1d804e83b8dc5b38148f0))
+* :penicil2: rename the property ([76bdf91](https://github.com/chantouchsek/vue-axios-http/commit/76bdf910955cd446d19e01435fa5e1c3d0a4cf14))
+* :poop: remove the test ([505bf94](https://github.com/chantouchsek/vue-axios-http/commit/505bf94247d0094b1d3baf7a928eeb8010577f43))
+* **deps:** bump actions/checkout from 3.3.0 to 3.5.2 ([868c4b2](https://github.com/chantouchsek/vue-axios-http/commit/868c4b20a5bfe952ea3fffc01e15956b77da79ea))
+* **deps:** bump actions/stale from 7 to 8 ([a5ea951](https://github.com/chantouchsek/vue-axios-http/commit/a5ea951962e10cdc365e603b9fe60af22e7f13de))
+* **deps:** bump axios from 0.27.2 to 1.3.0 ([cb065a4](https://github.com/chantouchsek/vue-axios-http/commit/cb065a41d41c976953c669d5716dad01d5038c64))
+* **deps:** bump qs from 6.11.0 to 6.11.2 ([c9eaba9](https://github.com/chantouchsek/vue-axios-http/commit/c9eaba9542aefeee7ea8c3eb2a393fe810e2b5e5))
+
 ### [3.2.1](https://github.com/chantouchsek/vue-axios-http/compare/v3.2.0...v3.2.1) (2023-01-26)
 
 
