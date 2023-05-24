@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.1](https://github.com/chantouchsek/vue-axios-http/compare/v3.3.0...v3.3.1) (2023-05-24)
+
+
+### Bug Fixes
+
+* :bug: accept all options from nuxt config ([ffa539a](https://github.com/chantouchsek/vue-axios-http/commit/ffa539a29149ce2c1d178e4671c27be5d37ed08c))
+* **deps-dev:** bump @vitest/coverage-c8 from 0.28.4 to 0.31.1 ([9ec905b](https://github.com/chantouchsek/vue-axios-http/commit/9ec905b348aec5c3f569695a16ac6c9d024cc799))
+* spread options by string ([e443ba2](https://github.com/chantouchsek/vue-axios-http/commit/e443ba286c9663c6111d21781f131d63f80071ed))
+
 ## [3.3.0](https://github.com/chantouchsek/vue-axios-http/compare/v3.2.1...v3.3.0) (2023-05-18)
 
 
