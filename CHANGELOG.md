@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.2](https://github.com/chantouchsek/vue-axios-http/compare/v3.3.1...v3.3.2) (2023-09-26)
+
+
+### Bug Fixes
+
+* :bug: encode url param ([f120618](https://github.com/chantouchsek/vue-axios-http/commit/f120618aff16a3d53b24d13b84ac10056adbf3a5))
+* **deps:** bump actions/checkout from 3.5.2 to 3.5.3 ([8458d7d](https://github.com/chantouchsek/vue-axios-http/commit/8458d7da9c5a60734626c0adc2c7fac9cb73da89))
+* **deps:** bump actions/checkout from 3.5.3 to 4.1.0 ([f8fbea2](https://github.com/chantouchsek/vue-axios-http/commit/f8fbea2b3146f93883c1b03b982a2d6d864c8ecd))
+* **deps:** bump actions/setup-node from 3.6.0 to 3.7.0 ([275ff69](https://github.com/chantouchsek/vue-axios-http/commit/275ff69df828f80eff83ddc7cc055e67af4a9da9))
+* **deps:** bump actions/setup-node from 3.7.0 to 3.8.1 ([e7b1fd6](https://github.com/chantouchsek/vue-axios-http/commit/e7b1fd6968bf5175dbb3af0dd3535eb5a546cd73))
+* **deps:** bump semver from 5.7.1 to 5.7.2 ([e2dde20](https://github.com/chantouchsek/vue-axios-http/commit/e2dde201797ae403685ac5c9cabb3330ddf53ccb))
+* **deps:** bump tough-cookie from 4.1.2 to 4.1.3 ([1cb4ed4](https://github.com/chantouchsek/vue-axios-http/commit/1cb4ed402970c46a6da876b4b16bb22c0322ed6c))
+
 ### [3.3.1](https://github.com/chantouchsek/vue-axios-http/compare/v3.3.0...v3.3.1) (2023-05-24)
 
 
