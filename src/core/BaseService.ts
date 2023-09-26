@@ -1,7 +1,7 @@
 import type { AxiosError, AxiosInstance, Method, AxiosRequestConfig, AxiosResponse } from 'axios'
 import type { IParseOptions } from 'qs'
 import { isObject } from 'lodash'
-import qs from 'qs'
+import { parse, stringify } from 'qs'
 import Validator from './Validator'
 import { hasFiles, objectToFormData } from '../util'
 
@@ -121,7 +121,13 @@ export default class BaseService {
   }
 
   private __getParameterString(url: string) {
-    const query = qs.stringify(this.parameters, { encode: false, skipNulls: true, addQueryPrefix: true })
+    const query = stringify(this.parameters, {
+      encode: true,
+      skipNulls: true,
+      addQueryPrefix: true,
+      encodeValuesOnly: true,
+      strictNullHandling: true,
+    })
     return `${url}${query}`
   }
 
@@ -139,7 +145,7 @@ export default class BaseService {
         allowDots: true,
         ignoreQueryPrefix: true,
       })
-      const params = qs.parse(parameter, options)
+      const params = parse(parameter, options)
       return this.setParameters(params)
     }
     this.parameters[parameter] = value

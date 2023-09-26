@@ -1,3 +1,4 @@
+import { afterEach, describe, expect, it } from 'vitest'
 import { hasFiles, isFile } from '../util'
 
 describe('Object Test', () => {

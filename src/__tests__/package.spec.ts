@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils'
+import { describe, expect, test } from 'vitest'
 import Vue from 'vue'
 import AxiosHttp from '../'
 import { addElemWithDataAppToBody, disableTransitions, sleep } from '../util'
