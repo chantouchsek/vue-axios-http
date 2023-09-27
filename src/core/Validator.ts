@@ -24,7 +24,7 @@ class Validator {
     return is(Object.keys(this.errors), fields)
   }
 
-  first(field: string | string[]): string | Record<string, any> | undefined {
+  first(field: string | string[]): string | undefined {
     if (Array.isArray(field)) {
       const fields = this.fields(field)
       let fd = ''
