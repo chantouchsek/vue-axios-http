@@ -1,3 +1,4 @@
+import type { SimpleObject } from '../types'
 import { cloneDeep, get, has, omit } from 'lodash'
 import { is, toCamelCase, toSnakeCase } from '../util'
 
@@ -5,7 +6,7 @@ class Validator {
   public successful: boolean
   public processing: boolean
 
-  constructor(public errors: Record<string, any> = {}) {
+  constructor(public errors: SimpleObject<any> = {}) {
     this.processing = false
     this.successful = false
   }
@@ -42,7 +43,7 @@ class Validator {
     }
   }
 
-  firstBy(obj: Record<string, any>, field?: string) {
+  firstBy(obj: SimpleObject<any>, field?: string) {
     let value: string
     if (!field) {
       value = obj[Object.keys(obj)[0]]
@@ -64,7 +65,7 @@ class Validator {
   any(field: string[] = [], returnObject?: boolean) {
     const fields = this.fields(field)
     if (returnObject) {
-      const errors: Record<string, any> = {}
+      const errors: SimpleObject<any> = {}
       if (!fields.length) return {}
       for (const f of fields) {
         const val = this.get(f)
@@ -74,7 +75,7 @@ class Validator {
       return errors
     }
     if (!fields.length) return Object.keys(this.errors).length > 0
-    const errors: Record<string, any> = {}
+    const errors: SimpleObject<any> = {}
     fields.forEach((key: string) => (errors[key] = this.get(key)))
     return Object.keys(errors).length > 0
   }
@@ -91,7 +92,7 @@ class Validator {
     return Object.keys(this.errors).length
   }
 
-  fill(errors: Record<string, any>) {
+  fill(errors: SimpleObject<any>) {
     this.errors = errors
   }
 
