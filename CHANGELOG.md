@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.3](https://github.com/chantouchsek/vue-axios-http/compare/v3.3.2...v3.3.3) (2023-09-27)
+
+
+### Bug Fixes
+
+* :bug: remove object return types from first function ([5fdfe01](https://github.com/chantouchsek/vue-axios-http/commit/5fdfe0106fe9487467cafa9039928ff47d992705))
+
 ### [3.3.2](https://github.com/chantouchsek/vue-axios-http/compare/v3.3.1...v3.3.2) (2023-09-26)
 
 
