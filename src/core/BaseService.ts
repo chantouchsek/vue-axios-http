@@ -1,3 +1,4 @@
+import type { SimpleObject } from '../types'
 import type { AxiosError, AxiosInstance, Method, AxiosRequestConfig, AxiosResponse } from 'axios'
 import type { IParseOptions } from 'qs'
 import { isObject } from 'lodash'
@@ -23,7 +24,7 @@ export default class BaseService {
     ignoreQueryPrefix: true,
   }
 
-  constructor(readonly endpoint: string, public parameters: Record<string, any> = {}) {}
+  constructor(readonly endpoint: string, public parameters: SimpleObject<any> = {}) {}
 
   get $http() {
     return BaseService.$http
@@ -102,7 +103,7 @@ export default class BaseService {
           const { response } = error
           if (response && response.status === UNPROCESSABLE_ENTITY) {
             const { data } = response
-            const validationErrors: Record<string, any> = {}
+            const validationErrors: SimpleObject<any> = {}
             Object.assign(validationErrors, data[this.$errorProperty])
             this.onFail(validationErrors)
           }
@@ -131,7 +132,7 @@ export default class BaseService {
     return `${url}${query}`
   }
 
-  setParameters(parameters: Record<string, any>) {
+  setParameters(parameters: SimpleObject<any>) {
     Object.keys(parameters).forEach((key) => {
       this.parameters[key] = parameters[key]
     })
@@ -166,7 +167,7 @@ export default class BaseService {
     return this
   }
 
-  onFail(errors: Record<string, any>) {
+  onFail(errors: SimpleObject<any>) {
     this.errors.fill(errors)
     validator.fill(errors)
   }
