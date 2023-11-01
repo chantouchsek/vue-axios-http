@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.4](https://github.com/chantouchsek/vue-axios-http/compare/v3.3.3...v3.3.4) (2023-11-01)
+
+
+### Bug Fixes
+
+* **deps:** bump @babel/traverse from 7.20.13 to 7.23.2 ([2a0b40c](https://github.com/chantouchsek/vue-axios-http/commit/2a0b40c93524b550f5b764ed0d4dc87dbab1126f))
+* **deps:** bump actions/checkout from 4.1.0 to 4.1.1 ([0bb8a34](https://github.com/chantouchsek/vue-axios-http/commit/0bb8a34055d74cd7579c4a5e778463547dfcf9d1))
+* **deps:** bump actions/setup-node from 3.8.1 to 4.0.0 ([b7d3f91](https://github.com/chantouchsek/vue-axios-http/commit/b7d3f91187e24d26ec932037bf11300129ad2964))
+* **deps:** bump browserify-sign from 4.2.1 to 4.2.2 ([297c8d7](https://github.com/chantouchsek/vue-axios-http/commit/297c8d78299bcf990f9c7b2c555f7e37b24ea44a))
+* **deps:** bump get-func-name from 2.0.0 to 2.0.2 ([e52a9e8](https://github.com/chantouchsek/vue-axios-http/commit/e52a9e8d3064c37a1c3a0fbd9f0121509a2ecff4))
+
 ### [3.3.3](https://github.com/chantouchsek/vue-axios-http/compare/v3.3.2...v3.3.3) (2023-09-27)
 
 
