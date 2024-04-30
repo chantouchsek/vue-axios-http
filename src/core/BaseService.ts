@@ -86,7 +86,7 @@ export default class BaseService {
 
   $submit<T = any, F = any>(method: Method, param?: string | number, form?: F, config?: AxiosRequestConfig) {
     this.beforeSubmit()
-    return new Promise<AxiosResponse<T>>((resolve, reject) => {
+    return new Promise<AxiosResponse<AxiosResponse<T>>>((resolve, reject) => {
       const formData = hasFiles(form) ? objectToFormData(form) : form
       const endpointPath = param ? `/${this.endpoint}/${param}` : `/${this.endpoint}`
       const endpoint = endpointPath.replace(/\/\//g, '/')
@@ -114,7 +114,7 @@ export default class BaseService {
   }
 
   submit<T = any, F = any>(method: Method, url?: string | number, form?: F, config?: AxiosRequestConfig) {
-    return new Promise<T>((resolve, reject) => {
+    return new Promise<AxiosResponse<T>>((resolve, reject) => {
       this.$submit<T>(method, url, form, config)
         .then(({ data }) => resolve(data))
         .catch((err) => reject(err))
@@ -133,32 +133,27 @@ export default class BaseService {
   }
 
   setParameters(parameters: SimpleObject<any>) {
-    Object.keys(parameters).forEach((key) => {
-      this.parameters[key] = parameters[key]
-    })
+    this.parameters = { ...this.parameters, ...parameters }
     return this
   }
 
   setParameter(parameter: string, value?: any) {
     if (!value) {
-      const options: IParseOptions = Object.assign({}, this.$parsedQs, {
-        comma: true,
-        allowDots: true,
-        ignoreQueryPrefix: true,
-      })
-      const params = parse(parameter, options)
-      return this.setParameters(params)
+      return this.setParameters(
+        parse(parameter, {
+          ...this.$parsedQs,
+          comma: true,
+          allowDots: true,
+          ignoreQueryPrefix: true,
+        }),
+      )
     }
     this.parameters[parameter] = value
     return this
   }
 
   removeParameters(parameters: string[] = []) {
-    if (!parameters || !parameters.length) {
-      this.parameters = {}
-    } else if (Array.isArray(parameters)) {
-      for (const parameter of parameters) delete this.parameters[parameter]
-    }
+    parameters.length ? parameters.forEach((param) => delete this.parameters[param]) : (this.parameters = {})
     return this
   }
 
