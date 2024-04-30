@@ -86,39 +86,34 @@ export default class BaseService {
 
   $submit<T = any, F = any>(method: Method, param?: string | number, form?: F, config?: AxiosRequestConfig) {
     this.beforeSubmit()
+    const formData = hasFiles(form) ? objectToFormData(form) : form
+    const endpointPath = param ? `/${this.endpoint}/${param}` : `/${this.endpoint}`
+    const endpoint = endpointPath.replace(/\/\//g, '/')
+    const url = this.__getParameterString(endpoint)
+    const axiosConfig = { url, data: formData, method, ...config }
     return new Promise<AxiosResponse<AxiosResponse<T>>>((resolve, reject) => {
-      const formData = hasFiles(form) ? objectToFormData(form) : form
-      const endpointPath = param ? `/${this.endpoint}/${param}` : `/${this.endpoint}`
-      const endpoint = endpointPath.replace(/\/\//g, '/')
-      const url = this.__getParameterString(endpoint)
-      const axiosConfig = { url, data: formData, method, ...config }
-      this.$http(axiosConfig)
+      this.$http<T>(axiosConfig)
         .then((response) => {
           this.onSuccess()
+          if (this.$resetParameter) this.removeParameters()
           resolve(response)
         })
         .catch((error: AxiosError<AxiosResponseData>) => {
           this.errors.processing = false
           validator.processing = false
-          const { response } = error
-          if (response && response.status === UNPROCESSABLE_ENTITY) {
-            const { data } = response
+          if (error.response && error.response.status === UNPROCESSABLE_ENTITY) {
             const validationErrors: SimpleObject<any> = {}
-            Object.assign(validationErrors, data[this.$errorProperty])
+            Object.assign(validationErrors, error.response.data[this.$errorProperty])
             this.onFail(validationErrors)
           }
           reject(error)
         })
-      if (this.$resetParameter) this.removeParameters()
     })
   }
 
-  submit<T = any, F = any>(method: Method, url?: string | number, form?: F, config?: AxiosRequestConfig) {
-    return new Promise<AxiosResponse<T>>((resolve, reject) => {
-      this.$submit<T>(method, url, form, config)
-        .then(({ data }) => resolve(data))
-        .catch((err) => reject(err))
-    })
+  async submit<T = any, F = any>(method: Method, url?: string | number, form?: F, config?: AxiosRequestConfig) {
+    const { data } = await this.$submit<T>(method, url, form, config)
+    return data
   }
 
   private __getParameterString(url: string) {
