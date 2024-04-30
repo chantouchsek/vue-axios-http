@@ -3,13 +3,7 @@ import { castArray, cloneDeep, get, has, omit, replace } from 'lodash'
 import { is, toCamelCase, toSnakeCase } from '../util'
 
 class Validator {
-  public successful: boolean
-  public processing: boolean
-
-  constructor(public errors: SimpleObject<any> = {}) {
-    this.processing = false
-    this.successful = false
-  }
+  constructor(public errors: SimpleObject<any> = {}, public processing = false, public successful = false) {}
 
   add(field: string, message: string, forceUpdate?: boolean) {
     if (forceUpdate || this.missed(field)) {
@@ -24,7 +18,7 @@ class Validator {
     return is(Object.keys(this.errors), fields)
   }
 
-  first(field: string | string[]): string | undefined {
+  first(field: string | string[]) {
     const fields = this.fields(castArray(field))
     const foundField = fields.find((f) => has(this.errors, f)) ?? ''
     const value = this.get(foundField)
@@ -32,8 +26,7 @@ class Validator {
   }
 
   firstBy(obj: SimpleObject<any>, field: string = Object.keys(obj)[0]): string {
-    const value: string = obj[field]
-    return Array.isArray(value) ? value[0] : value
+    return castArray(obj[field])[0]
   }
 
   missed(field: string | string[]) {
