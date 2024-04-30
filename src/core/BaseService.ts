@@ -91,12 +91,12 @@ export default class BaseService {
     const endpoint = endpointPath.replace(/\/\//g, '/')
     const url = this.__getParameterString(endpoint)
     const axiosConfig = { url, data: formData, method, ...config }
-    return new Promise<AxiosResponse<AxiosResponse<T>>>((resolve, reject) => {
+    return new Promise<AxiosResponse<T>>((resolve, reject) => {
       this.$http<T>(axiosConfig)
         .then((response) => {
           this.onSuccess()
           if (this.$resetParameter) this.removeParameters()
-          resolve(response)
+          resolve(response as AxiosResponse<T>)
         })
         .catch((error: AxiosError<AxiosResponseData>) => {
           this.errors.processing = false
