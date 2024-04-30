@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.1](https://github.com/chantouchsek/vue-axios-http/compare/v3.4.0...v3.4.1) (2024-04-30)
+
+
+### Bug Fixes
+
+* :label: cast types and fix ternary condition ([70c0451](https://github.com/chantouchsek/vue-axios-http/commit/70c0451f4c86ee4b4e54a252babafecbaf4ae0a6))
+
 ## [3.4.0](https://github.com/chantouchsek/vue-axios-http/compare/v3.3.3...v3.4.0) (2024-04-30)
 
 
