@@ -20,7 +20,7 @@ class Validator {
 
   first(field: string | string[]) {
     const fields = this.fields(castArray(field))
-    const foundField = fields.find((f) => has(this.errors, f)) ?? ''
+    const foundField = fields.find((f) => has(this.errors, f)) || ''
     const value = this.get(foundField)
     return Array.isArray(value) ? value[0] : value
   }
