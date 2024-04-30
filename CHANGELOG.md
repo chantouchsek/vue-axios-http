@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/chantouchsek/vue-axios-http/compare/v3.3.3...v3.4.0) (2024-04-30)
+
+
+### Features
+
+* :sparkles: add support wildcard fields ([1eefc70](https://github.com/chantouchsek/vue-axios-http/commit/1eefc70a8ed70384ff23146bd2ef2474b3c00cc2))
+
+
+### Bug Fixes
+
+* :lock: replace by lodash ([8c57402](https://github.com/chantouchsek/vue-axios-http/commit/8c57402adb0391a8d8ea81f7f92e5baa5ddfcf37))
+* **deps:** bump @babel/traverse from 7.20.13 to 7.23.2 ([2a0b40c](https://github.com/chantouchsek/vue-axios-http/commit/2a0b40c93524b550f5b764ed0d4dc87dbab1126f))
+* **deps:** bump actions/checkout from 4.1.0 to 4.1.1 ([0bb8a34](https://github.com/chantouchsek/vue-axios-http/commit/0bb8a34055d74cd7579c4a5e778463547dfcf9d1))
+* **deps:** bump actions/checkout from 4.1.1 to 4.1.4 ([46ca987](https://github.com/chantouchsek/vue-axios-http/commit/46ca987b8dfc64dfbba0b3be0f6e251e07725fa5))
+* **deps:** bump actions/setup-node from 3.8.1 to 4.0.0 ([b7d3f91](https://github.com/chantouchsek/vue-axios-http/commit/b7d3f91187e24d26ec932037bf11300129ad2964))
+* **deps:** bump browserify-sign from 4.2.1 to 4.2.2 ([297c8d7](https://github.com/chantouchsek/vue-axios-http/commit/297c8d78299bcf990f9c7b2c555f7e37b24ea44a))
+* **deps:** bump follow-redirects from 1.15.2 to 1.15.4 ([bc837a4](https://github.com/chantouchsek/vue-axios-http/commit/bc837a457465d4bf304a031a42597b73754918bb))
+* **deps:** bump follow-redirects from 1.15.4 to 1.15.6 ([f3590a0](https://github.com/chantouchsek/vue-axios-http/commit/f3590a0d68aba68b9ae727cee6258665d5961df0))
+* **deps:** bump get-func-name from 2.0.0 to 2.0.2 ([e52a9e8](https://github.com/chantouchsek/vue-axios-http/commit/e52a9e8d3064c37a1c3a0fbd9f0121509a2ecff4))
+* **deps:** bump ip from 1.1.8 to 1.1.9 ([20846a7](https://github.com/chantouchsek/vue-axios-http/commit/20846a7be6bfa6021aff6663768e539b65ea5169))
+* **deps:** bump tar from 6.1.13 to 6.2.1 ([5ce2d8a](https://github.com/chantouchsek/vue-axios-http/commit/5ce2d8a907aa8fd5dfb43304244e816e8eba8c69))
+* **deps:** bump webpack-dev-middleware from 5.3.3 to 5.3.4 ([bcf3ee6](https://github.com/chantouchsek/vue-axios-http/commit/bcf3ee6abd4a1ea58a43eac8a29638153476acb4))
+* skip lip check on build ([1d3fca8](https://github.com/chantouchsek/vue-axios-http/commit/1d3fca86807177e9c9ffccb67982ff0ea3633b79))
+
 ### [3.3.3](https://github.com/chantouchsek/vue-axios-http/compare/v3.3.2...v3.3.3) (2023-09-27)
 
 
