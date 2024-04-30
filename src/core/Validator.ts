@@ -1,5 +1,5 @@
 import type { SimpleObject } from '../types'
-import { castArray, cloneDeep, get, has, omit } from 'lodash'
+import { castArray, cloneDeep, get, has, omit, replace } from 'lodash'
 import { is, toCamelCase, toSnakeCase } from '../util'
 
 class Validator {
@@ -99,7 +99,7 @@ class Validator {
   fields(field: string | string[]) {
     const processField = (f: string) => {
       if (f.includes('*')) {
-        const regex = new RegExp(`^${f.replace('*', '.*')}$`, 'i')
+        const regex = new RegExp(`^${replace(f, '*', '.*')}$`, 'i')
         for (const key in this.errors) {
           if (regex.test(key)) fields.push(toCamelCase(key), toSnakeCase(key))
         }
