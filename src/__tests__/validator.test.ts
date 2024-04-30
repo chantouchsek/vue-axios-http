@@ -13,6 +13,7 @@ describe('Validator', () => {
   })
   test('Add an error', () => {
     validator.add('name', 'The name field is required.')
+    validator.add('name', 'The name field min length is 3.')
     expect(validator.any()).toBeTruthy()
   })
   test('Add an error with forceUpdate', () => {
@@ -239,5 +240,19 @@ describe('Validator', () => {
     validator.clear(['first_name'])
 
     expect(validator.has(['firstName'])).toBeFalsy()
+  })
+
+  it('should work with wildcard fields', () => {
+    const errors = {
+      'items.0.name': ['This fist name field is required'],
+      'items.1.name': ['This fist name field is required'],
+      'items.2.name': ['This fist name field is required'],
+    }
+    validator.fill(errors)
+
+    expect(validator.has(['items.*'])).toBeTruthy()
+    expect(validator.has(['items.*.name'])).toBeTruthy()
+    expect(validator.first(['items.*.name'])).toEqual('This fist name field is required')
+    expect(validator.first(['items.0.name'])).toEqual('This fist name field is required')
   })
 })
