@@ -3,7 +3,11 @@ import { castArray, cloneDeep, get, has, omit, replace } from 'lodash'
 import { is, toCamelCase, toSnakeCase } from '../util'
 
 class Validator {
-  constructor(public errors: SimpleObject<any> = {}, public processing = false, public successful = false) {}
+  constructor(
+    public errors: SimpleObject<any> = {},
+    public processing = false,
+    public successful = false,
+  ) {}
 
   add(field: string, message: string, forceUpdate?: boolean) {
     if (forceUpdate || this.missed(field)) {

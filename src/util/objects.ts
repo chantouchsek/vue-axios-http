@@ -1,4 +1,4 @@
-export function isFile(object: any): boolean {
+export function isFile(object: File | FileList): boolean {
   return object instanceof File || object instanceof FileList
 }
 export function is(errors: string[], errorsToCheck: string[] | string): boolean {

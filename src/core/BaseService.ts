@@ -24,7 +24,10 @@ export default class BaseService {
     ignoreQueryPrefix: true,
   }
 
-  constructor(readonly endpoint: string, public parameters: SimpleObject<any> = {}) {}
+  constructor(
+    readonly endpoint: string,
+    public parameters: SimpleObject<any> = {},
+  ) {}
 
   get $http() {
     return BaseService.$http
