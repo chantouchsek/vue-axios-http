@@ -13,7 +13,7 @@
     "start": "nodemon",
     "release": "standard-version && git push --follow-tags origin main && yarn publish",
     "clean": "rimraf dist",
-    "prepare": "husky install",
+    "prepare": "husky",
     "lint:js": "eslint --ext \".js,.ts\" --ignore-path .gitignore .",
     "lint:prettier": "prettier --check .",
     "lint": "yarn lint:js && yarn lint:prettier",
