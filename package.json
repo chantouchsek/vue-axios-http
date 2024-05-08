@@ -63,7 +63,7 @@
     "eslint-plugin-vue": "^9.25.0",
     "globals": "^15.1.0",
     "husky": "^9.0.11",
-    "jsdom": "^22.1.0",
+    "jsdom": "^24.0.0",
     "lint-staged": "^15.2.2",
     "nodemon": "^3.1.0",
     "nuxt": "^2.17.3",
