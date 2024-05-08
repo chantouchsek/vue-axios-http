@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://github.com/chantouchsek/vue-axios-http/compare/v3.4.1...v3.5.0) (2024-05-08)
+
+
+### Features
+
+* migrate eslint flat config ([cdc159c](https://github.com/chantouchsek/vue-axios-http/commit/cdc159c4b169e74538a87644e7b44dfbc6e49a5f))
+
+
+### Bug Fixes
+
+* correct husky config ([d6cc229](https://github.com/chantouchsek/vue-axios-http/commit/d6cc229680f40cd98c156f747b4cf92c359a9ddf))
+* **deps:** bump actions/checkout from 4.1.4 to 4.1.5 ([96e7d77](https://github.com/chantouchsek/vue-axios-http/commit/96e7d77ab8b79ea8c0bb1011e7ab844ae7dcd793))
+* types ([cb599ca](https://github.com/chantouchsek/vue-axios-http/commit/cb599ca12abf170708ad9987705901957d210ab8))
+
 ### [3.4.1](https://github.com/chantouchsek/vue-axios-http/compare/v3.4.0...v3.4.1) (2024-04-30)
 
 
